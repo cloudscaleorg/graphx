@@ -42,7 +42,7 @@ func NewAggregator(ctx context.Context, id string, opts AggregatorOpts) graphx.S
 
 	for datasource, chartMetrics := range chartMetrics {
 		switch datasource {
-		case "prometheus":
+		case prometheus.Datasource:
 			pOpts := prometheus.QuerierOpts{
 				ID:           id,
 				Client:       opts.PromClient,
