@@ -1,0 +1,155 @@
+//+build integration
+
+package prometheus
+
+import (
+	"context"
+	"fmt"
+	"sync"
+	"testing"
+	"time"
+
+	"github.com/cloudscaleorg/graphx"
+	"github.com/cloudscaleorg/graphx/internal/unixtime"
+)
+
+var TestRangerTT = []struct {
+	// name of the test table
+	name string
+	// id of unique query session
+	id string
+	// url of prometheus instance for creating API client
+	url string
+	// map massed to Querier associating metrics with query strings
+	queryMap map[graphx.ChartName]*graphx.Query
+	// range descriptor
+	rd graphx.RangeDescriptor
+	// fomrNow is how far from the current time stamp to create aa time.Time for the test
+	fromNow time.Duration
+}{
+	{
+		name: "single chart. one day before till now, 5 minute interval",
+		id:   "integration-test",
+		url:  DefaultPromURL,
+		rd: graphx.RangeDescriptor{
+			Charts:   []graphx.ChartName{graphx.CPUPercentage},
+			Name:     "metrics_prometheus_1",
+			Interval: 10 * time.Second,
+		},
+		fromNow: 24 * time.Minute,
+	},
+}
+
+// confirm that all returned timstamps are specified interval apart
+func confirmMetricIntervals(t *testing.T, r ranger) {
+	for _, metricsArray := range r.resMap {
+
+		for len(metricsArray) >= 2 {
+			// pop metric and get next metric
+			m := metricsArray[len(metricsArray)-1]
+			metricsArray = metricsArray[:len(metricsArray)-1]
+
+			// after pop the next item is the one we want to compare
+			compare := metricsArray[len(metricsArray)-1]
+
+			u, err := unixtime.ParseInt64(m.TimeStamp)
+			if err != nil {
+				t.Fatalf("could not parse current metric unix timestamp: %v", err)
+			}
+			uu, err := unixtime.ParseInt64(compare.TimeStamp)
+			if err != nil {
+				t.Fatalf("could not parse compared metric unix timestamp: %v", err)
+			}
+
+			// compare time with interval
+			delta := u.Sub(uu)
+			// we check if detla is less then our specified interval. if data is missing we could have timestamps with larger deltas but if
+			// data is preset we should not see deltas smaller then the configured interval
+			if delta < r.rd.Interval {
+				t.Fatalf("metric: %v and compare :%v are not %v apart, delta: %v", u, uu, r.rd.Interval, delta)
+			}
+		}
+
+	}
+
+}
+
+func confirmRange(t *testing.T, r ranger) {
+	for _, metricsArray := range r.resMap {
+		n := len(metricsArray) - 1
+
+		firstTS, err := unixtime.ParseInt64(metricsArray[0].TimeStamp)
+		if err != nil {
+			t.Fatalf("could not parse first metric unix timestamp: %v", err)
+		}
+		lastTS, err := unixtime.ParseInt64(metricsArray[n].TimeStamp)
+		if err != nil {
+			t.Fatalf("could not parse last metric unix timestamp: %v", err)
+		}
+
+		// confirm first TS is not before our start
+		if firstTS.Before(r.rd.Start) {
+			t.Fatalf("first seen timestamp: %v is before range query start: %v", firstTS, r.rd.Start)
+		}
+
+		// confirm last TS seen is not after our end
+		if lastTS.After(r.rd.End) {
+			t.Fatalf("last seen timestamp: %v is after range query end: %v", lastTS, r.rd.End)
+		}
+	}
+}
+
+func TestRanger(t *testing.T) {
+	for _, tt := range TestRangerTT {
+
+		t.Run(tt.name, func(t *testing.T) {
+			api := setupAPI(t, tt.url)
+
+			// create time.Time from fromNow field
+			end := time.Now()
+			start := end.Add(-1 * tt.fromNow)
+
+			tt.rd.Start = start
+			tt.rd.End = end
+
+			// get query map
+			qm, err := newQueryMap(tt.rd.ToChartsDescriptor())
+			if err != nil {
+				t.Fatalf("failed to resolve range query into a query map: %v", err)
+			}
+
+			rnger := ranger{
+				client:   api,
+				m:        &sync.Mutex{},
+				queryMap: qm,
+				rd:       tt.rd,
+				resMap:   make(map[graphx.ChartName][]*graphx.RangeMetric),
+			}
+
+			ctx := context.Background()
+			ctx, cancel := context.WithTimeout(ctx, 1*time.Minute)
+			defer cancel()
+
+			resp, err := rnger.Range(ctx)
+			if err != nil {
+				t.Fatalf("range request returned error: %v", err)
+			}
+
+			select {
+			case <-ctx.Done():
+				t.Fatalf("query ended due to context timeout")
+			default:
+			}
+
+			for _, v := range resp.Charts {
+				for _, m := range v {
+					fmt.Printf("%v\n", m.TimeStamp)
+				}
+			}
+
+			confirmMetricIntervals(t, rnger)
+
+			cancel()
+		})
+	}
+}

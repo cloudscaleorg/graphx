@@ -1,0 +1,126 @@
+package prometheus
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"sync"
+
+	"github.com/cloudscaleorg/graphx"
+	promapi "github.com/prometheus/client_golang/api/prometheus/v1"
+	prommodels "github.com/prometheus/common/model"
+)
+
+// ranger implements the graphx.Range interface. ranger concurrently queries prometheus
+// for multiple time series for a single name, collects the results, and returns
+type ranger struct {
+	id string
+	// prometheus api client
+	client promapi.API
+	// configured range descriptor defining our range query
+	rd graphx.RangeDescriptor
+	// a map protecting qMap
+	m *sync.Mutex
+	// query map associating configured chart names with query descriptors
+	queryMap map[graphx.ChartName]graphx.Query
+	// the map to fill with resolved metrics
+	resMap map[graphx.ChartName][]*graphx.RangeMetric
+}
+
+// NewRanger returns a prometheus implementation of the graphx.Ranger interface
+func NewRanger(client promapi.API, rd graphx.RangeDescriptor) (graphx.Ranger, error) {
+	qMap, err := newQueryMap(rd.ToChartsDescriptor())
+	if err != nil {
+		return nil, fmt.Errorf("failed to create ranger: %v", err)
+	}
+
+	resMap := make(map[graphx.ChartName][]*graphx.RangeMetric)
+	m := &sync.Mutex{}
+
+	return &ranger{
+		rd:       rd,
+		client:   client,
+		m:        m,
+		queryMap: qMap,
+		resMap:   resMap,
+	}, nil
+}
+
+// Range is a public method implementing the graphx.Ranger interface. Range issues a concurrent range query for each
+// chart in it's queryMap
+func (r *ranger) Range(ctx context.Context) (*graphx.RangeResponse, error) {
+	var wg sync.WaitGroup
+
+	// check context
+	select {
+	case <-ctx.Done():
+		log.Printf("context closed before concurrent fill of buffer")
+		return nil, fmt.Errorf("context canceled")
+	default:
+	}
+
+	// concurrently issue queries
+	for chart, query := range r.queryMap {
+		wg.Add(1)
+		log.Printf("issuing query: %s", string(query))
+		go r.rangeQuery(ctx, chart, query, &wg)
+	}
+
+	wg.Wait()
+
+	return &graphx.RangeResponse{
+		Charts: r.resMap,
+		Name:   r.rd.Name,
+	}, nil
+}
+
+// rangeQuery handles the logic for querying prometheus for a range, unpacking the matrix, converting each sample to our domain metric
+// and adding this to the results map
+func (r *ranger) rangeQuery(ctx context.Context, chart graphx.ChartName, query graphx.Query, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	// check context
+	select {
+	case <-ctx.Done():
+		log.Printf("context closed before fill of buffer")
+		return
+	default:
+	}
+
+	// create range
+	rng := promapi.Range{
+		Start: r.rd.Start,
+		End:   r.rd.End,
+		Step:  r.rd.Interval,
+	}
+
+	// perform query
+	value, err := r.client.QueryRange(ctx, string(query), rng)
+	if err != nil {
+		log.Printf("range query to prometheus failed: %v", err)
+	}
+
+	// typecast returned value to matrix
+	var matrix prommodels.Matrix
+	var ok bool
+	if matrix, ok = value.(prommodels.Matrix); !ok {
+		log.Printf("received unknown type from range request")
+		return
+	}
+
+	metrics := make([]*graphx.RangeMetric, 0)
+	// unpack matrix and add to resMap
+	for _, sampleStream := range matrix {
+		for _, value := range sampleStream.Values {
+			m := samplePairToRangeMetric(value)
+			metrics = append(metrics, m)
+		}
+	}
+
+	// add to map
+	r.m.Lock()
+	r.resMap[chart] = metrics
+	r.m.Unlock()
+
+	return
+}

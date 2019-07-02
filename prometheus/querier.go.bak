@@ -1,0 +1,290 @@
+package prometheus
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"sync"
+	"time"
+
+	"github.com/cloudscaleorg/graphx"
+	promapi "github.com/prometheus/client_golang/api/prometheus/v1"
+	prommodels "github.com/prometheus/common/model"
+)
+
+// NOTE: Prometheus only allows aggregate queries grouped by time series. For example if we do not
+// want to make 1 query, per time series, per name, our only alternative is to ask for 1 time series
+// specifying multiple names. E.g: (cpu_usage_percent{container_name="Name1|Name2"})
+// will return cpu percentage time series for both Name1 and Name2 while a query such as
+// (cpu_usage_percent{container_name="Name1|Name2"}, mem_usage_percent{container_name="Name1|Name2"})
+// is not possible. Thus the only way to save on HTTP connections is to batch per time series with multiple names.
+
+// QueryStreamerOpts are options to construct a new prometheus Querier
+type QueryStreamerOpts struct {
+	// ID identifying unique session
+	ID string
+	// client used to contact prometheus
+	Client promapi.API
+	// ChartsDescriptor informing querier how to build it's charts and queries
+	ChartsDesc graphx.ChartsDescriptor
+	// Context used to cancel poller and concurrent queries
+	Ctx context.Context
+	// EOSThreshold determines how long we go without seeing any metrics on the stream before sending an end of stream error
+	EOSThreshhold time.Duration
+}
+
+// queryStreamer is a private implementation of graphx.Querier and graphx.Streamer. this implementation queries prometheus concurrently
+// per graphx.Chartname in it's queryMap and streams those resutlts to an internal metrics channel
+type queryStreamer struct {
+	// unique id for the streaming session
+	id string
+	// prometheus api client
+	client promapi.API
+	// the chart descriptor configuring this streaming session
+	cd graphx.ChartsDescriptor
+	// the queries to run for a specific configured chart
+	queryMap map[graphx.ChartName]graphx.Query
+	// the internal metrics channel. the public Recv() method is the interface for retrieving off this channel
+	mChan chan *graphx.Metric
+	// the internal errror channel. the public Recv() method is the interface for retreiving off this channel
+	errChan chan error
+	// lm is a mutex protecting the latestTS variable below
+	lm *sync.RWMutex
+	// latestTS is future most timestamp we've seen returned from each concurrent query
+	latestTS time.Time
+	// eosThreshold is the max duration in which no metrics are returned from concurrent queries that triggers an EOS error
+	eosThreshold time.Duration
+}
+
+// NewQueryStreamer is a constructor for a prometheus implementation of graphx.Querier
+func NewQueryStreamer(opts QueryStreamerOpts) (graphx.QuerierStreamer, error) {
+	// build query map
+	qmap, err := newQueryMap(opts.ChartsDesc)
+	if err != nil {
+		return nil, fmt.Errorf("failed to build query map: %v", err)
+	}
+
+	// create channels
+	mChan := make(chan *graphx.Metric, 1024)
+	errChan := make(chan error, 1024)
+
+	// create querier
+	q := &queryStreamer{
+		id:           opts.ID,
+		cd:           opts.ChartsDesc,
+		client:       opts.Client,
+		queryMap:     qmap,
+		mChan:        mChan,
+		errChan:      errChan,
+		lm:           &sync.RWMutex{},
+		latestTS:     time.Now(),
+		eosThreshold: opts.EOSThreshhold,
+	}
+
+	//if Fill option specified we fill the buffer with historical metrics first and then start our poller
+	if !time.Time(opts.ChartsDesc.Fill).IsZero() {
+		go q.fillBuf(opts.Ctx)
+		return q, nil
+	}
+
+	// create and launch poller
+	poller := graphx.NewPoller(opts.ID, q, time.Duration(opts.ChartsDesc.PollInterval))
+	go poller.Poll(opts.Ctx)
+
+	return q, nil
+}
+
+// Recv is a blocking public method implementing the Streamer interface.
+// callers can block on this method to wait for a metric or an error
+func (q *queryStreamer) Recv(ctx context.Context) (*graphx.Metric, error) {
+	select {
+	case m := <-q.mChan:
+		return m, nil
+	case err := <-q.errChan:
+		return nil, err
+	case <-ctx.Done():
+		return nil, &graphx.CtxDoneErr{Err: ctx.Err()}
+	}
+}
+
+// Query is the public method implementing the graphx.Querier interface. this method blocks
+// until all concurrent queries are completed and have streamed their metrics to the provided channel
+func (q *queryStreamer) Query(ctx context.Context) {
+	var wg sync.WaitGroup
+
+	// check context
+	select {
+	case <-ctx.Done():
+		log.Printf("session id %s: context closed before concurrent queries", q.id)
+		return
+	default:
+	}
+
+	// derive context with timeout
+	ctxTO, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	for chart, query := range q.queryMap {
+		wg.Add(1)
+		go q.query(ctxTO, chart, query, &wg)
+	}
+
+	wg.Wait()
+
+	// check if we hit end of stream threshold
+	if q.endOfStream() {
+		q.errChan <- &graphx.EndOfStream{}
+	}
+}
+
+// query is a private method meant to be ran as a go routine. handles the logic for querying prometheus given
+// a chart and a query and streams the results to the internal metrics channel
+func (q *queryStreamer) query(ctx context.Context, chart graphx.ChartName, query graphx.Query, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	// check context
+	select {
+	case <-ctx.Done():
+		log.Printf("session id %s: context closed before query", q.id)
+		return
+	default:
+	}
+
+	// issue query
+	value, err := q.client.Query(ctx, string(query), time.Now())
+	if err != nil {
+		log.Printf("session id %s: failed to query prometheus. ERROR: %v QUERY: %v", q.id, err, string(query))
+		return
+	}
+
+	// type assert return value to vector
+	var vector prommodels.Vector
+	var ok bool
+	if vector, ok = value.(prommodels.Vector); !ok {
+		log.Printf("received unknown type from vector request")
+		return
+	}
+
+	// if vector is empty just return. do not update latestTS
+	if len(vector) == 0 {
+		return
+	}
+
+	// stream metrics to channel
+	for _, sample := range vector {
+		m := sampleToMetric(chart, sample)
+		select {
+		case <-ctx.Done():
+			log.Printf("session id %s: context closed while streaming results", q.id)
+			return
+		case q.mChan <- m:
+		default:
+			log.Printf("session id %s: unable to deliver metrics to channel", q.id)
+		}
+	}
+
+	// update latestTS
+	q.updateLatestTS(time.Now())
+
+}
+
+// updateLatestTS is a method used to update the latestTS field. This methos is go-routine/thread safe and uses locking semantics.
+func (q *queryStreamer) updateLatestTS(ts time.Time) {
+	// read lock on latestTS var
+	q.lm.RLock()
+	ok := ts.After(q.latestTS)
+	q.lm.RUnlock()
+
+	if ok {
+		// take exclusive lock
+		q.lm.Lock()
+		// check again and update
+		if ts.After(q.latestTS) {
+			q.latestTS = ts
+		}
+		// unlock
+		q.lm.Unlock()
+	}
+}
+
+// endOfStream determines if we consider the stream ended based on latestTS and eosTimeout. this method is not go-routine/thread safe. call this method only when all concurrent queries are finished
+func (q *queryStreamer) endOfStream() bool {
+	now := time.Now()
+	delta := now.Sub(q.latestTS)
+	return delta >= q.eosThreshold
+}
+
+// fillBuf performs concurrent range queries to pre populate metrics before we begin polling. after all go routines return we launch our poller
+func (q *queryStreamer) fillBuf(ctx context.Context) {
+	var wg sync.WaitGroup
+
+	// check context
+	select {
+	case <-ctx.Done():
+		log.Printf("session id %s: context closed before concurrent fill of buffer", q.id)
+		return
+	default:
+	}
+
+	// concurrently issue queries
+	for chart, query := range q.queryMap {
+		wg.Add(1)
+		go q.rangeQuery(ctx, chart, query, &wg)
+	}
+
+	wg.Wait()
+
+	// launch poller to stream at configured interval
+	poller := graphx.NewPoller(q.id, q, time.Duration(q.cd.PollInterval))
+	go poller.Poll(ctx)
+}
+
+// rangeQuery is a private method meant to be ran as a go routine. handles the logic for querying prometheus given
+// a chart, a range, and a query and streams the results to the internal metrics channel
+func (q *queryStreamer) rangeQuery(ctx context.Context, chart graphx.ChartName, query graphx.Query, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	// check context
+	select {
+	case <-ctx.Done():
+		log.Printf("session id %s: context closed before fill of buffer", q.id)
+		return
+	default:
+	}
+
+	// specify range
+	ts := time.Now()
+	// hardcode this for now to not bombard client
+	r := promapi.Range{
+		Start: time.Time(q.cd.Fill),
+		End:   ts,
+		Step:  time.Duration(q.cd.PollInterval),
+	}
+
+	// perform query
+	value, err := q.client.QueryRange(ctx, string(query), r)
+	if err != nil {
+		log.Printf("session id %s: range query to prometheus failed: %v", q.id, err)
+	}
+
+	// type asert returned value to matrix
+	var matrix prommodels.Matrix
+	var ok bool
+	if matrix, ok = value.(prommodels.Matrix); !ok {
+		log.Printf("session id %s: received unknown type from range request", q.id)
+		return
+	}
+
+	// unpack matrix and stream to channel
+	for _, sampleStream := range matrix {
+		for _, value := range sampleStream.Values {
+			m := samplePairToMetric(chart, sampleStream.Metric, value)
+			select {
+			case q.mChan <- m:
+			default:
+				log.Printf("session id %s: dropped range query metric. channel full", q.id)
+			}
+		}
+	}
+
+}
