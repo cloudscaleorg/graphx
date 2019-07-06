@@ -18,7 +18,7 @@ const (
 	MetricsStreamErrCode = "graphx.stream_handler"
 )
 
-func StreamHandler(v *validator.Validate, ws websocket.Upgrader) http.HandlerFunc {
+func StreamHandler(v *validator.Validate, cs ChartStore, ws websocket.Upgrader) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// only support posts
 		if r.Method != http.MethodGet {
