@@ -8,45 +8,45 @@ import (
 
 type chartStore struct {
 	mu *sync.RWMutex
-	m  map[string]graphx.Chart
+	m  map[string]*graphx.Chart
 }
 
 func NewChartStore() graphx.ChartStore {
 	return &chartStore{
 		mu: &sync.RWMutex{},
-		m:  make(map[string]graphx.Chart),
+		m:  make(map[string]*graphx.Chart),
 	}
 }
 
-func (cs *chartStore) Get() (map[string]graphx.Chart, error) {
+func (cs *chartStore) Get() ([]*graphx.Chart, error) {
 	// allocate
-	m := make(map[string]graphx.Chart)
+	a := make([]*graphx.Chart, 0)
 
 	// copy
 	cs.mu.RLock()
-	for k, v := range cs.m {
-		m[k] = v
+	for _, v := range cs.m {
+		a = append(a, v)
 	}
 	cs.mu.RUnlock()
 
-	return m, nil
+	return a, nil
 }
 
-func (cs *chartStore) GetByNames(chartNames []string) (map[string]graphx.Chart, error) {
+func (cs *chartStore) GetByNames(chartNames []string) ([]*graphx.Chart, error) {
 	// allocate
-	m := make(map[string]graphx.Chart)
+	a := make([]*graphx.Chart, 0)
 
 	// retrieve
 	for _, chartName := range chartNames {
 		cs.mu.RLock()
-		m[chartName] = cs.m[chartName]
+		a = append(a, cs.m[chartName])
 		cs.mu.RUnlock()
 	}
 
-	return m, nil
+	return a, nil
 }
 
-func (cs *chartStore) Store(charts []graphx.Chart) error {
+func (cs *chartStore) Store(charts []*graphx.Chart) error {
 	for _, chart := range charts {
 		cs.mu.Lock()
 		cs.m[chart.Name] = chart
