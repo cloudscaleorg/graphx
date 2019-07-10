@@ -18,7 +18,7 @@ const (
 	MetricsStreamErrCode = "graphx.stream_handler"
 )
 
-func StreamHandler(v *validator.Validate, cs ChartStore, ws websocket.Upgrader) http.HandlerFunc {
+func StreamHandler(v *validator.Validate, cs ChartStore, sf StreamerFactory, ws websocket.Upgrader) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// only support posts
 		if r.Method != http.MethodGet {
@@ -74,18 +74,25 @@ func StreamHandler(v *validator.Validate, cs ChartStore, ws websocket.Upgrader) 
 			return
 		}
 
-		// // create streamer from our streamer factory
-		// qs, err := sf.NewStreamer(ctx, id, cd, time.Duration(cd.PollInterval))
-		// if err != nil {
-		// 	log.Printf("id %s: failed to instantiate query streamer: %v", id, err)
-		// 	return
-		// }
+		// receive configured charts from chart store
+		charts, err := cs.GetByNames(cd.ChartNames)
+		if err != nil {
+			log.Printf("id %s: failed to query chart store: %v", err)
+			return
+		}
 
-		// begin streaming metrics to websocket
+		// create streamer from our streamer factory
+		_ = sf.NewStreamer(ctx, id, charts, time.Duration(cd.PollInterval))
+		if err != nil {
+			log.Printf("id %s: failed to instantiate query streamer: %v", id, err)
+			return
+		}
+
+		// // begin streaming metrics to websocket
 		// log.Printf("id %s: beginning to stream metrics to client", id)
 		// for {
 		// 	// retrieve message from metric stream and handle errors
-		// 	m, err := qs.Recv(ctx)
+		// 	m, err := st.Recv(ctx)
 		// 	if err != nil {
 		// 		// check if we've reached end of stream. i.e. query streamer receives no metrics from prometheus
 		// 		if _, ok := err.(*EndOfStream); ok {

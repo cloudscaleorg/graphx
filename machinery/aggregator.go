@@ -26,8 +26,8 @@ type aggregator struct {
 // AggregatorOpts are the options for an aggregator
 type AggregatorOpts struct {
 	PollInterval time.Duration
-	Charts       []graphx.Chart
-	ChartMetrics map[string][]graphx.ChartMetric
+	Charts       []*graphx.Chart
+	ChartMetrics map[string][]*graphx.ChartMetric
 	PromClient   promapi.API
 }
 
@@ -38,7 +38,7 @@ func NewAggregator(ctx context.Context, id string, opts AggregatorOpts) graphx.S
 	mChan := make(chan *graphx.Metric, 1024)
 	eChan := make(chan error, 1024)
 
-	chartMetrics := graphx.MergeChartMetrics(opts.Charts)
+	chartMetrics := graphx.DatasourceTranspose(opts.Charts)
 
 	for datasource, chartMetrics := range chartMetrics {
 		switch datasource {
