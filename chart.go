@@ -21,8 +21,14 @@ type ChartMetric struct {
 	Datasource string `json:"datasource"`
 }
 
+// DataSource
+type DataSource struct {
+	Name       string `json:"name"`
+	ConnString string `json:"connection_string"`
+}
+
 // DatasourceTranpose takes a list of charts and returns a map
-// of ChartMetrics keye'd by their datasource. This is helpful for
+// of ChartMetrics key'd by their datasource. This is helpful for
 // handing specific ChartMetrics to the appropriate datasource clients
 func DatasourceTranspose(charts []*Chart) map[string][]ChartMetric {
 	res := map[string][]ChartMetric{}

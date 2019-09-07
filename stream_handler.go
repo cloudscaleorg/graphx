@@ -77,7 +77,7 @@ func StreamHandler(v *validator.Validate, cs ChartStore, sf StreamerFactory, ws 
 		// receive configured charts from chart store
 		charts, err := cs.GetByNames(cd.ChartNames)
 		if err != nil {
-			log.Printf("id %s: failed to query chart store: %v", err)
+			log.Printf("id %s: failed to query chart store: %v", id, err)
 			return
 		}
 
@@ -87,32 +87,6 @@ func StreamHandler(v *validator.Validate, cs ChartStore, sf StreamerFactory, ws 
 			log.Printf("id %s: failed to instantiate query streamer: %v", id, err)
 			return
 		}
-
-		// // begin streaming metrics to websocket
-		// log.Printf("id %s: beginning to stream metrics to client", id)
-		// for {
-		// 	// retrieve message from metric stream and handle errors
-		// 	m, err := st.Recv(ctx)
-		// 	if err != nil {
-		// 		// check if we've reached end of stream. i.e. query streamer receives no metrics from prometheus
-		// 		if _, ok := err.(*EndOfStream); ok {
-		// 			log.Printf("received end of stream from query streamer. returing")
-		// 			// all defers will run
-		// 			return
-		// 		}
-		// 		// else log the error
-		// 		log.Printf("id %s: received error from stream: %v", id, err)
-		// 		continue
-		// 	}
-		// 	log.Printf("id %s: streaming metric to client: %v", id, m)
-
-		// 	// write metric to websocket
-		// 	err = wsConn.WriteJSON(m)
-		// 	if err != nil {
-		// 		log.Printf("id %s: received error writing to websocket. returning from stream_handler: %v", id, err)
-		// 		return
-		// 	}
-		// }
 
 	}
 }
