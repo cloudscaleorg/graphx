@@ -25,26 +25,26 @@ func Test_ChartStore_Integration_Store(t *testing.T) {
 			name: "10 chart",
 			c:    10,
 		},
-		{
-			name: "50 chart",
-			c:    50,
-		},
-		{
-			name: "100 chart",
-			c:    100,
-		},
-		{
-			name: "500 chart",
-			c:    500,
-		},
-		{
-			name: "1000 chart",
-			c:    1000,
-		},
-		{
-			name: "5000 chart",
-			c:    5000,
-		},
+		// {
+		// 	name: "50 chart",
+		// 	c:    50,
+		// },
+		// {
+		// 	name: "100 chart",
+		// 	c:    100,
+		// },
+		// {
+		// 	name: "500 chart",
+		// 	c:    500,
+		// },
+		// {
+		// 	name: "1000 chart",
+		// 	c:    1000,
+		// },
+		// {
+		// 	name: "5000 chart",
+		// 	c:    5000,
+		// },
 	}
 	for _, tt := range table {
 		t.Run(tt.name, func(t *testing.T) {

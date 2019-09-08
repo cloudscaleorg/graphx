@@ -2,9 +2,7 @@ package etcd
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
-	"sync"
 
 	"github.com/cloudscaleorg/events"
 	"github.com/cloudscaleorg/graphx"
@@ -14,35 +12,31 @@ import (
 	"go.etcd.io/etcd/mvcc/mvccpb"
 )
 
-const (
-	dsPrefix         = "/graphx/datasources"
-	dsPrefixTemplate = "/graphx/datasources/%s"
-)
-
-// dsReduce closes over a DSStore and returns a function for
-// reducing events
 var dsReduce = func(store *DSStore) events.ReduceFunc {
-	return func(e *v3.Event) {
+	return func(e *v3.Event, snapshot bool) {
+		// a new consistent state will follow. dump the current map and get up to date
+		if snapshot {
+			store.reset()
+		}
+
 		switch e.Type {
 		case mvccpb.PUT:
-			var v *graphx.DataSource
-			if err := json.Unmarshal(e.Kv.Value, &v); err != nil {
-				store.logger.Error().Msgf("failed to unmarshal event for key: %v", string(e.Kv.Key))
+			var v graphx.DataSource
+			err := v.FromJSON(e.Kv.Value)
+			if err != nil {
+				store.logger.Error().Msgf("failed to deserialize key %v: %v", string(e.Kv.Key), err)
 				return
 			}
-			store.mu.Lock()
-			store.m[v.Name] = v
-			store.mu.Unlock()
+			store.store([]*graphx.DataSource{&v})
 			store.logger.Debug().Msgf("added datasource to store: %v", v.Name)
 		case mvccpb.DELETE:
 			var v *graphx.DataSource
-			if err := json.Unmarshal(e.PrevKv.Value, &v); err != nil {
-				store.logger.Error().Msgf("failed to unmarshal prev event for key: %v", string(e.Kv.Key))
+			err := v.FromJSON(e.PrevKv.Value)
+			if err != nil {
+				store.logger.Error().Msgf("failed to deserialize previous key %v: %v", string(e.Kv.Key), err)
 				return
 			}
-			store.mu.Lock()
-			delete(store.m, v.Name)
-			store.mu.Unlock()
+			store.remove([]string{v.Name})
 			store.logger.Debug().Msgf("removed datasource from store: %v", v.Name)
 		}
 	}
@@ -50,18 +44,16 @@ var dsReduce = func(store *DSStore) events.ReduceFunc {
 
 // dsStore implement the graphx.DataSourceStore
 type DSStore struct {
+	*dsmap
 	etcd     *v3.Client
-	mu       *sync.RWMutex
-	m        map[string]*graphx.DataSource
 	listener *events.Listener
 	logger   zerolog.Logger
 }
 
 func NewDSStore(ctx context.Context, client *v3.Client) (graphx.DataSourceStore, error) {
 	store := &DSStore{
+		dsmap:  NewDSMap(),
 		etcd:   client,
-		mu:     &sync.RWMutex{},
-		m:      map[string]*graphx.DataSource{},
 		logger: log.With().Str("component", "datasourcestore").Logger(),
 	}
 
@@ -82,73 +74,40 @@ func NewDSStore(ctx context.Context, client *v3.Client) (graphx.DataSourceStore,
 }
 
 func (s *DSStore) Get() ([]*graphx.DataSource, error) {
-	if err := s.checkListener(); err != nil {
-		return nil, err
-	}
-
-	d := []*graphx.DataSource{}
-
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-
-	for _, v := range s.m {
-		d = append(d, v)
-	}
-	return d, nil
-}
-
-func (s *DSStore) GetByNames(names []string) ([]*graphx.DataSource, error) {
-	if err := s.checkListener(); err != nil {
-		return nil, err
-	}
-
-	d := []*graphx.DataSource{}
-
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-
-	for _, name := range names {
-		if v, ok := s.m[name]; ok {
-			d = append(d, v)
+	out, missing := s.get(nil)
+	if len(missing) > 0 {
+		return nil, &ErrNotFound{
+			missing: missing,
 		}
 	}
 
-	return d, nil
+	return out, nil
 }
+
+func (s *DSStore) GetByNames(names []string) ([]*graphx.DataSource, error) {
+	out, missing := s.get(names)
+	if len(missing) > 0 {
+		return nil, &ErrNotFound{
+			missing: missing,
+		}
+	}
+	return out, nil
+}
+
 func (s *DSStore) Store(sources []*graphx.DataSource) error {
 	if err := s.checkListener(); err != nil {
 		return err
 	}
-
-	for _, ds := range sources {
-		b, err := json.Marshal(ds)
-		if err != nil {
-			return fmt.Errorf("failed to serialize datastore: %v", err)
-		}
-
-		key := fmt.Sprintf(dsPrefixTemplate, ds.Name)
-		val := string(b)
-		_, err = s.etcd.Put(context.Background(), key, val)
-		if err != nil {
-			return fmt.Errorf("failed to add ds %v to store", ds.Name)
-		}
-	}
-
-	return nil
+	err := putDS(context.Background(), s.etcd, sources)
+	return err
 }
+
 func (s *DSStore) RemoveByNames(names []string) error {
 	if err := s.checkListener(); err != nil {
 		return err
 	}
-
-	for _, name := range names {
-		_, err := s.etcd.Delete(context.Background(), name)
-		if err != nil {
-			return fmt.Errorf("failed to remove ds %v to store", name)
-		}
-	}
-
-	return nil
+	err := delDS(context.Background(), s.etcd, names)
+	return err
 }
 
 func (s *DSStore) checkListener() error {

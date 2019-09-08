@@ -1,5 +1,9 @@
 package graphx
 
+import (
+	"encoding/json"
+)
+
 // Chart is a user defined container of ChartMetrics. Provides a
 // high level name for a chart and a container for all of a chart's metrics
 type Chart struct {
@@ -7,6 +11,16 @@ type Chart struct {
 	Name string `json:"name"`
 	// a list of chart metrics this high level chart comprises
 	ChartMetrics []ChartMetric `json:"metrics"`
+}
+
+func (c *Chart) ToJSON() ([]byte, error) {
+	b, err := json.Marshal(c)
+	return b, err
+}
+
+func (c *Chart) FromJSON(b []byte) error {
+	err := json.Unmarshal(b, c)
+	return err
 }
 
 // ChartMetric
@@ -25,6 +39,16 @@ type ChartMetric struct {
 type DataSource struct {
 	Name       string `json:"name"`
 	ConnString string `json:"connection_string"`
+}
+
+func (d *DataSource) ToJSON() ([]byte, error) {
+	b, err := json.Marshal(d)
+	return b, err
+}
+
+func (d *DataSource) FromJSON(b []byte) error {
+	err := json.Unmarshal(b, d)
+	return err
 }
 
 // DatasourceTranpose takes a list of charts and returns a map
