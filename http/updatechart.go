@@ -9,7 +9,7 @@ import (
 	fw "github.com/ldelossa/goframework/http"
 )
 
-func UpdateDataSource(a admin.DataSource) h.HandlerFunc {
+func UpdateChart(a admin.Chart) h.HandlerFunc {
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodPut {
 			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports PUT")
@@ -17,7 +17,7 @@ func UpdateDataSource(a admin.DataSource) h.HandlerFunc {
 			return
 		}
 
-		var v graphx.DataSource
+		var v graphx.Chart
 		err := json.NewDecoder(r.Body).Decode(&v)
 		if err != nil {
 			resp := fw.NewResponse(fw.CodeFailedSerialization, "could not validate provided json")
@@ -25,7 +25,7 @@ func UpdateDataSource(a admin.DataSource) h.HandlerFunc {
 			return
 		}
 
-		err = a.UpdateDataSource(&v)
+		err = a.UpdateChart(&v)
 		if err != nil {
 			switch {
 			case (err == admin.ErrNotFound):

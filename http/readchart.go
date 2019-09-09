@@ -8,7 +8,7 @@ import (
 	fw "github.com/ldelossa/goframework/http"
 )
 
-func ReadDataSource(admin admin.DataSource) h.HandlerFunc {
+func ReadChart(admin admin.Chart) h.HandlerFunc {
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodGet {
 			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports GET")
@@ -16,7 +16,7 @@ func ReadDataSource(admin admin.DataSource) h.HandlerFunc {
 			return
 		}
 
-		v, err := admin.ReadDataSource()
+		v, err := admin.ReadChart()
 		if err != nil {
 			resp := fw.NewResponse(fw.CodeInternalServerError, "backing store was unavailable")
 			fw.JError(w, resp, h.StatusBadRequest)

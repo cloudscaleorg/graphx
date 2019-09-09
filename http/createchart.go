@@ -9,7 +9,7 @@ import (
 	fw "github.com/ldelossa/goframework/http"
 )
 
-func CreateDatasource(admin admin.DataSource) h.HandlerFunc {
+func CreateChart(admin admin.Chart) h.HandlerFunc {
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodPost {
 			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports POST")
@@ -17,15 +17,21 @@ func CreateDatasource(admin admin.DataSource) h.HandlerFunc {
 			return
 		}
 
-		var v graphx.DataSource
+		var v graphx.Chart
 		if err := json.NewDecoder(r.Body).Decode(&v); err != nil {
 			resp := fw.NewResponse(fw.CodeFailedSerialization, "could not validate provided json")
 			fw.JError(w, resp, h.StatusBadRequest)
 			return
 		}
 
+		err := admin.CreateChart([]*graphx.Chart{&v})
+		if err != nil {
+			resp := fw.NewResponse(fw.CodeCreateFail, err.Error())
+			fw.JError(w, resp, h.StatusBadRequest)
+		}
+
 		resp := fw.NewResponse(fw.CodeSuccess, "DataSource stored")
-		err := json.NewEncoder(w).Encode(&resp)
+		err = json.NewEncoder(w).Encode(&resp)
 		if err != nil {
 			w.WriteHeader(h.StatusInternalServerError)
 			return

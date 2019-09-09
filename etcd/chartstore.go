@@ -84,14 +84,9 @@ func (s *ChartStore) Get() ([]*graphx.Chart, error) {
 	return out, nil
 }
 
-func (s *ChartStore) GetByNames(names []string) ([]*graphx.Chart, error) {
+func (s *ChartStore) GetByNames(names []string) ([]*graphx.Chart, []string, error) {
 	out, missing := s.get(names)
-	if len(missing) > 0 {
-		return nil, &ErrNotFound{
-			missing: missing,
-		}
-	}
-	return out, nil
+	return out, missing, nil
 }
 
 func (s *ChartStore) Store(charts []*graphx.Chart) error {

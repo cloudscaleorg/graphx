@@ -84,14 +84,9 @@ func (s *DSStore) Get() ([]*graphx.DataSource, error) {
 	return out, nil
 }
 
-func (s *DSStore) GetByNames(names []string) ([]*graphx.DataSource, error) {
+func (s *DSStore) GetByNames(names []string) ([]*graphx.DataSource, []string, error) {
 	out, missing := s.get(names)
-	if len(missing) > 0 {
-		return nil, &ErrNotFound{
-			missing: missing,
-		}
-	}
-	return out, nil
+	return out, missing, nil
 }
 
 func (s *DSStore) Store(sources []*graphx.DataSource) error {

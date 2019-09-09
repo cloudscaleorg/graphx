@@ -9,15 +9,15 @@ import (
 	fw "github.com/ldelossa/goframework/http"
 )
 
-func UpdateDataSource(a admin.DataSource) h.HandlerFunc {
+func RemoveChart(a admin.Chart) h.HandlerFunc {
 	return func(w h.ResponseWriter, r *h.Request) {
-		if r.Method != h.MethodPut {
-			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports PUT")
+		if r.Method != h.MethodDelete {
+			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports DELETE")
 			fw.JError(w, resp, h.StatusNotImplemented)
 			return
 		}
 
-		var v graphx.DataSource
+		var v graphx.Chart
 		err := json.NewDecoder(r.Body).Decode(&v)
 		if err != nil {
 			resp := fw.NewResponse(fw.CodeFailedSerialization, "could not validate provided json")
@@ -25,7 +25,7 @@ func UpdateDataSource(a admin.DataSource) h.HandlerFunc {
 			return
 		}
 
-		err = a.UpdateDataSource(&v)
+		err = a.DeleteChart(&v)
 		if err != nil {
 			switch {
 			case (err == admin.ErrNotFound):
@@ -39,12 +39,7 @@ func UpdateDataSource(a admin.DataSource) h.HandlerFunc {
 			}
 		}
 
-		err = json.NewEncoder(w).Encode(&v)
-		if err != nil {
-			w.WriteHeader(h.StatusInternalServerError)
-			return
-		}
-
+		w.WriteHeader(h.StatusOK)
 		return
 	}
 }

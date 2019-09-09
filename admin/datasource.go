@@ -13,7 +13,7 @@ func (a *admin) ReadDataSource() ([]*graphx.DataSource, error) {
 }
 
 func (a *admin) UpdateDataSource(ds *graphx.DataSource) error {
-	source, err := a.dsStore.GetByNames([]string{ds.Name})
+	source, _, err := a.dsStore.GetByNames([]string{ds.Name})
 	if err != nil {
 		return ErrStore{err}
 	}
@@ -31,7 +31,7 @@ func (a *admin) UpdateDataSource(ds *graphx.DataSource) error {
 }
 
 func (a *admin) DeleteDataSource(ds *graphx.DataSource) error {
-	source, err := a.dsStore.GetByNames([]string{ds.Name})
+	source, _, err := a.dsStore.GetByNames([]string{ds.Name})
 	if err != nil {
 		return ErrStore{err}
 	}

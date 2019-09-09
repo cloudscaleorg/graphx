@@ -11,21 +11,21 @@ import (
 
 func RemoveDataSource(a admin.DataSource) h.HandlerFunc {
 	return func(w h.ResponseWriter, r *h.Request) {
-		if r.Method != h.MethodPut {
-			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports PUT")
+		if r.Method != h.MethodDelete {
+			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports DELETE")
 			fw.JError(w, resp, h.StatusNotImplemented)
 			return
 		}
 
-		var ds graphx.DataSource
-		err := json.NewDecoder(r.Body).Decode(&ds)
+		var v graphx.DataSource
+		err := json.NewDecoder(r.Body).Decode(&v)
 		if err != nil {
 			resp := fw.NewResponse(fw.CodeFailedSerialization, "could not validate provided json")
 			fw.JError(w, resp, h.StatusBadRequest)
 			return
 		}
 
-		err = a.DeleteDataSource(&ds)
+		err = a.DeleteDataSource(&v)
 		if err != nil {
 			switch {
 			case (err == admin.ErrNotFound):
