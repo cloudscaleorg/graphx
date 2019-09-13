@@ -5,6 +5,7 @@ go 1.12
 require (
 	github.com/cloudscaleorg/events v0.0.3
 	github.com/coreos/go-semver v0.3.0 // indirect
+	github.com/crgimenes/goconfig v1.2.1
 	github.com/go-playground/locales v0.12.1 // indirect
 	github.com/go-playground/universal-translator v0.16.0 // indirect
 	github.com/google/uuid v1.1.1

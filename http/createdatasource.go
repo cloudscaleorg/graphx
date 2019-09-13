@@ -9,7 +9,7 @@ import (
 	fw "github.com/ldelossa/goframework/http"
 )
 
-func CreateDatasource(admin admin.DataSource) h.HandlerFunc {
+func CreateDataSource(admin admin.DataSource) h.HandlerFunc {
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodPost {
 			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports POST")

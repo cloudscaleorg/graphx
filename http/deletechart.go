@@ -9,7 +9,7 @@ import (
 	fw "github.com/ldelossa/goframework/http"
 )
 
-func RemoveChart(a admin.Chart) h.HandlerFunc {
+func DeleteChart(a admin.Chart) h.HandlerFunc {
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodDelete {
 			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports DELETE")

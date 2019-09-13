@@ -9,7 +9,7 @@ import (
 	fw "github.com/ldelossa/goframework/http"
 )
 
-func RemoveDataSource(a admin.DataSource) h.HandlerFunc {
+func DeleteDataSource(a admin.DataSource) h.HandlerFunc {
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodDelete {
 			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports DELETE")
