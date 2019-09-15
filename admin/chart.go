@@ -27,12 +27,19 @@ func (a *admin) CreateChart(charts []*graphx.Chart) error {
 	}
 
 	err = a.chartStore.Store(charts)
-	return ErrStore{err}
+	if err != nil {
+		return ErrStore{err}
+	}
+
+	return nil
 }
 
 func (a *admin) ReadChart() ([]*graphx.Chart, error) {
 	sources, err := a.chartStore.Get()
-	return sources, ErrStore{err}
+	if err != nil {
+		return nil, ErrStore{err}
+	}
+	return sources, nil
 }
 
 func (a *admin) UpdateChart(chart *graphx.Chart) error {

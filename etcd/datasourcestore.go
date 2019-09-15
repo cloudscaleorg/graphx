@@ -30,7 +30,7 @@ var dsReduce = func(store *DSStore) events.ReduceFunc {
 			store.store([]*graphx.DataSource{&v})
 			store.logger.Debug().Msgf("added datasource to store: %v", v.Name)
 		case mvccpb.DELETE:
-			var v *graphx.DataSource
+			var v graphx.DataSource
 			err := v.FromJSON(e.PrevKv.Value)
 			if err != nil {
 				store.logger.Error().Msgf("failed to deserialize previous key %v: %v", string(e.Kv.Key), err)
@@ -50,7 +50,7 @@ type DSStore struct {
 	logger   zerolog.Logger
 }
 
-func NewDSStore(ctx context.Context, client *v3.Client) (graphx.DataSourceStore, error) {
+func NewDataSourceStore(ctx context.Context, client *v3.Client) (graphx.DataSourceStore, error) {
 	store := &DSStore{
 		dsmap:  NewDSMap(),
 		etcd:   client,

@@ -1,7 +1,6 @@
 package etcd
 
 import (
-	"log"
 	"sync"
 
 	"github.com/cloudscaleorg/graphx"
@@ -57,7 +56,6 @@ func (m *chartmap) remove(names []string) {
 func (m *chartmap) store(charts []*graphx.Chart) {
 	m.mu.Lock()
 	for _, chart := range charts {
-		log.Printf("%v", chart)
 		m.m[chart.Name] = chart
 	}
 	m.mu.Unlock()

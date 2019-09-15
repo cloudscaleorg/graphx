@@ -22,6 +22,15 @@ func (m *dsmap) get(names []string) ([]*graphx.DataSource, []string) {
 	out := []*graphx.DataSource{}
 	missing := []string{}
 
+	if names == nil {
+		m.mu.RLock()
+		for _, v := range m.m {
+			out = append(out, v)
+		}
+		m.mu.RUnlock()
+		return out, missing
+	}
+
 	m.mu.RLock()
 	for _, name := range names {
 		v, ok := m.m[name]

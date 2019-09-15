@@ -30,3 +30,5 @@ require (
 )
 
 replace github.com/ldelossa/goframework => /Users/louis/git/go/goframework
+
+replace github.com/cloudscaleorg/events => /Users/louis/git/go/events

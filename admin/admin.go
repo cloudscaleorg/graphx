@@ -1,6 +1,10 @@
 package admin
 
-import "github.com/cloudscaleorg/graphx"
+import (
+	"github.com/cloudscaleorg/graphx"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
+)
 
 // All aggregates all interfaces for administoring a graphx cluster
 type All interface {
@@ -28,11 +32,13 @@ type Chart interface {
 type admin struct {
 	dsStore    graphx.DataSourceStore
 	chartStore graphx.ChartStore
+	logger     zerolog.Logger
 }
 
 func NewAdmin(dsStore graphx.DataSourceStore, chartStore graphx.ChartStore) All {
 	return &admin{
 		dsStore:    dsStore,
 		chartStore: chartStore,
+		logger:     log.With().Str("component", "admin").Logger(),
 	}
 }

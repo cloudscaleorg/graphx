@@ -1,15 +1,23 @@
 package admin
 
-import "github.com/cloudscaleorg/graphx"
+import (
+	"github.com/cloudscaleorg/graphx"
+)
 
 func (a *admin) CreateDataSource(sources []*graphx.DataSource) error {
 	err := a.dsStore.Store(sources)
-	return ErrStore{err}
+	if err != nil {
+		return ErrStore{err}
+	}
+	return nil
 }
 
 func (a *admin) ReadDataSource() ([]*graphx.DataSource, error) {
 	sources, err := a.dsStore.Get()
-	return sources, ErrStore{err}
+	if err != nil {
+		return nil, ErrStore{err}
+	}
+	return sources, nil
 }
 
 func (a *admin) UpdateDataSource(ds *graphx.DataSource) error {
