@@ -6,6 +6,6 @@ type ErrNotFound struct {
 	missing []string
 }
 
-func (e *ErrNotFound) Error() string {
+func (e ErrNotFound) Error() string {
 	return fmt.Sprintf("following charts not found: %v", e.missing)
 }

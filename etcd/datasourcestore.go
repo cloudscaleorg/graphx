@@ -76,7 +76,7 @@ func NewDataSourceStore(ctx context.Context, client *v3.Client) (graphx.DataSour
 func (s *DSStore) Get() ([]*graphx.DataSource, error) {
 	out, missing := s.get(nil)
 	if len(missing) > 0 {
-		return nil, &ErrNotFound{
+		return nil, ErrNotFound{
 			missing: missing,
 		}
 	}

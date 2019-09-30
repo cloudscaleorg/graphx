@@ -1,23 +1,27 @@
 package admin
 
 import (
-	"errors"
 	"fmt"
 )
 
-var (
-	ErrNotFound = errors.New("resource not found")
-)
+type ErrNotFound struct {
+	Resource string
+}
+
+func (e ErrNotFound) Error() string {
+	return fmt.Sprintf("resoure %v not found", e.Resource)
+}
 
 // ErrStore indicates an issue with a provided Store.
 type ErrStore struct {
 	error
 }
 
+// ErrMissingDataSources indicates a chart is attempted to be created with a missing datasource resource
 type ErrMissingDataSources struct {
-	missing []string
+	Missing []string
 }
 
 func (e ErrMissingDataSources) Error() string {
-	return fmt.Sprintf("missing datasources: %v", e.missing)
+	return fmt.Sprintf("missing datasources: %v", e.Missing)
 }

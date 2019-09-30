@@ -26,7 +26,7 @@ func (a *admin) UpdateDataSource(ds *graphx.DataSource) error {
 		return ErrStore{err}
 	}
 	if len(source) <= 0 {
-		return ErrNotFound
+		return ErrNotFound{ds.Name}
 	}
 
 	// overwrite
@@ -44,7 +44,7 @@ func (a *admin) DeleteDataSource(ds *graphx.DataSource) error {
 		return ErrStore{err}
 	}
 	if len(source) <= 0 {
-		return ErrNotFound
+		return ErrNotFound{ds.Name}
 	}
 
 	err = a.dsStore.RemoveByNames([]string{ds.Name})

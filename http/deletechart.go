@@ -7,9 +7,11 @@ import (
 	"github.com/cloudscaleorg/graphx"
 	"github.com/cloudscaleorg/graphx/admin"
 	fw "github.com/ldelossa/goframework/http"
+	"github.com/rs/zerolog/log"
 )
 
 func DeleteChart(a admin.Chart) h.HandlerFunc {
+	logger := log.With().Str("component", "DeleteDataSourceHandler").Logger()
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodDelete {
 			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports DELETE")
@@ -26,17 +28,17 @@ func DeleteChart(a admin.Chart) h.HandlerFunc {
 		}
 
 		err = a.DeleteChart(&v)
-		if err != nil {
-			switch {
-			case (err == admin.ErrNotFound):
-				resp := fw.NewResponse(fw.CodeNotFound, "resource being updated not found")
-				fw.JError(w, resp, h.StatusNotFound)
-				return
-			case (err == admin.ErrStore{}):
-				resp := fw.NewResponse(fw.CodeInternalServerError, "an internal error occured")
-				fw.JError(w, resp, h.StatusNotFound)
-				return
-			}
+		switch e := err.(type) {
+		case admin.ErrNotFound:
+			logger.Error().Msgf("resource %v being updated not found: %v", v.Name, e)
+			resp := fw.NewResponse(fw.CodeNotFound, "resource being updated not found")
+			fw.JError(w, resp, h.StatusNotFound)
+			return
+		case admin.ErrStore:
+			logger.Error().Msgf("storage error: %v", err)
+			resp := fw.NewResponse(fw.CodeInternalServerError, "an internal error occured")
+			fw.JError(w, resp, h.StatusNotFound)
+			return
 		}
 
 		w.WriteHeader(h.StatusOK)

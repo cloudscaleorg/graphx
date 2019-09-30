@@ -42,7 +42,8 @@ func main() {
 	if err != nil {
 		log.Fatal().Msgf("failed to create admin interface: %v", err)
 	}
-	adminAPI := adminAPI(conf.AdminListenAddr, a)
+
+	adminServer := adminServer(conf.AdminListenAddr, a)
 	if err != nil {
 		log.Fatal().Msgf("failed to create admin api: %v", err)
 	}
@@ -52,7 +53,7 @@ func main() {
 
 	go func() {
 		log.Info().Msgf("starting admin http server on: %v", conf.AdminListenAddr)
-		err := adminAPI.ListenAndServe()
+		err := adminServer.ListenAndServe()
 		if err != nil {
 			eC <- err
 		}
@@ -63,11 +64,12 @@ func main() {
 		log.Fatal().Msgf("received error: %v", e)
 	case s := <-sigs:
 		log.Info().Msgf("received signal: %v. stopping", s)
-		adminAPI.Shutdown(context.TODO())
+		adminServer.Shutdown(context.TODO())
 	}
 }
 
-func adminAPI(addr string, admin admin.All) *h.Server {
+// creates an http server with the endpoints for administering a graphx cluster
+func adminServer(addr string, admin admin.All) *h.Server {
 	mux := h.NewServeMux()
 	mux.HandleFunc("/api/v1/charts", http.ChartCRUD(admin))
 	mux.HandleFunc("/api/v1/datasources", http.DataSourceCRUD(admin))
@@ -80,6 +82,7 @@ func adminAPI(addr string, admin admin.All) *h.Server {
 	return s
 }
 
+// creates the etcd backed admin interface
 func adminInit(ctx context.Context, hosts string) (admin.All, error) {
 	endpoints := strings.Split(hosts, ",")
 

@@ -29,19 +29,17 @@ func DeleteDataSource(a admin.DataSource) h.HandlerFunc {
 		}
 
 		err = a.DeleteDataSource(&v)
-		if err != nil {
-			switch {
-			case (err == admin.ErrNotFound):
-				logger.Error().Msg("resource being deleted not found")
-				resp := fw.NewResponse(fw.CodeNotFound, "resource being updated not found")
-				fw.JError(w, resp, h.StatusNotFound)
-				return
-			case (err == admin.ErrStore{}):
-				logger.Error().Msgf("storage error: %v", err)
-				resp := fw.NewResponse(fw.CodeInternalServerError, "an internal error occured")
-				fw.JError(w, resp, h.StatusNotFound)
-				return
-			}
+		switch e := err.(type) {
+		case admin.ErrNotFound:
+			logger.Error().Msgf("resource %v being updated not found", v.Name, e)
+			resp := fw.NewResponse(fw.CodeNotFound, "resource being updated not found")
+			fw.JError(w, resp, h.StatusNotFound)
+			return
+		case admin.ErrStore:
+			logger.Error().Msgf("storage error: %v", e)
+			resp := fw.NewResponse(fw.CodeInternalServerError, "an internal error occured")
+			fw.JError(w, resp, h.StatusNotFound)
+			return
 		}
 
 		logger.Debug().Msgf("succesfully deleted datasource: %v", v.Name)

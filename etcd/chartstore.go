@@ -22,7 +22,6 @@ var cReduce = func(store *ChartStore) events.ReduceFunc {
 		case mvccpb.PUT:
 			var v graphx.Chart
 			err := v.FromJSON(e.Kv.Value)
-			log.Printf("after return: %v", v)
 			if err != nil {
 				store.logger.Error().Msgf("failed to deserialize key %v: %v", string(e.Kv.Key), err)
 				return
@@ -76,7 +75,7 @@ func NewChartStore(ctx context.Context, client *v3.Client) (graphx.ChartStore, e
 func (s *ChartStore) Get() ([]*graphx.Chart, error) {
 	out, missing := s.get(nil)
 	if len(missing) > 0 {
-		return nil, &ErrNotFound{
+		return nil, ErrNotFound{
 			missing: missing,
 		}
 	}

@@ -1,6 +1,8 @@
 package admin
 
-import "github.com/cloudscaleorg/graphx"
+import (
+	"github.com/cloudscaleorg/graphx"
+)
 
 // retrieves a list of datasource names from a list of charts
 var sources = func(charts []*graphx.Chart) []string {
@@ -48,7 +50,7 @@ func (a *admin) UpdateChart(chart *graphx.Chart) error {
 		return ErrStore{err}
 	}
 	if len(charts) <= 0 {
-		return ErrNotFound
+		return ErrNotFound{chart.Name}
 	}
 
 	_, missing, err := a.dsStore.GetByNames(sources([]*graphx.Chart{chart}))
@@ -73,7 +75,7 @@ func (a *admin) DeleteChart(ds *graphx.Chart) error {
 		return ErrStore{err}
 	}
 	if len(source) <= 0 {
-		return ErrNotFound
+		return ErrNotFound{ds.Name}
 	}
 
 	err = a.chartStore.RemoveByNames([]string{ds.Name})

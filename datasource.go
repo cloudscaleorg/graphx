@@ -4,7 +4,11 @@ import "encoding/json"
 
 // DataSource
 type DataSource struct {
-	Name       string `json:"name"`
+	// unique name for this datasource
+	Name string `json:"name"`
+	// the datasource type such as "prometheus"
+	Type string `json:"type"`
+	// the connection string for the above type
 	ConnString string `json:"connection_string"`
 }
 
