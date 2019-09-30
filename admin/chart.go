@@ -19,74 +19,60 @@ var sources = func(charts []*graphx.Chart) []string {
 	return out
 }
 
-func (a *admin) CreateChart(charts []*graphx.Chart) error {
-	_, missing, err := a.dsStore.GetByNames(sources(charts))
-	if err != nil {
-		return ErrStore{err}
+// names retrieves a list of chart names from a list of charts
+var names = func(charts []*graphx.Chart) []string {
+	seen := map[string]struct{}{}
+	names := []string{}
+	for _, chart := range charts {
+		if _, ok := seen[chart.Name]; !ok {
+			names = append(names, chart.Name)
+		}
 	}
+
+	return names
+}
+
+func (a *admin) CreateChart(charts []*graphx.Chart) error {
+	_, missing := a.dsmap.Get(sources(charts))
 	if len(missing) > 0 {
 		return ErrMissingDataSources{missing}
 	}
 
-	err = a.chartStore.Store(charts)
-	if err != nil {
-		return ErrStore{err}
-	}
-
+	a.chartmap.Store(charts)
 	return nil
 }
 
 func (a *admin) ReadChart() ([]*graphx.Chart, error) {
-	sources, err := a.chartStore.Get()
-	if err != nil {
-		return nil, ErrStore{err}
-	}
+	sources, _ := a.chartmap.Get(nil)
 	return sources, nil
 }
 
-func (a *admin) ReadChartsByName([]string) ([]*graphx.Chart, error) {
-	charts, missing, err := a.chartStore.GetByNames
-	return charts, error
+func (a *admin) ReadChartsByName(names []string) ([]*graphx.Chart, error) {
+	charts, _ := a.chartmap.Get(names)
+	return charts, nil
 }
 
 func (a *admin) UpdateChart(chart *graphx.Chart) error {
-	charts, _, err := a.chartStore.GetByNames([]string{chart.Name})
-	if err != nil {
-		return ErrStore{err}
-	}
+	charts, _ := a.chartmap.Get([]string{chart.Name})
 	if len(charts) <= 0 {
 		return ErrNotFound{chart.Name}
 	}
 
-	_, missing, err := a.dsStore.GetByNames(sources([]*graphx.Chart{chart}))
-	if err != nil {
-		return ErrStore{err}
-	}
+	_, missing := a.dsmap.Get(sources([]*graphx.Chart{chart}))
 	if len(missing) > 0 {
 		return ErrMissingDataSources{missing}
 	}
 
-	err = a.chartStore.Store([]*graphx.Chart{chart})
-	if err != nil {
-		return ErrStore{err}
-	}
-
+	a.chartmap.Store([]*graphx.Chart{chart})
 	return nil
 }
 
 func (a *admin) DeleteChart(ds *graphx.Chart) error {
-	source, _, err := a.chartStore.GetByNames([]string{ds.Name})
-	if err != nil {
-		return ErrStore{err}
-	}
+	source, _ := a.chartmap.Get([]string{ds.Name})
 	if len(source) <= 0 {
 		return ErrNotFound{ds.Name}
 	}
 
-	err = a.chartStore.RemoveByNames([]string{ds.Name})
-	if err != nil {
-		return ErrStore{err}
-	}
-
+	a.chartmap.Remove([]string{ds.Name})
 	return nil
 }

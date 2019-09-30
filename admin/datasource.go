@@ -16,55 +16,36 @@ func (a *admin) CreateDataSource(sources []*graphx.DataSource) error {
 		return ErrMissingQueriers{missing}
 	}
 
-	err := a.dsStore.Store(sources)
-	if err != nil {
-		return ErrStore{err}
-	}
+	a.dsmap.Store(sources)
 	return nil
 }
 
 func (a *admin) ReadDataSource() ([]*graphx.DataSource, error) {
-	sources, err := a.dsStore.Get()
-	if err != nil {
-		return nil, ErrStore{err}
-	}
+	sources, _ := a.dsmap.Get(nil)
 	return sources, nil
 }
 
 func (a *admin) UpdateDataSource(ds *graphx.DataSource) error {
-	source, _, err := a.dsStore.GetByNames([]string{ds.Name})
-	if err != nil {
-		return ErrStore{err}
-	}
+	source, _ := a.dsmap.Get([]string{ds.Name})
 	if len(source) <= 0 {
 		return ErrNotFound{ds.Name}
 	}
+
 	if ok := a.reg.Check(ds.Type); !ok {
 		return ErrMissingQueriers{[]string{ds.Type}}
 	}
 
 	// overwrite
-	err = a.dsStore.Store([]*graphx.DataSource{ds})
-	if err != nil {
-		return ErrStore{err}
-	}
-
+	a.dsmap.Store([]*graphx.DataSource{ds})
 	return nil
 }
 
 func (a *admin) DeleteDataSource(ds *graphx.DataSource) error {
-	source, _, err := a.dsStore.GetByNames([]string{ds.Name})
-	if err != nil {
-		return ErrStore{err}
-	}
+	source, _ := a.dsmap.Get([]string{ds.Name})
 	if len(source) <= 0 {
 		return ErrNotFound{ds.Name}
 	}
 
-	err = a.dsStore.RemoveByNames([]string{ds.Name})
-	if err != nil {
-		return ErrStore{err}
-	}
-
+	a.dsmap.Remove([]string{ds.Name})
 	return nil
 }

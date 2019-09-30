@@ -2,6 +2,7 @@ package admin
 
 import (
 	"github.com/cloudscaleorg/graphx"
+	"github.com/cloudscaleorg/graphx/etcd"
 	"github.com/cloudscaleorg/graphx/registry"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -32,17 +33,17 @@ type Chart interface {
 
 // admin implements the All interface
 type admin struct {
-	dsStore    graphx.DataSourceStore
-	chartStore graphx.ChartStore
-	reg        registry.Querier
-	logger     zerolog.Logger
+	dsmap    *etcd.DSMap
+	chartmap *etcd.ChartMap
+	reg      registry.Querier
+	logger   zerolog.Logger
 }
 
-func NewAdmin(dsStore graphx.DataSourceStore, chartStore graphx.ChartStore, reg registry.Querier) All {
+func NewAdmin(dsmap *etcd.DSMap, chartmap *etcd.ChartMap, reg registry.Querier) All {
 	return &admin{
-		dsStore:    dsStore,
-		chartStore: chartStore,
-		reg:        reg,
-		logger:     log.With().Str("component", "admin").Logger(),
+		dsmap:    dsmap,
+		chartmap: chartmap,
+		reg:      reg,
+		logger:   log.With().Str("component", "admin").Logger(),
 	}
 }

@@ -25,26 +25,26 @@ func Test_DataSourceStore_Integration_Store(t *testing.T) {
 			name: "10 datasource",
 			ds:   10,
 		},
-		// {
-		// 	name: "50 datasource",
-		// 	ds:   50,
-		// },
-		// {
-		// 	name: "100 datasource",
-		// 	ds:   100,
-		// },
-		// {
-		// 	name: "500 datasource",
-		// 	ds:   500,
-		// },
-		// {
-		// 	name: "1000 datasource",
-		// 	ds:   1000,
-		// },
-		// {
-		// 	name: "5000 datasource",
-		// 	ds:   5000,
-		// },
+		{
+			name: "50 datasource",
+			ds:   50,
+		},
+		{
+			name: "100 datasource",
+			ds:   100,
+		},
+		{
+			name: "500 datasource",
+			ds:   500,
+		},
+		{
+			name: "1000 datasource",
+			ds:   1000,
+		},
+		{
+			name: "5000 datasource",
+			ds:   5000,
+		},
 	}
 	for _, tt := range table {
 		t.Run(tt.name, func(t *testing.T) {
@@ -53,11 +53,11 @@ func Test_DataSourceStore_Integration_Store(t *testing.T) {
 
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 
-			store, err := NewDSStore(ctx, client)
+			m, err := NewDSMap(ctx, client)
 			assert.NoError(t, err)
 
 			sources := test.GenDataSources(tt.ds)
-			err = store.Store(sources)
+			m.Store(sources)
 			assert.NoError(t, err)
 
 			// allow convergence
@@ -65,15 +65,15 @@ func Test_DataSourceStore_Integration_Store(t *testing.T) {
 			cancel()
 
 			// confirm stored datastores
-			store.(*DSStore).mu.Lock()
+			m.mu.Lock()
 			for _, ds := range sources {
-				v, ok := store.(*DSStore).m[ds.Name]
+				v, ok := m.m[ds.Name]
 				if !ok {
-					t.Fatalf("failed to find datasource: %v. dump: %v", ds.Name, store.(*DSStore).m)
+					t.Fatalf("failed to find datasource: %v. dump: %v", ds.Name, m.m)
 				}
 				assert.Equal(t, ds, v)
 			}
-			store.(*DSStore).mu.Unlock()
+			m.mu.Unlock()
 		})
 	}
 

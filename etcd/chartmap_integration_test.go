@@ -25,26 +25,26 @@ func Test_ChartStore_Integration_Store(t *testing.T) {
 			name: "10 chart",
 			c:    10,
 		},
-		// {
-		// 	name: "50 chart",
-		// 	c:    50,
-		// },
-		// {
-		// 	name: "100 chart",
-		// 	c:    100,
-		// },
-		// {
-		// 	name: "500 chart",
-		// 	c:    500,
-		// },
-		// {
-		// 	name: "1000 chart",
-		// 	c:    1000,
-		// },
-		// {
-		// 	name: "5000 chart",
-		// 	c:    5000,
-		// },
+		{
+			name: "50 chart",
+			c:    50,
+		},
+		{
+			name: "100 chart",
+			c:    100,
+		},
+		{
+			name: "500 chart",
+			c:    500,
+		},
+		{
+			name: "1000 chart",
+			c:    1000,
+		},
+		{
+			name: "5000 chart",
+			c:    5000,
+		},
 	}
 	for _, tt := range table {
 		t.Run(tt.name, func(t *testing.T) {
@@ -53,11 +53,11 @@ func Test_ChartStore_Integration_Store(t *testing.T) {
 
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 
-			store, err := NewChartStore(ctx, client)
+			m, err := NewChartMap(ctx, client)
 			assert.NoError(t, err)
 
 			charts := test.GetCharts(tt.c)
-			err = store.Store(charts)
+			m.Store(charts)
 			assert.NoError(t, err)
 
 			// allow convergence
@@ -65,15 +65,15 @@ func Test_ChartStore_Integration_Store(t *testing.T) {
 			cancel()
 
 			// confirm stored datastores
-			store.(*ChartStore).mu.Lock()
+			m.mu.Lock()
 			for _, ds := range charts {
-				v, ok := store.(*ChartStore).m[ds.Name]
+				v, ok := m.m[ds.Name]
 				if !ok {
-					t.Fatalf("failed to find chart: %v. dump: %v", ds.Name, store.(*ChartStore).m)
+					t.Fatalf("failed to find chart: %v. dump: %v", ds.Name, m.m)
 				}
 				assert.Equal(t, ds, v)
 			}
-			store.(*ChartStore).mu.Unlock()
+			m.mu.Unlock()
 		})
 	}
 
