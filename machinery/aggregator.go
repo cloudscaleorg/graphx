@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/cloudscaleorg/graphx"
-	"github.com/cloudscaleorg/graphx/prometheus"
 	"github.com/cloudscaleorg/graphx/registry"
 )
 
@@ -33,6 +32,12 @@ type AggregatorOpts struct {
 	Registry     registry.Querier
 }
 
+// aggregate will create multiple queriers.
+// datasources have the conn string necessary to create a client
+// chart metrics have the datasource.
+// aggregator gets list of chart metrics, looksups data sources
+// creates a querier per data source, datasource has "type".
+
 // NewAggregator creates an aggregator Streamer. make sure to cancel ctx
 // to not leak go routines.
 func NewAggregator(ctx context.Context, id string, opts AggregatorOpts) graphx.Streamer {
@@ -40,26 +45,26 @@ func NewAggregator(ctx context.Context, id string, opts AggregatorOpts) graphx.S
 	mChan := make(chan *graphx.Metric, 1024)
 	eChan := make(chan error, 1024)
 
-	chartMetrics := graphx.DatasourceTranspose(opts.Charts)
+	// chartMetrics := graphx.DatasourceTranspose(opts.Charts)
 
-	for datasource, chartMetrics := range chartMetrics {
-		switch datasource {
-		case prometheus.Datasource:
-			pOpts := prometheus.QuerierOpts{
-				ID:           id,
-				Client:       opts.PromClient,
-				ChartMetrics: chartMetrics,
-				MChan:        mChan,
-				EChan:        eChan,
-			}
+	// for datasource, chartMetrics := range chartMetrics {
+	// 	switch datasource {
+	// 	case prometheus.Datasource:
+	// 		pOpts := prometheus.QuerierOpts{
+	// 			ID:           id,
+	// 			Client:       opts.PromClient,
+	// 			ChartMetrics: chartMetrics,
+	// 			MChan:        mChan,
+	// 			EChan:        eChan,
+	// 		}
 
-			// create a prometheus querier and a poller and launch
-			pq := prometheus.NewQuerier(pOpts)
-			poller := NewPoller(id, pq, opts.PollInterval)
-			go poller.Poll(ctx)
-		case "influxdb":
-		}
-	}
+	// 		// create a prometheus querier and a poller and launch
+	// 		pq := prometheus.NewQuerier(pOpts)
+	// 		poller := NewPoller(id, pq, opts.PollInterval)
+	// 		go poller.Poll(ctx)
+	// 	case "influxdb":
+	// 	}
+	// }
 
 	return &aggregator{
 		AggregatorOpts: opts,

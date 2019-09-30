@@ -1,9 +1,72 @@
-package graphx
+package http
+
+import (
+	"context"
+	"fmt"
+	"log"
+	"net/http"
+	h "net/http"
+
+	"github.com/cloudscaleorg/graphx"
+	"github.com/cloudscaleorg/graphx/admin"
+	"github.com/cloudscaleorg/graphx/registry"
+	"github.com/google/uuid"
+)
 
 const (
 	ValidationError      = "could not validate your charts descriptor. chart_names and names keys are required and must contain more the one item"
 	MetricsStreamErrCode = "graphx.stream_handler"
 )
+
+func StreamHandler(v *validator.Validate, admin admin.All, reg registry.Querier) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet {
+			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports POST")
+			fw.JError(w, resp, h.StatusNotImplemented)
+			return
+		}
+
+		// create context for this streaming session
+		ctx := context.Background()
+		ctx, cancel := context.WithCancel(ctx)
+		defer cancel()
+
+		// upgrade to web socket
+		wsConn, err := ws.Upgrade(w, r, nil)
+		defer wsConn.Close()
+		if err != nil {
+			resp := fw.NewResponse(fw.WebsocketUpgradeFailure, "endpoint only supports POST")
+			fw.JError(w, resp, h.StatusNotImplemented)
+		}
+		log.Printf("successfully upgraded to websocket")
+
+		// TODO: handle timeouts
+		// set initial deadline see: https://github.com/golang/go/blob/master/src/net/net.go#L149
+
+		// wait for charts descriptor
+		var cd graphx.ChartsDescriptor
+		for {
+			err := wsConn.ReadJSON(&cd)
+			if err != nil {
+				log.Printf("received error waiting for chart descriptor: %v", err)
+				return
+			}
+			break
+		}
+		id := fmt.Sprintf("%s.%v", uuid.New().String(), cd.Names)
+		log.Printf("id: %v received chart descriptor: %v", id, cd)
+
+		// validate struct
+		err = v.StructCtx(ctx, cd)
+		if err != nil {
+			log.Printf("id %s: struct validation error: %v", id, err)
+			return
+		}
+
+		// get chart definitions
+		charts := admin.ReadChart
+	}
+}
 
 // func StreamHandler(v *validator.Validate, cs ChartStore, sf StreamerFactory, ws websocket.Upgrader) http.HandlerFunc {
 // 	return func(w http.ResponseWriter, r *http.Request) {

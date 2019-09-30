@@ -44,6 +44,11 @@ func (a *admin) ReadChart() ([]*graphx.Chart, error) {
 	return sources, nil
 }
 
+func (a *admin) ReadChartsByName([]string) ([]*graphx.Chart, error) {
+	charts, missing, err := a.chartStore.GetByNames
+	return charts, error
+}
+
 func (a *admin) UpdateChart(chart *graphx.Chart) error {
 	charts, _, err := a.chartStore.GetByNames([]string{chart.Name})
 	if err != nil {

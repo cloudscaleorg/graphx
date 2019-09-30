@@ -25,6 +25,7 @@ type DataSource interface {
 type Chart interface {
 	CreateChart([]*graphx.Chart) error
 	ReadChart() ([]*graphx.Chart, error)
+	ReadChartsByName(names []string) ([]*graphx.Chart, error)
 	UpdateChart(ds *graphx.Chart) error
 	DeleteChart(ds *graphx.Chart) error
 }
