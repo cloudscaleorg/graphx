@@ -11,19 +11,23 @@ type QuerierOpts struct {
 
 type QuerierFactory func(opts QuerierOpts) graphx.Querier
 
-type Registry interface {
+type Querier interface {
 	Registerer
 	Getter
+	Checker
 }
 
 type Registerer interface {
-	RegisterQuerier(name string, factory QuerierFactory) error
+	Register(name string, factory QuerierFactory) error
 }
 type Getter interface {
-	GetQuerier(name string) (graphx.Querier, error)
+	Get(name string, opts QuerierOpts) (graphx.Querier, error)
+}
+type Checker interface {
+	Check(name string) bool
 }
 
-// registry implements
+// registry implements the registry.Querier interface
 type registry struct {
 	qMap map[string]QuerierFactory
 }
@@ -34,6 +38,25 @@ func NewRegistry() Registerer {
 	}
 }
 
-func (r *registry) RegisterQuerier(name string, factory QuerierFactory) error {
+func (r *registry) Register(name string, factory QuerierFactory) error {
+	if _, ok := r.qMap[name]; ok {
+		return ErrNameConflict{name}
+	}
 
+	r.qMap[name] = factory
+	return nil
+}
+
+func (r *registry) Get(name string, opts QuerierOpts) (graphx.Querier, error) {
+	factory, ok := r.qMap[name]
+	if !ok {
+		return nil, ErrNotFound{name}
+	}
+
+	return factory(opts), nil
+}
+
+func (r *registry) Check(name string) bool {
+	_, ok := r.qMap[name]
+	return ok
 }

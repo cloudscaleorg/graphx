@@ -5,6 +5,17 @@ import (
 )
 
 func (a *admin) CreateDataSource(sources []*graphx.DataSource) error {
+	missing := []string{}
+	for _, ds := range sources {
+		if ok := a.reg.Check(ds.Type); !ok {
+			missing = append(missing, ds.Type)
+		}
+	}
+
+	if len(missing) > 0 {
+		return ErrMissingQueriers{missing}
+	}
+
 	err := a.dsStore.Store(sources)
 	if err != nil {
 		return ErrStore{err}
@@ -27,6 +38,9 @@ func (a *admin) UpdateDataSource(ds *graphx.DataSource) error {
 	}
 	if len(source) <= 0 {
 		return ErrNotFound{ds.Name}
+	}
+	if ok := a.reg.Check(ds.Type); !ok {
+		return ErrMissingQueriers{[]string{ds.Type}}
 	}
 
 	// overwrite

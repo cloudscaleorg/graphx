@@ -25,3 +25,12 @@ type ErrMissingDataSources struct {
 func (e ErrMissingDataSources) Error() string {
 	return fmt.Sprintf("missing datasources: %v", e.Missing)
 }
+
+// ErrMissingQueriers indicates a querier has not been implemented
+type ErrMissingQueriers struct {
+	Missing []string
+}
+
+func (e ErrMissingQueriers) Error() string {
+	return fmt.Sprintf("missing queriers: %v", e.Missing)
+}

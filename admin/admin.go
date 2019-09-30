@@ -2,6 +2,7 @@ package admin
 
 import (
 	"github.com/cloudscaleorg/graphx"
+	"github.com/cloudscaleorg/graphx/registry"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
@@ -32,13 +33,15 @@ type Chart interface {
 type admin struct {
 	dsStore    graphx.DataSourceStore
 	chartStore graphx.ChartStore
+	reg        registry.Querier
 	logger     zerolog.Logger
 }
 
-func NewAdmin(dsStore graphx.DataSourceStore, chartStore graphx.ChartStore) All {
+func NewAdmin(dsStore graphx.DataSourceStore, chartStore graphx.ChartStore, reg registry.Querier) All {
 	return &admin{
 		dsStore:    dsStore,
 		chartStore: chartStore,
+		reg:        reg,
 		logger:     log.With().Str("component", "admin").Logger(),
 	}
 }

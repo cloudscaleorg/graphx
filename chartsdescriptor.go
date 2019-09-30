@@ -7,6 +7,9 @@ import (
 	"time"
 )
 
+// get charts from chart store
+//
+
 // ChartsDescriptor is a client request to begin streaming metrics from the
 // configured chart names.
 type ChartsDescriptor struct {
