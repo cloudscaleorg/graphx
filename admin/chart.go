@@ -76,3 +76,20 @@ func (a *admin) DeleteChart(ds *graphx.Chart) error {
 	a.chartmap.Remove([]string{ds.Name})
 	return nil
 }
+
+func (a *admin) ChartMetricsByDataSource(names []string) map[*graphx.DataSource][]*graph.ChartMetrics {
+	charts, missing := a.chartmap.Get(names)
+	for _, chart := range charts {
+		for chart.Metrics {
+			
+		}
+	}
+
+
+	datasources := map[string][]graphx.ChartMetrics{}
+	out := map[*graphx.DataSource][]*graphx.ChartMetics{}
+
+	for _, chart := range chart {
+		if _, !ok := datasources[chart.Name]
+	}
+}

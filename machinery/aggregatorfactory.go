@@ -1,36 +1,28 @@
 package machinery
 
-import (
-	"context"
-	"time"
+// // aggregatorFactory holds any constant runtime depedencies for an aggregator streamer.
+// type aggregatorFactory struct {
+// 	// prometheus client
+// 	pc promapi.API
+// 	// influx client
+// 	// opentsd client
+// 	// ...
+// }
 
-	"github.com/cloudscaleorg/graphx"
-	promapi "github.com/prometheus/client_golang/api/prometheus/v1"
-)
+// func NewAggregatorFactory(promClient promapi.API) graphx.StreamerFactory {
+// 	return &aggregatorFactory{
+// 		pc: promClient,
+// 	}
+// }
 
-// aggregatorFactory holds any constant runtime depedencies for an aggregator streamer.
-type aggregatorFactory struct {
-	// prometheus client
-	pc promapi.API
-	// influx client
-	// opentsd client
-	// ...
-}
+// func (af *aggregatorFactory) NewStreamer(ctx context.Context, id string, charts []*graphx.Chart, pollInterval time.Duration) graphx.Streamer {
+// 	opts := AggregatorOpts{
+// 		PollInterval: pollInterval,
+// 		Charts:       charts,
+// 		PromClient:   af.pc,
+// 	}
 
-func NewAggregatorFactory(promClient promapi.API) graphx.StreamerFactory {
-	return &aggregatorFactory{
-		pc: promClient,
-	}
-}
+// 	streamer := NewAggregator(ctx, id, opts)
 
-func (af *aggregatorFactory) NewStreamer(ctx context.Context, id string, charts []*graphx.Chart, pollInterval time.Duration) graphx.Streamer {
-	opts := AggregatorOpts{
-		PollInterval: pollInterval,
-		Charts:       charts,
-		PromClient:   af.pc,
-	}
-
-	streamer := NewAggregator(ctx, id, opts)
-
-	return streamer
-}
+// 	return streamer
+// }

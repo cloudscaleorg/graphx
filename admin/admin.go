@@ -29,6 +29,7 @@ type Chart interface {
 	ReadChartsByName(names []string) ([]*graphx.Chart, error)
 	UpdateChart(ds *graphx.Chart) error
 	DeleteChart(ds *graphx.Chart) error
+	ChartMetricsByDataSource(names []string) map[*graphx.DataSource][]*graphx.ChartMetrics
 }
 
 // admin implements the All interface

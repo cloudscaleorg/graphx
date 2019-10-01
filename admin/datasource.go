@@ -25,6 +25,11 @@ func (a *admin) ReadDataSource() ([]*graphx.DataSource, error) {
 	return sources, nil
 }
 
+func (a *admin) ReadDataSourcesByName(names []string) ([]*graphx.DataSource, error) {
+	datasources, _ := a.dsmap.Get(names)
+	return datasources, nil
+}
+
 func (a *admin) UpdateDataSource(ds *graphx.DataSource) error {
 	source, _ := a.dsmap.Get([]string{ds.Name})
 	if len(source) <= 0 {

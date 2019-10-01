@@ -9,6 +9,7 @@ import (
 
 	"github.com/cloudscaleorg/graphx"
 	"github.com/cloudscaleorg/graphx/admin"
+	"github.com/cloudscaleorg/graphx/machinery"
 	"github.com/cloudscaleorg/graphx/registry"
 	"github.com/google/uuid"
 )
@@ -64,7 +65,26 @@ func StreamHandler(v *validator.Validate, admin admin.All, reg registry.Querier)
 		}
 
 		// get chart definitions
-		charts := admin.ReadChart
+		charts := admin.ReadChartsByName(cd.ChartNames)
+		chartMetrics := graphx.DatasourceTranspose(charts)
+
+		// get datasources
+		tmp := make([]string, 0)
+		for k, _ := range chartMetrics {
+			sources = append(sources, tmp)
+		}
+		datasources := admin.ReadDataSourcesByName(tmp)
+
+		agg := machinery.NewAggregator(ctx, AggregatorOpts{
+			cd.PollInterval,
+			charts,
+			chartMetrics,
+			reg,
+		})
+
+		// datasources hold structs with the type of querier
+		// and the connection string to use.
+
 	}
 }
 
