@@ -9,8 +9,10 @@ import (
 type Chart struct {
 	// a name for this chart. must be unique to the system
 	Name string `json:"name"`
-	// a list of chart metrics this high level chart comprises
-	Metrics []ChartMetric `json:"metrics"`
+	// a map of datasource names by chart metrics
+	DataSources map[string][]ChartMetric `json:data_sources`
+	// // a list of chart metrics this high level chart comprises
+	// Metrics []ChartMetric `json:"metrics"`
 }
 
 func (c *Chart) ToJSON() ([]byte, error) {
@@ -33,19 +35,4 @@ type ChartMetric struct {
 	Query string `json:"query"`
 	// the datasource that the query targets
 	DataSource string `json:"datasource"`
-}
-
-// DatasourceTranpose takes a list of charts and returns a map
-// of ChartMetrics key'd by their datasource. This is helpful for
-// handing specific ChartMetrics to the appropriate datasource clients
-func DataSourceTranspose(charts []*Chart) map[string][]ChartMetric {
-	res := map[string][]ChartMetric{}
-
-	for _, chart := range charts {
-		for _, chartMetric := range chart.Metrics {
-			res[chartMetric.DataSource] = append(res[chartMetric.DataSource], chartMetric)
-		}
-	}
-
-	return res
 }

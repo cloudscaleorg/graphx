@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/cloudscaleorg/graphx"
-	"github.com/cloudscaleorg/graphx/registry"
 )
 
 // Aggregator implements the Streamer interface.
@@ -20,8 +19,6 @@ type aggregator struct {
 	mChan chan *graphx.Metric
 	// the error channel Queriers will deliver errors on
 	eChan chan error
-	// a registry for constructing Queriers
-	reg registry.Querier
 }
 
 // AggregatorOpts are the options for an aggregator
@@ -29,7 +26,6 @@ type AggregatorOpts struct {
 	PollInterval time.Duration
 	Charts       []*graphx.Chart
 	ChartMetrics map[string][]*graphx.ChartMetric
-	Registry     registry.Querier
 }
 
 // NewAggregator creates an aggregator Streamer. make sure to cancel ctx

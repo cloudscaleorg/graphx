@@ -5,16 +5,15 @@ import (
 )
 
 // retrieves a list of datasource names from a list of charts
-var sources = func(charts []*graphx.Chart) []string {
+var datasources = func(charts []*graphx.Chart) []string {
+	out := []string{}
 	seen := map[string]struct{}{}
 	for _, chart := range charts {
-		for _, metric := range chart.Metrics {
-			seen[metric.DataSource] = struct{}{}
+		for datasource, _ := range chart.DataSources {
+			if _, ok := seen[datasource]; !ok {
+				out = append(out, datasource)
+			}
 		}
-	}
-	out := []string{}
-	for k, _ := range seen {
-		out = append(out, k)
 	}
 	return out
 }
@@ -33,7 +32,7 @@ var names = func(charts []*graphx.Chart) []string {
 }
 
 func (a *admin) CreateChart(charts []*graphx.Chart) error {
-	_, missing := a.dsmap.Get(sources(charts))
+	_, missing := a.dsmap.Get(datasources(charts))
 	if len(missing) > 0 {
 		return ErrMissingDataSources{missing}
 	}
@@ -58,7 +57,7 @@ func (a *admin) UpdateChart(chart *graphx.Chart) error {
 		return ErrNotFound{chart.Name}
 	}
 
-	_, missing := a.dsmap.Get(sources([]*graphx.Chart{chart}))
+	_, missing := a.dsmap.Get(datasources([]*graphx.Chart{chart}))
 	if len(missing) > 0 {
 		return ErrMissingDataSources{missing}
 	}
@@ -77,19 +76,18 @@ func (a *admin) DeleteChart(ds *graphx.Chart) error {
 	return nil
 }
 
-func (a *admin) ChartMetricsByDataSource(names []string) map[*graphx.DataSource][]*graph.ChartMetrics {
-	charts, missing := a.chartmap.Get(names)
-	for _, chart := range charts {
-		for chart.Metrics {
-			
-		}
-	}
+// func (a *admin) ChartMetricsByDataSource(names []string) map[*graphx.DataSource][]*graph.ChartMetrics {
+// 	charts, missing := a.chartmap.Get(names)
+// 	for _, chart := range charts {
+// 		for chart.Metrics {
 
+// 		}
+// 	}
 
-	datasources := map[string][]graphx.ChartMetrics{}
-	out := map[*graphx.DataSource][]*graphx.ChartMetics{}
+// 	datasources := map[string][]graphx.ChartMetrics{}
+// 	out := map[*graphx.DataSource][]*graphx.ChartMetics{}
 
-	for _, chart := range chart {
-		if _, !ok := datasources[chart.Name]
-	}
-}
+// 	for _, chart := range chart {
+// 		if _, !ok := datasources[chart.Name]
+// 	}
+// }

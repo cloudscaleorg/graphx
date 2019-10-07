@@ -1,21 +1,19 @@
 package registry
 
-import (
-	"fmt"
-)
+import "fmt"
 
-type ErrNameConflict struct {
-	conflict string
+type ErrDuplicateBackend struct {
+	backend string
 }
 
-func (e ErrNameConflict) Error() string {
-	return fmt.Sprintf("duplicate name %v found", e.conflict)
+func (e *ErrDuplicateBackend) Error() string {
+	return fmt.Sprintf("attempted to register existing backend %v", e.backend)
 }
 
-type ErrNotFound struct {
-	notfound string
+type ErrBackendNotExist struct {
+	backend string
 }
 
-func (e ErrNotFound) Error() string {
-	return fmt.Sprintf("%v has not been registered", e.notfound)
+func (e *ErrBackendNotExist) Error() string {
+	return fmt.Sprintf("backend %v does not exist in registry", e.backend)
 }

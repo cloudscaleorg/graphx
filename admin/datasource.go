@@ -7,8 +7,8 @@ import (
 func (a *admin) CreateDataSource(sources []*graphx.DataSource) error {
 	missing := []string{}
 	for _, ds := range sources {
-		if ok := a.reg.Check(ds.Type); !ok {
-			missing = append(missing, ds.Type)
+		if ok := a.beReg.Exists(ds.Backend); !ok {
+			missing = append(missing, ds.Backend)
 		}
 	}
 
@@ -36,8 +36,8 @@ func (a *admin) UpdateDataSource(ds *graphx.DataSource) error {
 		return ErrNotFound{ds.Name}
 	}
 
-	if ok := a.reg.Check(ds.Type); !ok {
-		return ErrMissingQueriers{[]string{ds.Type}}
+	if ok := a.beReg.Exists(ds.Backend); !ok {
+		return ErrMissingQueriers{[]string{ds.Backend}}
 	}
 
 	// overwrite

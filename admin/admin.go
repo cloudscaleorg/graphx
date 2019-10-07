@@ -18,6 +18,7 @@ type All interface {
 type DataSource interface {
 	CreateDataSource([]*graphx.DataSource) error
 	ReadDataSource() ([]*graphx.DataSource, error)
+	ReadDataSourcesByName(names []string) ([]*graphx.DataSource, error)
 	UpdateDataSource(ds *graphx.DataSource) error
 	DeleteDataSource(ds *graphx.DataSource) error
 }
@@ -29,22 +30,22 @@ type Chart interface {
 	ReadChartsByName(names []string) ([]*graphx.Chart, error)
 	UpdateChart(ds *graphx.Chart) error
 	DeleteChart(ds *graphx.Chart) error
-	ChartMetricsByDataSource(names []string) map[*graphx.DataSource][]*graphx.ChartMetrics
+	// ChartMetricsByDataSource(names []string) map[*graphx.DataSource][]*graphx.ChartMetric
 }
 
 // admin implements the All interface
 type admin struct {
 	dsmap    *etcd.DSMap
 	chartmap *etcd.ChartMap
-	reg      registry.Querier
+	beReg    registry.Backend
 	logger   zerolog.Logger
 }
 
-func NewAdmin(dsmap *etcd.DSMap, chartmap *etcd.ChartMap, reg registry.Querier) All {
+func NewAdmin(dsmap *etcd.DSMap, chartmap *etcd.ChartMap, beReg registry.Backend) All {
 	return &admin{
 		dsmap:    dsmap,
 		chartmap: chartmap,
-		reg:      reg,
+		beReg:    beReg,
 		logger:   log.With().Str("component", "admin").Logger(),
 	}
 }

@@ -12,6 +12,8 @@ import (
 	"github.com/cloudscaleorg/graphx/machinery"
 	"github.com/cloudscaleorg/graphx/registry"
 	"github.com/google/uuid"
+	"github.com/gorilla/websocket"
+	fw "github.com/ldelossa/goframework/http"
 )
 
 const (
@@ -19,7 +21,7 @@ const (
 	MetricsStreamErrCode = "graphx.stream_handler"
 )
 
-func StreamHandler(v *validator.Validate, admin admin.All, reg registry.Querier) {
+func StreamHandler(admin admin.All, beReg registry.Backend, ws websocket.Upgrader) h.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports POST")
@@ -57,23 +59,23 @@ func StreamHandler(v *validator.Validate, admin admin.All, reg registry.Querier)
 		id := fmt.Sprintf("%s.%v", uuid.New().String(), cd.Names)
 		log.Printf("id: %v received chart descriptor: %v", id, cd)
 
-		// validate struct
-		err = v.StructCtx(ctx, cd)
-		if err != nil {
-			log.Printf("id %s: struct validation error: %v", id, err)
-			return
+		charts, _ := admin.ReadChartsByName(cd.ChartNames)
+
+		seen := map[string]struct{}{}
+		names := []string{}
+		for _, chart := range charts {
+			for name, _ := range chart.DataSources {
+				if _, ok := seen[name]; !ok {
+					names = append(names, name)
+				}
+			}
 		}
 
-		// get chart definitions
-		charts := admin.ReadChartsByName(cd.ChartNames)
-		chartMetrics := graphx.DatasourceTranspose(charts)
+		datasources, _ := admin.ReadDataSourcesByName(names)
 
-		// get datasources
-		tmp := make([]string, 0)
-		for k, _ := range chartMetrics {
-			sources = append(sources, tmp)
+		for _, ds := range datasources {
+			be, err := beReg.Get(ds)
 		}
-		datasources := admin.ReadDataSourcesByName(tmp)
 
 		agg := machinery.NewAggregator(ctx, AggregatorOpts{
 			cd.PollInterval,
