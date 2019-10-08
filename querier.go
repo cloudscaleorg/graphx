@@ -4,9 +4,7 @@ import (
 	"context"
 )
 
-// Querier is an interface to abstract the data backend we retrieve metrics from.
-// implementations can control how they query the backend data source
+// Querier will run one or more ChartMetric queries for the implemented Backend and return Metric structs to the caller
 type Querier interface {
-	// Query the results of a query to the provided channel
-	Query(ctx context.Context)
+	Query(ctx context.Context) ([]*Metric, error)
 }

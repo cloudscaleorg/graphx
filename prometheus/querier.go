@@ -2,6 +2,7 @@ package prometheus
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"sync"
 	"time"
@@ -15,8 +16,6 @@ type QuerierOpts struct {
 	ID           string
 	Client       promapi.API
 	ChartMetrics []graphx.ChartMetric
-	MChan        chan *graphx.Metric
-	EChan        chan error
 }
 
 type querier struct {
@@ -34,14 +33,18 @@ func NewQuerier(opts QuerierOpts) graphx.Querier {
 
 // Query is the public method implementing the graphx.Querier interface. this method blocks
 // until all concurrent queries are completed and have streamed their metrics to the provided channel
-func (q *querier) Query(ctx context.Context) {
+func (q *querier) Query(ctx context.Context) ([]*graphx.Metric, error) {
+	out := []*graphx.Metric{}
+	mChan := make(chan *graphx.Metric, 1024)
+	eChan := make(chan error, 1024)
+
 	var wg sync.WaitGroup
 
 	// check context
 	select {
 	case <-ctx.Done():
 		log.Printf("session id %s: context closed before concurrent queries", q.ID)
-		return
+		return nil, fmt.Errorf("")
 	default:
 	}
 
@@ -51,15 +54,15 @@ func (q *querier) Query(ctx context.Context) {
 
 	for _, chartMetric := range q.ChartMetrics {
 		wg.Add(1)
-		go q.query(ctxTO, chartMetric.Name, chartMetric.Query, &wg)
+		go q.query(ctxTO, &chartMetric, eChan, mChan, &wg)
 	}
-
 	wg.Wait()
+	return out, nil
 }
 
 // query is a private method meant to be ran as a go routine. handles the logic for querying prometheus given
 // a chart and a query and streams the results to the internal metrics channel
-func (q *querier) query(ctx context.Context, chart string, query string, wg *sync.WaitGroup) {
+func (q *querier) query(ctx context.Context, chartMetric *graphx.ChartMetric, eChan chan error, mChan chan *graphx.Metric, wg *sync.WaitGroup) {
 	defer wg.Done()
 
 	// check context
@@ -71,9 +74,9 @@ func (q *querier) query(ctx context.Context, chart string, query string, wg *syn
 	}
 
 	// issue query
-	value, _, err := q.Client.Query(ctx, string(query), time.Now())
+	value, _, err := q.Client.Query(ctx, string(chartMetric.Query), time.Now())
 	if err != nil {
-		log.Printf("session id %s: failed to query prometheus. ERROR: %v QUERY: %v", q.ID, err, string(query))
+		log.Printf("session id %s: failed to query prometheus. ERROR: %v QUERY: %v", q.ID, err, string(chartMetric.Query))
 		return
 	}
 
@@ -87,12 +90,12 @@ func (q *querier) query(ctx context.Context, chart string, query string, wg *syn
 
 	// stream metrics to channel
 	for _, sample := range vector {
-		m := sampleToMetric(chart, sample)
+		m := sampleToMetric(chartMetric.Name, sample)
 		select {
 		case <-ctx.Done():
 			log.Printf("session id %s: context closed while streaming results", q.ID)
 			return
-		case q.MChan <- m:
+		case mChan <- m:
 		default:
 			log.Printf("session id %s: unable to deliver metrics to channel", q.ID)
 		}
