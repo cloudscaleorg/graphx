@@ -29,6 +29,6 @@ require (
 	gopkg.in/go-playground/validator.v9 v9.29.0
 )
 
-replace github.com/ldelossa/goframework => /home/louis/git/go/goframework
+replace github.com/ldelossa/goframework => /Users/louis/git/go/goframework
 
-replace github.com/cloudscaleorg/events => /home/louis/git/go/events
+replace github.com/cloudscaleorg/events => /Users/louis/git/go/events

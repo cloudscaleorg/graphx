@@ -7,10 +7,13 @@ import (
 )
 
 // BackendFactory are a function type used in registration.
-// the factory should return a *graphx.Backend able to connect to the connection string provided by ds
+//
+// the factory should return a *graphx.Backend able to connect to the datasource provided
 type BackendFactory func(ds *graphx.DataSource) (*graphx.Backend, error)
 
 // Backend is a registry for graphx.Backend implementations.
+//
+// acts as a factory for creating configured Backends and checking if a particular backend exists
 type Backend interface {
 	// Register a backend by name. its an error to register two or more backend of of the same name
 	Register(name string, f BackendFactory) error

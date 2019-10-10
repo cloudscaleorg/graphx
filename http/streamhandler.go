@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	h "net/http"
+	"time"
 
 	"github.com/cloudscaleorg/graphx"
 	"github.com/cloudscaleorg/graphx/admin"
@@ -73,16 +74,12 @@ func StreamHandler(admin admin.All, beReg registry.Backend, ws websocket.Upgrade
 
 		datasources, _ := admin.ReadDataSourcesByName(names)
 
+		queriers := []graphx.Querier{}
 		for _, ds := range datasources {
 			be, err := beReg.Get(ds)
 		}
 
-		agg := machinery.NewAggregator(ctx, AggregatorOpts{
-			cd.PollInterval,
-			charts,
-			chartMetrics,
-			reg,
-		})
+		agg := machinery.NewQueryAggregator(queriers, time.Duration(cd.PollInterval))
 
 		// datasources hold structs with the type of querier
 		// and the connection string to use.
