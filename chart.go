@@ -10,9 +10,7 @@ type Chart struct {
 	// a name for this chart. must be unique to the system
 	Name string `json:"name"`
 	// a map of datasource names by chart metrics
-	DataSources map[string][]ChartMetric `json:data_sources`
-	// // a list of chart metrics this high level chart comprises
-	// Metrics []ChartMetric `json:"metrics"`
+	DataSources map[string][]*ChartMetric `json:data_sources`
 }
 
 func (c *Chart) ToJSON() ([]byte, error) {
@@ -33,6 +31,19 @@ type ChartMetric struct {
 	Chart string `json:"chart"`
 	// the query to retrieve this metric
 	Query string `json:"query"`
-	// the datasource that the query targets
-	DataSource string `json:"datasource"`
+}
+
+// MergeDataSources takes 0 - N charts and merges
+func MergeCharts(charts []*Chart) (map[string][]*ChartMetric, []string) {
+	metricMap := map[string][]*ChartMetric{}
+	dsNames := []string{}
+	for _, chart := range charts {
+		for datasource, chartMetrics := range chart.DataSources {
+			metricMap[datasource] = append(metricMap[datasource], chartMetrics...)
+		}
+	}
+	for dsName, _ := range metricMap {
+		dsNames = append(dsNames, dsName)
+	}
+	return metricMap, dsNames
 }

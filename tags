@@ -32,7 +32,7 @@ Backend	backend.go	/^type Backend interface {$/;"	i	package:graphx
 Backend	datasource.go	/^	Backend string `json:"type"`$/;"	m	struct:graphx.DataSource
 Backend	prometheus/backend.go	/^type Backend struct {$/;"	s	package:prometheus
 Backend	registry/backend.go	/^type Backend interface {$/;"	i	package:registry
-BackendFactory	registry/backend.go	/^type BackendFactory func(ds *graphx.DataSource) (*graphx.Backend, error)$/;"	t	package:registry
+BackendFactory	registry/backend.go	/^type BackendFactory func(ds *graphx.DataSource) (graphx.Backend, error)$/;"	t	package:registry
 Chart	admin/admin.go	/^type Chart interface {$/;"	i	package:admin
 Chart	chart.go	/^	Chart string `json:"chart"`$/;"	m	struct:graphx.ChartMetric
 Chart	chart.go	/^type Chart struct {$/;"	s	package:graphx
@@ -53,10 +53,9 @@ CreateDataSource	admin/datasource.go	/^func (a *admin) CreateDataSource(sources 
 CreateDataSource	http/createdatasource.go	/^func CreateDataSource(admin admin.DataSource) h.HandlerFunc {$/;"	f	package:http
 DSMap	etcd/dsmap.go	/^type DSMap struct {$/;"	s	package:etcd
 DataSource	admin/admin.go	/^type DataSource interface {$/;"	i	package:admin
-DataSource	chart.go	/^	DataSource string `json:"datasource"`$/;"	m	struct:graphx.ChartMetric
 DataSource	datasource.go	/^type DataSource struct {$/;"	s	package:graphx
 DataSourceCRUD	http/datasourcecrud.go	/^func DataSourceCRUD(admin admin.DataSource) h.HandlerFunc {$/;"	f	package:http
-DataSources	chart.go	/^	DataSources map[string][]ChartMetric `json:data_sources`$/;"	m	struct:graphx.Chart
+DataSources	chart.go	/^	DataSources map[string][]*ChartMetric `json:data_sources`$/;"	m	struct:graphx.Chart
 Datasource	prometheus/datasource.go	/^	Datasource = "prometheus"$/;"	c	package:prometheus
 DefaultPromURL	prometheus/prometheus_integration_test.go	/^	DefaultPromURL = "http:\/\/localhost:9090\/"$/;"	c	package:prometheus
 DefaultTSFormat	internal/unixtime/time_test.go	/^	DefaultTSFormat = "2006-01-02 15:04:05.999999999 -0700 MST"$/;"	c	package:unixtime
@@ -86,14 +85,14 @@ FromJSON	datasource.go	/^func (d *DataSource) FromJSON(b []byte) error {$/;"	f	u
 GenDataSources	test/datasource.go	/^func GenDataSources(n int) []*graphx.DataSource {$/;"	f	package:test
 Get	etcd/chartmap.go	/^func (m *ChartMap) Get(names []string) ([]*graphx.Chart, []string) {$/;"	f	unknown:etcd.ChartMap
 Get	etcd/dsmap.go	/^func (m *DSMap) Get(names []string) ([]*graphx.DataSource, []string) {$/;"	f	unknown:etcd.DSMap
-Get	registry/backend.go	/^func (r *bregistry) Get(ds *graphx.DataSource) (*graphx.Backend, error) {$/;"	f	unknown:registry.bregistry
+Get	registry/backend.go	/^func (r *bregistry) Get(ds *graphx.DataSource) (graphx.Backend, error) {$/;"	f	unknown:registry.bregistry
 GetCharts	test/chart.go	/^func GetCharts(n int) []*graphx.Chart {$/;"	f	package:test
-ID	machinery/poller.go	/^	ID string$/;"	m	struct:machinery.Poller
 ID	prometheus/querier.go	/^	ID           string$/;"	m	struct:prometheus.QuerierOpts
 LogLevel	cmd/graphx/main.go	/^	LogLevel            string `cfg:"debug" cfgHelper:"the debug level to use" cfgDefault:"debug"`$/;"	m	struct:main.Config
 MarshalJSON	chartsdescriptor.go	/^func (cn ChartName) MarshalJSON() ([]byte, error) {$/;"	f	unknown:graphx.ChartName
 MarshalJSON	chartsdescriptor.go	/^func (d Duration) MarshalJSON() ([]byte, error) {$/;"	f	unknown:graphx.Duration
 MarshalJSON	chartsdescriptor.go	/^func (t TimeStamp) MarshalJSON() ([]byte, error) {$/;"	f	unknown:graphx.TimeStamp
+MergeCharts	chart.go	/^func MergeCharts(charts []*Chart) (map[string][]*ChartMetric, []string) {$/;"	f	package:graphx
 Metric	metric.go	/^type Metric struct {$/;"	s	package:graphx
 MetricsStreamErrCode	http/streamhandler.go	/^	MetricsStreamErrCode = "graphx.stream_handler"$/;"	c	package:http
 Missing	admin/error.go	/^	Missing []string$/;"	m	struct:admin.ErrMissingDataSources
@@ -109,16 +108,11 @@ NewAdmin	admin/admin.go	/^func NewAdmin(dsmap *etcd.DSMap, chartmap *etcd.ChartM
 NewBackend	prometheus/backend.go	/^func NewBackend(ds *graphx.DataSource) (*graphx.Backend, error) {$/;"	f	package:prometheus
 NewChartMap	etcd/chartmap.go	/^func NewChartMap(ctx context.Context, client *v3.Client) (*ChartMap, error) {$/;"	f	package:etcd
 NewDSMap	etcd/dsmap.go	/^func NewDSMap(ctx context.Context, client *v3.Client) (*DSMap, error) {$/;"	f	package:etcd
-NewPoller	machinery/poller.go	/^func NewPoller(id string, q graphx.Querier, pollInterval time.Duration) *Poller {$/;"	f	package:machinery
 NewQuerier	prometheus/querier.go	/^func NewQuerier(opts QuerierOpts) graphx.Querier {$/;"	f	package:prometheus
 NewQueryAggregator	machinery/queryaggregator.go	/^func NewQueryAggregator(queriers []graphx.Querier, interval time.Duration) *QueryAggregator {$/;"	f	package:machinery
 ParseInt64	internal/unixtime/time.go	/^func ParseInt64(epoch int64) (time.Time, error) {$/;"	f	package:unixtime
 ParseString	internal/unixtime/time.go	/^func ParseString(epoch string) (time.Time, error) {$/;"	f	package:unixtime
-Poll	machinery/poller.go	/^func (p *Poller) Poll(ctx context.Context) {$/;"	f	unknown:machinery.Poller
 PollInterval	chartsdescriptor.go	/^	PollInterval Duration `json:"poll_interval" validate:"required"`$/;"	m	struct:graphx.ChartsDescriptor
-PollInterval	machinery/poller.go	/^	PollInterval time.Duration$/;"	m	struct:machinery.Poller
-Poller	machinery/poller.go	/^type Poller struct {$/;"	s	package:machinery
-Q	machinery/poller.go	/^	Q graphx.Querier$/;"	m	struct:machinery.Poller
 Querier	backend.go	/^type Querier interface {$/;"	i	package:graphx
 Querier	prometheus/backend.go	/^func (b *Backend) Querier(metrics []*graphx.ChartMetric) graphx.Querier {$/;"	f	unknown:prometheus.Backend
 QuerierOpts	prometheus/querier.go	/^	QuerierOpts$/;"	M	struct:prometheus.querier	typeref:typename:QuerierOpts
@@ -287,7 +281,6 @@ graphx	chart.go	/^package graphx$/;"	p
 graphx	chartsdescriptor.go	/^package graphx$/;"	p
 graphx	datasource.go	/^package graphx$/;"	p
 graphx	metric.go	/^package graphx$/;"	p
-graphx	querier.go	/^package graphx$/;"	p
 graphx	streamer.go	/^package graphx$/;"	p
 graphx	streamfactory.go	/^package graphx$/;"	p
 headers	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.0
@@ -329,9 +322,6 @@ logger	etcd/dsmap.go	/^	logger   zerolog.Logger$/;"	m	struct:etcd.DSMap
 m	etcd/chartmap.go	/^	m        map[string]*graphx.Chart$/;"	m	struct:etcd.ChartMap
 m	etcd/dsmap.go	/^	m        map[string]*graphx.DataSource$/;"	m	struct:etcd.DSMap
 mChan	machinery/queryaggregator.go	/^	mChan         chan *graphx.Metric$/;"	m	struct:machinery.QueryAggregator
-machinery	machinery/aggregator.go	/^package machinery$/;"	p
-machinery	machinery/aggregatorfactory.go	/^package machinery$/;"	p
-machinery	machinery/poller.go	/^package machinery$/;"	p
 machinery	machinery/queryaggregator.go	/^package machinery$/;"	p
 main	cmd/graphx/main.go	/^func main() {$/;"	f	package:main
 main	cmd/graphx/main.go	/^package main$/;"	p

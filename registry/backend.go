@@ -9,7 +9,7 @@ import (
 // BackendFactory are a function type used in registration.
 //
 // the factory should return a *graphx.Backend able to connect to the datasource provided
-type BackendFactory func(ds *graphx.DataSource) (*graphx.Backend, error)
+type BackendFactory func(ds *graphx.DataSource) (graphx.Backend, error)
 
 // Backend is a registry for graphx.Backend implementations.
 //
@@ -17,8 +17,8 @@ type BackendFactory func(ds *graphx.DataSource) (*graphx.Backend, error)
 type Backend interface {
 	// Register a backend by name. its an error to register two or more backend of of the same name
 	Register(name string, f BackendFactory) error
-	// Get must take a datasource and return a *graphx.Backend or an error if the backend does not exist
-	Get(ds *graphx.DataSource) (*graphx.Backend, error)
+	// Get must take a datasource and return a graphx.Backend or an error if the backend does not exist
+	Get(ds *graphx.DataSource) (graphx.Backend, error)
 	// Exists must tell the caller if the backend exists in the registry given a name
 	Exists(name string) bool
 }
@@ -39,7 +39,7 @@ func (r *bregistry) Register(name string, f BackendFactory) error {
 	return nil
 }
 
-func (r *bregistry) Get(ds *graphx.DataSource) (*graphx.Backend, error) {
+func (r *bregistry) Get(ds *graphx.DataSource) (graphx.Backend, error) {
 	var (
 		factory BackendFactory
 		ok      bool

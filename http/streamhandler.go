@@ -62,27 +62,29 @@ func StreamHandler(admin admin.All, beReg registry.Backend, ws websocket.Upgrade
 
 		charts, _ := admin.ReadChartsByName(cd.ChartNames)
 
-		seen := map[string]struct{}{}
-		names := []string{}
-		for _, chart := range charts {
-			for name, _ := range chart.DataSources {
-				if _, ok := seen[name]; !ok {
-					names = append(names, name)
-				}
-			}
-		}
+		metricMap, dsNames := graphx.MergeCharts(charts)
 
-		datasources, _ := admin.ReadDataSourcesByName(names)
+		datasources, _ := admin.ReadDataSourcesByName(dsNames)
 
 		queriers := []graphx.Querier{}
-		for _, ds := range datasources {
-			be, err := beReg.Get(ds)
+		for _, datasource := range datasources {
+			be, _ := beReg.Get(datasource)
+			queriers = append(queriers, be.Querier(metricMap[datasource.Name]))
 		}
 
 		agg := machinery.NewQueryAggregator(queriers, time.Duration(cd.PollInterval))
+		agg.Start(ctx)
 
-		// datasources hold structs with the type of querier
-		// and the connection string to use.
+		for {
+			metric, err := agg.Recv(ctx)
+			if err != nil {
+				break
+			}
+			err = wsConn.WriteJSON(&metric)
+			if err != nil {
+				log.Printf("received error writing to websocket: %v", err)
+			}
+		}
 
 	}
 }
