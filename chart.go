@@ -23,16 +23,6 @@ func (c *Chart) FromJSON(b []byte) error {
 	return err
 }
 
-// ChartMetric
-type ChartMetric struct {
-	// name of the metric within a chart
-	Name string `json:"name"`
-	// the name of the chart this metric is destined for
-	Chart string `json:"chart"`
-	// the query to retrieve this metric
-	Query string `json:"query"`
-}
-
 // MergeDataSources takes 0 - N charts and merges
 func MergeCharts(charts []*Chart) (map[string][]*ChartMetric, []string) {
 	metricMap := map[string][]*ChartMetric{}

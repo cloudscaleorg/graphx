@@ -34,12 +34,12 @@ Backend	prometheus/backend.go	/^type Backend struct {$/;"	s	package:prometheus
 Backend	registry/backend.go	/^type Backend interface {$/;"	i	package:registry
 BackendFactory	registry/backend.go	/^type BackendFactory func(ds *graphx.DataSource) (graphx.Backend, error)$/;"	t	package:registry
 Chart	admin/admin.go	/^type Chart interface {$/;"	i	package:admin
-Chart	chart.go	/^	Chart string `json:"chart"`$/;"	m	struct:graphx.ChartMetric
 Chart	chart.go	/^type Chart struct {$/;"	s	package:graphx
+Chart	chartmetric.go	/^	Chart string `json:"chart"`$/;"	m	struct:graphx.ChartMetric
 Chart	metric.go	/^	Chart string `json:"chart_name"`$/;"	m	struct:graphx.Metric
 ChartCRUD	http/chartcrud.go	/^func ChartCRUD(admin admin.Chart) h.HandlerFunc {$/;"	f	package:http
 ChartMap	etcd/chartmap.go	/^type ChartMap struct {$/;"	s	package:etcd
-ChartMetric	chart.go	/^type ChartMetric struct {$/;"	s	package:graphx
+ChartMetric	chartmetric.go	/^type ChartMetric struct {$/;"	s	package:graphx
 ChartMetrics	prometheus/querier.go	/^	ChartMetrics []graphx.ChartMetric$/;"	m	struct:prometheus.QuerierOpts
 ChartName	chartsdescriptor.go	/^type ChartName string$/;"	t	package:graphx
 ChartNames	chartsdescriptor.go	/^	ChartNames []string `json:"chart_names" validate:"required,min=1"`$/;"	m	struct:graphx.ChartsDescriptor
@@ -56,7 +56,6 @@ DataSource	admin/admin.go	/^type DataSource interface {$/;"	i	package:admin
 DataSource	datasource.go	/^type DataSource struct {$/;"	s	package:graphx
 DataSourceCRUD	http/datasourcecrud.go	/^func DataSourceCRUD(admin admin.DataSource) h.HandlerFunc {$/;"	f	package:http
 DataSources	chart.go	/^	DataSources map[string][]*ChartMetric `json:data_sources`$/;"	m	struct:graphx.Chart
-Datasource	prometheus/datasource.go	/^	Datasource = "prometheus"$/;"	c	package:prometheus
 DefaultPromURL	prometheus/prometheus_integration_test.go	/^	DefaultPromURL = "http:\/\/localhost:9090\/"$/;"	c	package:prometheus
 DefaultTSFormat	internal/unixtime/time_test.go	/^	DefaultTSFormat = "2006-01-02 15:04:05.999999999 -0700 MST"$/;"	c	package:unixtime
 DeleteChart	admin/chart.go	/^func (a *admin) DeleteChart(ds *graphx.Chart) error {$/;"	f	unknown:admin.admin
@@ -98,14 +97,14 @@ MetricsStreamErrCode	http/streamhandler.go	/^	MetricsStreamErrCode = "graphx.str
 Missing	admin/error.go	/^	Missing []string$/;"	m	struct:admin.ErrMissingDataSources
 Missing	admin/error.go	/^	Missing []string$/;"	m	struct:admin.ErrMissingQueriers
 Name	chart.go	/^	Name string `json:"name"`$/;"	m	struct:graphx.Chart
-Name	chart.go	/^	Name string `json:"name"`$/;"	m	struct:graphx.ChartMetric
+Name	chartmetric.go	/^	Name string `json:"name"`$/;"	m	struct:graphx.ChartMetric
 Name	datasource.go	/^	Name string `json:"name"`$/;"	m	struct:graphx.DataSource
 Name	metric.go	/^	Name string `json:"name"`$/;"	m	struct:graphx.Metric
 Name	prometheus/backend.go	/^func (b *Backend) Name() string {$/;"	f	unknown:prometheus.Backend
 NameTag	prometheus/sampleconv.go	/^	NameTag = "container_name"$/;"	c	package:prometheus
 Names	chartsdescriptor.go	/^	Names []string `json:"names" validate:"required,min=1"`$/;"	m	struct:graphx.ChartsDescriptor
 NewAdmin	admin/admin.go	/^func NewAdmin(dsmap *etcd.DSMap, chartmap *etcd.ChartMap, beReg registry.Backend) All {$/;"	f	package:admin
-NewBackend	prometheus/backend.go	/^func NewBackend(ds *graphx.DataSource) (*graphx.Backend, error) {$/;"	f	package:prometheus
+NewBackend	prometheus/backend.go	/^func NewBackend(ds *graphx.DataSource) (graphx.Backend, error) {$/;"	f	package:prometheus
 NewChartMap	etcd/chartmap.go	/^func NewChartMap(ctx context.Context, client *v3.Client) (*ChartMap, error) {$/;"	f	package:etcd
 NewDSMap	etcd/dsmap.go	/^func NewDSMap(ctx context.Context, client *v3.Client) (*DSMap, error) {$/;"	f	package:etcd
 NewQuerier	prometheus/querier.go	/^func NewQuerier(opts QuerierOpts) graphx.Querier {$/;"	f	package:prometheus
@@ -113,11 +112,12 @@ NewQueryAggregator	machinery/queryaggregator.go	/^func NewQueryAggregator(querie
 ParseInt64	internal/unixtime/time.go	/^func ParseInt64(epoch int64) (time.Time, error) {$/;"	f	package:unixtime
 ParseString	internal/unixtime/time.go	/^func ParseString(epoch string) (time.Time, error) {$/;"	f	package:unixtime
 PollInterval	chartsdescriptor.go	/^	PollInterval Duration `json:"poll_interval" validate:"required"`$/;"	m	struct:graphx.ChartsDescriptor
+Prometheus	prometheus/backend.go	/^	Prometheus = "prometheus"$/;"	c	package:prometheus
 Querier	backend.go	/^type Querier interface {$/;"	i	package:graphx
 Querier	prometheus/backend.go	/^func (b *Backend) Querier(metrics []*graphx.ChartMetric) graphx.Querier {$/;"	f	unknown:prometheus.Backend
 QuerierOpts	prometheus/querier.go	/^	QuerierOpts$/;"	M	struct:prometheus.querier	typeref:typename:QuerierOpts
 QuerierOpts	prometheus/querier.go	/^type QuerierOpts struct {$/;"	s	package:prometheus
-Query	chart.go	/^	Query string `json:"query"`$/;"	m	struct:graphx.ChartMetric
+Query	chartmetric.go	/^	Query string `json:"query"`$/;"	m	struct:graphx.ChartMetric
 Query	prometheus/querier.go	/^func (q *querier) Query(ctx context.Context) ([]*graphx.Metric, error) {$/;"	f	unknown:prometheus.querier
 QueryAggregator	machinery/queryaggregator.go	/^type QueryAggregator struct {$/;"	s	package:machinery
 ReadChart	admin/chart.go	/^func (a *admin) ReadChart() ([]*graphx.Chart, error) {$/;"	f	unknown:admin.admin
@@ -278,6 +278,7 @@ etcd-up	Makefile	/^etcd-up:$/;"	t
 graphx	README.md	/^# graphx$/;"	c
 graphx	backend.go	/^package graphx$/;"	p
 graphx	chart.go	/^package graphx$/;"	p
+graphx	chartmetric.go	/^package graphx$/;"	p
 graphx	chartsdescriptor.go	/^package graphx$/;"	p
 graphx	datasource.go	/^package graphx$/;"	p
 graphx	metric.go	/^package graphx$/;"	p
@@ -399,7 +400,6 @@ parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":
 parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.9
 parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	z	object:resources.2
 prometheus	prometheus/backend.go	/^package prometheus$/;"	p
-prometheus	prometheus/datasource.go	/^package prometheus$/;"	p
 prometheus	prometheus/prometheus_integration_test.go	/^package prometheus$/;"	p
 prometheus	prometheus/querier.go	/^package prometheus$/;"	p
 prometheus	prometheus/querier_integration_test.go	/^package prometheus$/;"	p
