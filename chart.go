@@ -23,7 +23,8 @@ func (c *Chart) FromJSON(b []byte) error {
 	return err
 }
 
-// MergeDataSources takes 0 - N charts and merges
+// MergeDataSources takes 0 - N charts and merges duplicate datasource:chartMetric maps
+// into one.
 func MergeCharts(charts []*Chart) (map[string][]*ChartMetric, []string) {
 	metricMap := map[string][]*ChartMetric{}
 	dsNames := []string{}
