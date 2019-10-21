@@ -1,281 +1,145 @@
 !_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
 !_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
-!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
-!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
-!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
-!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
-!_TAG_PROGRAM_VERSION	0.0.0	/3522685/
-&	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.11.dataPropertyOrder
-0	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-0	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources.0.headers
-0	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources.3.headers
-0	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources.6.headers
-0	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources.7.headers
-0	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources.8.headers
-0	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	array:resources.11.dataPropertyOrder.&
-1	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-1	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	array:resources.11.dataPropertyOrder.&
-10	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-11	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-2	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-2	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	array:resources.11.dataPropertyOrder.&
-3	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-4	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-5	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-6	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-7	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-8	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-9	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	array:resources
-AdminListenAddr	cmd/graphx/main.go	/^	AdminListenAddr     string `cfg:"admin" cfgHelper:"the address in host:port format where the ad/;"	m	struct:main.Config
-All	admin/admin.go	/^type All interface {$/;"	i	package:admin
-Backend	backend.go	/^type Backend interface {$/;"	i	package:graphx
-Backend	datasource.go	/^	Backend string `json:"type"`$/;"	m	struct:graphx.DataSource
-Backend	prometheus/backend.go	/^type Backend struct {$/;"	s	package:prometheus
-Backend	registry/backend.go	/^type Backend interface {$/;"	i	package:registry
-BackendFactory	registry/backend.go	/^type BackendFactory func(ds *graphx.DataSource) (graphx.Backend, error)$/;"	t	package:registry
-Chart	admin/admin.go	/^type Chart interface {$/;"	i	package:admin
-Chart	chart.go	/^type Chart struct {$/;"	s	package:graphx
-Chart	chartmetric.go	/^	Chart string `json:"chart"`$/;"	m	struct:graphx.ChartMetric
-Chart	metric.go	/^	Chart string `json:"chart_name"`$/;"	m	struct:graphx.Metric
-ChartCRUD	http/chartcrud.go	/^func ChartCRUD(admin admin.Chart) h.HandlerFunc {$/;"	f	package:http
-ChartMap	etcd/chartmap.go	/^type ChartMap struct {$/;"	s	package:etcd
-ChartMetric	chartmetric.go	/^type ChartMetric struct {$/;"	s	package:graphx
-ChartMetrics	prometheus/querier.go	/^	ChartMetrics []graphx.ChartMetric$/;"	m	struct:prometheus.QuerierOpts
-ChartName	chartsdescriptor.go	/^type ChartName string$/;"	t	package:graphx
-ChartNames	chartsdescriptor.go	/^	ChartNames []string `json:"chart_names" validate:"required,min=1"`$/;"	m	struct:graphx.ChartsDescriptor
-ChartsDescriptor	chartsdescriptor.go	/^type ChartsDescriptor struct {$/;"	s	package:graphx
-Client	prometheus/querier.go	/^	Client       promapi.API$/;"	m	struct:prometheus.QuerierOpts
-Config	cmd/graphx/main.go	/^type Config struct {$/;"	s	package:main
-ConnString	datasource.go	/^	ConnString string `json:"connection_string"`$/;"	m	struct:graphx.DataSource
-CreateChart	admin/chart.go	/^func (a *admin) CreateChart(charts []*graphx.Chart) error {$/;"	f	unknown:admin.admin
-CreateChart	http/createchart.go	/^func CreateChart(admin admin.Chart) h.HandlerFunc {$/;"	f	package:http
-CreateDataSource	admin/datasource.go	/^func (a *admin) CreateDataSource(sources []*graphx.DataSource) error {$/;"	f	unknown:admin.admin
-CreateDataSource	http/createdatasource.go	/^func CreateDataSource(admin admin.DataSource) h.HandlerFunc {$/;"	f	package:http
-DSMap	etcd/dsmap.go	/^type DSMap struct {$/;"	s	package:etcd
-DataSource	admin/admin.go	/^type DataSource interface {$/;"	i	package:admin
-DataSource	datasource.go	/^type DataSource struct {$/;"	s	package:graphx
-DataSourceCRUD	http/datasourcecrud.go	/^func DataSourceCRUD(admin admin.DataSource) h.HandlerFunc {$/;"	f	package:http
-DataSources	chart.go	/^	DataSources map[string][]*ChartMetric `json:data_sources`$/;"	m	struct:graphx.Chart
-DefaultPromURL	prometheus/prometheus_integration_test.go	/^	DefaultPromURL = "http:\/\/localhost:9090\/"$/;"	c	package:prometheus
-DefaultTSFormat	internal/unixtime/time_test.go	/^	DefaultTSFormat = "2006-01-02 15:04:05.999999999 -0700 MST"$/;"	c	package:unixtime
-DeleteChart	admin/chart.go	/^func (a *admin) DeleteChart(ds *graphx.Chart) error {$/;"	f	unknown:admin.admin
-DeleteChart	http/deletechart.go	/^func DeleteChart(a admin.Chart) h.HandlerFunc {$/;"	f	package:http
-DeleteDataSource	admin/datasource.go	/^func (a *admin) DeleteDataSource(ds *graphx.DataSource) error {$/;"	f	unknown:admin.admin
-DeleteDataSource	http/deletedatasource.go	/^func DeleteDataSource(a admin.DataSource) h.HandlerFunc {$/;"	f	package:http
-Duration	chartsdescriptor.go	/^type Duration time.Duration$/;"	t	package:graphx
-ErrBackendNotExist	registry/errors.go	/^type ErrBackendNotExist struct {$/;"	s	package:registry
-ErrDuplicateBackend	registry/errors.go	/^type ErrDuplicateBackend struct {$/;"	s	package:registry
-ErrMissingDataSources	admin/error.go	/^type ErrMissingDataSources struct {$/;"	s	package:admin
-ErrMissingQueriers	admin/error.go	/^type ErrMissingQueriers struct {$/;"	s	package:admin
-ErrNotFound	admin/error.go	/^type ErrNotFound struct {$/;"	s	package:admin
-ErrNotFound	etcd/error.go	/^type ErrNotFound struct {$/;"	s	package:etcd
-ErrStore	admin/error.go	/^type ErrStore struct {$/;"	s	package:admin
-Error	admin/error.go	/^func (e ErrMissingDataSources) Error() string {$/;"	f	unknown:admin.ErrMissingDataSources
-Error	admin/error.go	/^func (e ErrMissingQueriers) Error() string {$/;"	f	unknown:admin.ErrMissingQueriers
-Error	admin/error.go	/^func (e ErrNotFound) Error() string {$/;"	f	unknown:admin.ErrNotFound
-Error	etcd/error.go	/^func (e ErrNotFound) Error() string {$/;"	f	unknown:etcd.ErrNotFound
-Error	registry/errors.go	/^func (e *ErrBackendNotExist) Error() string {$/;"	f	unknown:registry.ErrBackendNotExist
-Error	registry/errors.go	/^func (e *ErrDuplicateBackend) Error() string {$/;"	f	unknown:registry.ErrDuplicateBackend
-Etcd	cmd/graphx/main.go	/^	Etcd                string `cfg:"etcd" cfgHelper:"a comma separated list of etcd hosts in host:/;"	m	struct:main.Config
-Exists	registry/backend.go	/^func (r *bregistry) Exists(name string) bool {$/;"	f	unknown:registry.bregistry
-Fill	chartsdescriptor.go	/^	Fill TimeStamp `json:"fill"`$/;"	m	struct:graphx.ChartsDescriptor
-FromJSON	chart.go	/^func (c *Chart) FromJSON(b []byte) error {$/;"	f	unknown:graphx.Chart
-FromJSON	datasource.go	/^func (d *DataSource) FromJSON(b []byte) error {$/;"	f	unknown:graphx.DataSource
-GenDataSources	test/datasource.go	/^func GenDataSources(n int) []*graphx.DataSource {$/;"	f	package:test
-Get	etcd/chartmap.go	/^func (m *ChartMap) Get(names []string) ([]*graphx.Chart, []string) {$/;"	f	unknown:etcd.ChartMap
-Get	etcd/dsmap.go	/^func (m *DSMap) Get(names []string) ([]*graphx.DataSource, []string) {$/;"	f	unknown:etcd.DSMap
-Get	registry/backend.go	/^func (r *bregistry) Get(ds *graphx.DataSource) (graphx.Backend, error) {$/;"	f	unknown:registry.bregistry
-GetCharts	test/chart.go	/^func GetCharts(n int) []*graphx.Chart {$/;"	f	package:test
-ID	prometheus/querier.go	/^	ID           string$/;"	m	struct:prometheus.QuerierOpts
-LogLevel	cmd/graphx/main.go	/^	LogLevel            string `cfg:"debug" cfgHelper:"the debug level to use" cfgDefault:"debug"`$/;"	m	struct:main.Config
-MarshalJSON	chartsdescriptor.go	/^func (cn ChartName) MarshalJSON() ([]byte, error) {$/;"	f	unknown:graphx.ChartName
-MarshalJSON	chartsdescriptor.go	/^func (d Duration) MarshalJSON() ([]byte, error) {$/;"	f	unknown:graphx.Duration
-MarshalJSON	chartsdescriptor.go	/^func (t TimeStamp) MarshalJSON() ([]byte, error) {$/;"	f	unknown:graphx.TimeStamp
-MergeCharts	chart.go	/^func MergeCharts(charts []*Chart) (map[string][]*ChartMetric, []string) {$/;"	f	package:graphx
-Metric	metric.go	/^type Metric struct {$/;"	s	package:graphx
-MetricsStreamErrCode	http/streamhandler.go	/^	MetricsStreamErrCode = "graphx.stream_handler"$/;"	c	package:http
-Missing	admin/error.go	/^	Missing []string$/;"	m	struct:admin.ErrMissingDataSources
-Missing	admin/error.go	/^	Missing []string$/;"	m	struct:admin.ErrMissingQueriers
-Name	chart.go	/^	Name string `json:"name"`$/;"	m	struct:graphx.Chart
-Name	chartmetric.go	/^	Name string `json:"name"`$/;"	m	struct:graphx.ChartMetric
-Name	datasource.go	/^	Name string `json:"name"`$/;"	m	struct:graphx.DataSource
-Name	metric.go	/^	Name string `json:"name"`$/;"	m	struct:graphx.Metric
-Name	prometheus/backend.go	/^func (b *Backend) Name() string {$/;"	f	unknown:prometheus.Backend
-NameTag	prometheus/sampleconv.go	/^	NameTag = "container_name"$/;"	c	package:prometheus
-Names	chartsdescriptor.go	/^	Names []string `json:"names" validate:"required,min=1"`$/;"	m	struct:graphx.ChartsDescriptor
-NewAdmin	admin/admin.go	/^func NewAdmin(dsmap *etcd.DSMap, chartmap *etcd.ChartMap, beReg registry.Backend) All {$/;"	f	package:admin
-NewBackend	prometheus/backend.go	/^func NewBackend(ds *graphx.DataSource) (graphx.Backend, error) {$/;"	f	package:prometheus
-NewChartMap	etcd/chartmap.go	/^func NewChartMap(ctx context.Context, client *v3.Client) (*ChartMap, error) {$/;"	f	package:etcd
-NewDSMap	etcd/dsmap.go	/^func NewDSMap(ctx context.Context, client *v3.Client) (*DSMap, error) {$/;"	f	package:etcd
-NewQuerier	prometheus/querier.go	/^func NewQuerier(opts QuerierOpts) graphx.Querier {$/;"	f	package:prometheus
-NewQueryAggregator	machinery/queryaggregator.go	/^func NewQueryAggregator(queriers []graphx.Querier, interval time.Duration) *QueryAggregator {$/;"	f	package:machinery
-ParseInt64	internal/unixtime/time.go	/^func ParseInt64(epoch int64) (time.Time, error) {$/;"	f	package:unixtime
-ParseString	internal/unixtime/time.go	/^func ParseString(epoch string) (time.Time, error) {$/;"	f	package:unixtime
-PollInterval	chartsdescriptor.go	/^	PollInterval Duration `json:"poll_interval" validate:"required"`$/;"	m	struct:graphx.ChartsDescriptor
-Prometheus	prometheus/backend.go	/^	Prometheus = "prometheus"$/;"	c	package:prometheus
-Querier	backend.go	/^type Querier interface {$/;"	i	package:graphx
-Querier	prometheus/backend.go	/^func (b *Backend) Querier(metrics []*graphx.ChartMetric) graphx.Querier {$/;"	f	unknown:prometheus.Backend
-QuerierOpts	prometheus/querier.go	/^	QuerierOpts$/;"	M	struct:prometheus.querier	typeref:typename:QuerierOpts
-QuerierOpts	prometheus/querier.go	/^type QuerierOpts struct {$/;"	s	package:prometheus
-Query	chartmetric.go	/^	Query string `json:"query"`$/;"	m	struct:graphx.ChartMetric
-Query	prometheus/querier.go	/^func (q *querier) Query(ctx context.Context) ([]*graphx.Metric, error) {$/;"	f	unknown:prometheus.querier
-QueryAggregator	machinery/queryaggregator.go	/^type QueryAggregator struct {$/;"	s	package:machinery
-ReadChart	admin/chart.go	/^func (a *admin) ReadChart() ([]*graphx.Chart, error) {$/;"	f	unknown:admin.admin
-ReadChart	http/readchart.go	/^func ReadChart(admin admin.Chart) h.HandlerFunc {$/;"	f	package:http
-ReadChartsByName	admin/chart.go	/^func (a *admin) ReadChartsByName(names []string) ([]*graphx.Chart, error) {$/;"	f	unknown:admin.admin
-ReadDataSource	admin/datasource.go	/^func (a *admin) ReadDataSource() ([]*graphx.DataSource, error) {$/;"	f	unknown:admin.admin
-ReadDataSource	http/readdatasource.go	/^func ReadDataSource(admin admin.DataSource) h.HandlerFunc {$/;"	f	package:http
-ReadDataSourcesByName	admin/datasource.go	/^func (a *admin) ReadDataSourcesByName(names []string) ([]*graphx.DataSource, error) {$/;"	f	unknown:admin.admin
-Recv	machinery/queryaggregator.go	/^func (qa *QueryAggregator) Recv(ctx context.Context) (*graphx.Metric, error) {$/;"	f	unknown:machinery.QueryAggregator
-Register	registry/backend.go	/^func (r *bregistry) Register(name string, f BackendFactory) error {$/;"	f	unknown:registry.bregistry
-Remove	etcd/chartmap.go	/^func (m *ChartMap) Remove(names []string) {$/;"	f	unknown:etcd.ChartMap
-Remove	etcd/dsmap.go	/^func (m *DSMap) Remove(names []string) {$/;"	f	unknown:etcd.DSMap
-Reset	etcd/chartmap.go	/^func (m *ChartMap) Reset() {$/;"	f	unknown:etcd.ChartMap
-Reset	etcd/dsmap.go	/^func (m *DSMap) Reset() {$/;"	f	unknown:etcd.DSMap
-Resource	admin/error.go	/^	Resource string$/;"	m	struct:admin.ErrNotFound
-Start	machinery/queryaggregator.go	/^func (qa *QueryAggregator) Start(ctx context.Context) {$/;"	f	unknown:machinery.QueryAggregator
-Store	etcd/chartmap.go	/^func (m *ChartMap) Store(charts []*graphx.Chart) {$/;"	f	unknown:etcd.ChartMap
-Store	etcd/dsmap.go	/^func (m *DSMap) Store(charts []*graphx.DataSource) {$/;"	f	unknown:etcd.DSMap
-StreamHandler	http/streamhandler.go	/^func StreamHandler(admin admin.All, beReg registry.Backend, ws websocket.Upgrader) h.HandlerFunc/;"	f	package:http
-Streamer	streamer.go	/^type Streamer interface {$/;"	i	package:graphx
-StreamerFactory	streamfactory.go	/^type StreamerFactory interface {$/;"	i	package:graphx
-TestParseString	internal/unixtime/time_test.go	/^func TestParseString(t *testing.T) {$/;"	f	package:unixtime
-TestQuery	prometheus/prometheus_integration_test.go	/^func TestQuery(t *testing.T) {$/;"	f	package:prometheus
-TestQueryRange	prometheus/prometheus_integration_test.go	/^func TestQueryRange(t *testing.T) {$/;"	f	package:prometheus
-TestQueryRangeTT	prometheus/prometheus_integration_test.go	/^var TestQueryRangeTT = []struct {$/;"	v	package:prometheus
-TestQueryStreamer	prometheus/querier_integration_test.go	/^func TestQueryStreamer(t *testing.T) {$/;"	f	package:prometheus
-TestQueryStreamerTT	prometheus/querier_integration_test.go	/^var TestQueryStreamerTT = []struct {$/;"	v	package:prometheus
-TestQueryTT	prometheus/prometheus_integration_test.go	/^var TestQueryTT = []struct {$/;"	v	package:prometheus
-Test_ChartStore_Integration_Store	etcd/chartmap_integration_test.go	/^func Test_ChartStore_Integration_Store(t *testing.T) {$/;"	f	package:etcd
-Test_DataSourceStore_Integration_Store	etcd/dsmap_integration_test.go	/^func Test_DataSourceStore_Integration_Store(t *testing.T) {$/;"	f	package:etcd
-TimeStamp	chartsdescriptor.go	/^type TimeStamp time.Time$/;"	t	package:graphx
-TimeStamp	metric.go	/^	TimeStamp int64 `json:"time_stamp"`$/;"	m	struct:graphx.Metric
-ToJSON	chart.go	/^func (c *Chart) ToJSON() ([]byte, error) {$/;"	f	unknown:graphx.Chart
-ToJSON	datasource.go	/^func (d *DataSource) ToJSON() ([]byte, error) {$/;"	f	unknown:graphx.DataSource
-UnitTimeTT	internal/unixtime/time_test.go	/^var UnitTimeTT = []struct {$/;"	v	package:unixtime
-UnmarshalJSON	chartsdescriptor.go	/^func (cn *ChartName) UnmarshalJSON(value []byte) error {$/;"	f	unknown:graphx.ChartName
-UnmarshalJSON	chartsdescriptor.go	/^func (d *Duration) UnmarshalJSON(b []byte) error {$/;"	f	unknown:graphx.Duration
-UnmarshalJSON	chartsdescriptor.go	/^func (t *TimeStamp) UnmarshalJSON(b []byte) error {$/;"	f	unknown:graphx.TimeStamp
-UpdateChart	admin/chart.go	/^func (a *admin) UpdateChart(chart *graphx.Chart) error {$/;"	f	unknown:admin.admin
-UpdateChart	http/updatechart.go	/^func UpdateChart(a admin.Chart) h.HandlerFunc {$/;"	f	package:http
-UpdateDataSource	admin/datasource.go	/^func (a *admin) UpdateDataSource(ds *graphx.DataSource) error {$/;"	f	unknown:admin.admin
-UpdateDataSource	http/updatedatasource.go	/^func UpdateDataSource(a admin.DataSource) h.HandlerFunc {$/;"	f	package:http
-ValidationError	http/streamhandler.go	/^	ValidationError      = "could not validate your charts descriptor. chart_names and names keys a/;"	c	package:http
-Value	metric.go	/^	Value string `json:"value"`$/;"	m	struct:graphx.Metric
-WebsocketListenAddr	cmd/graphx/main.go	/^	WebsocketListenAddr string `cfg:"websocket" cfgHelper:"the address in host:port format where th/;"	m	struct:main.Config
-__export_date	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s
-__export_format	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n
-__export_source	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.1
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.10
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.11
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.2
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.4
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.5
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8
-_id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.9
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.1
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.10
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.11
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.2
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.4
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.5
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8
-_type	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.9
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+All	admin/admin.go	/^type All interface {$/;"	t
+Backend	backend.go	/^type Backend interface {$/;"	t
+Backend	prometheus/backend.go	/^type Backend struct {$/;"	t
+Backend	registry/backend.go	/^type Backend interface {$/;"	t
+BackendFactory	registry/backend.go	/^type BackendFactory func(ds *graphx.DataSource) (graphx.Backend, error)$/;"	t
+Chart	admin/admin.go	/^type Chart interface {$/;"	t
+Chart	chart.go	/^type Chart struct {$/;"	t
+ChartCRUD	http/chartcrud.go	/^func ChartCRUD(admin admin.Chart) h.HandlerFunc {$/;"	f
+ChartMap	etcd/chartmap.go	/^type ChartMap struct {$/;"	t
+ChartMetric	chartmetric.go	/^type ChartMetric struct {$/;"	t
+ChartName	chartsdescriptor.go	/^type ChartName string$/;"	t
+ChartsDescriptor	chartsdescriptor.go	/^type ChartsDescriptor struct {$/;"	t
+Config	cmd/graphx/main.go	/^type Config struct {$/;"	t
+CreateChart	admin/chart.go	/^func (a *admin) CreateChart(charts []*graphx.Chart) error {$/;"	f
+CreateChart	http/createchart.go	/^func CreateChart(admin admin.Chart) h.HandlerFunc {$/;"	f
+CreateDataSource	admin/datasource.go	/^func (a *admin) CreateDataSource(sources []*graphx.DataSource) error {$/;"	f
+CreateDataSource	http/createdatasource.go	/^func CreateDataSource(admin admin.DataSource) h.HandlerFunc {$/;"	f
+DSMap	etcd/dsmap.go	/^type DSMap struct {$/;"	t
+DataSource	admin/admin.go	/^type DataSource interface {$/;"	t
+DataSource	datasource.go	/^type DataSource struct {$/;"	t
+DataSourceCRUD	http/datasourcecrud.go	/^func DataSourceCRUD(admin admin.DataSource) h.HandlerFunc {$/;"	f
+DefaultPromURL	prometheus/prometheus_integration_test.go	/^	DefaultPromURL = "http:\/\/localhost:9090\/"$/;"	c
+DefaultTSFormat	internal/unixtime/time_test.go	/^	DefaultTSFormat = "2006-01-02 15:04:05.999999999 -0700 MST"$/;"	c
+DeleteChart	admin/chart.go	/^func (a *admin) DeleteChart(ds *graphx.Chart) error {$/;"	f
+DeleteChart	http/deletechart.go	/^func DeleteChart(a admin.Chart) h.HandlerFunc {$/;"	f
+DeleteDataSource	admin/datasource.go	/^func (a *admin) DeleteDataSource(ds *graphx.DataSource) error {$/;"	f
+DeleteDataSource	http/deletedatasource.go	/^func DeleteDataSource(a admin.DataSource) h.HandlerFunc {$/;"	f
+Duration	chartsdescriptor.go	/^type Duration time.Duration$/;"	t
+ErrBackendNotExist	registry/errors.go	/^type ErrBackendNotExist struct {$/;"	t
+ErrDuplicateBackend	registry/errors.go	/^type ErrDuplicateBackend struct {$/;"	t
+ErrMissingBackends	admin/error.go	/^type ErrMissingBackends struct {$/;"	t
+ErrMissingDataSources	admin/error.go	/^type ErrMissingDataSources struct {$/;"	t
+ErrNotFound	admin/error.go	/^type ErrNotFound struct {$/;"	t
+ErrNotFound	etcd/error.go	/^type ErrNotFound struct {$/;"	t
+ErrStore	admin/error.go	/^type ErrStore struct {$/;"	t
+Error	admin/error.go	/^func (e ErrMissingBackends) Error() string {$/;"	f
+Error	admin/error.go	/^func (e ErrMissingDataSources) Error() string {$/;"	f
+Error	admin/error.go	/^func (e ErrNotFound) Error() string {$/;"	f
+Error	etcd/error.go	/^func (e ErrNotFound) Error() string {$/;"	f
+Error	registry/errors.go	/^func (e *ErrBackendNotExist) Error() string {$/;"	f
+Error	registry/errors.go	/^func (e *ErrDuplicateBackend) Error() string {$/;"	f
+Exists	registry/backend.go	/^func (r *bregistry) Exists(name string) bool {$/;"	f
+FromJSON	chart.go	/^func (c *Chart) FromJSON(b []byte) error {$/;"	f
+FromJSON	datasource.go	/^func (d *DataSource) FromJSON(b []byte) error {$/;"	f
+GenDataSources	test/datasource.go	/^func GenDataSources(n int) []*graphx.DataSource {$/;"	f
+Get	etcd/chartmap.go	/^func (m *ChartMap) Get(names []string) ([]*graphx.Chart, []string) {$/;"	f
+Get	etcd/dsmap.go	/^func (m *DSMap) Get(names []string) ([]*graphx.DataSource, []string) {$/;"	f
+Get	registry/backend.go	/^func (r *bregistry) Get(ds *graphx.DataSource) (graphx.Backend, error) {$/;"	f
+GetCharts	test/chart.go	/^func GetCharts(n int) []*graphx.Chart {$/;"	f
+MarshalJSON	chartsdescriptor.go	/^func (cn ChartName) MarshalJSON() ([]byte, error) {$/;"	f
+MarshalJSON	chartsdescriptor.go	/^func (d Duration) MarshalJSON() ([]byte, error) {$/;"	f
+MarshalJSON	chartsdescriptor.go	/^func (t TimeStamp) MarshalJSON() ([]byte, error) {$/;"	f
+MergeCharts	chart.go	/^func MergeCharts(charts []*Chart) (map[string][]*ChartMetric, []string) {$/;"	f
+Metric	metric.go	/^type Metric struct {$/;"	t
+MetricsStreamErrCode	http/streamhandler.go	/^	MetricsStreamErrCode = "graphx.stream_handler"$/;"	c
+Name	prometheus/backend.go	/^func (b *Backend) Name() string {$/;"	f
+NameTag	prometheus/sampleconv.go	/^	NameTag = "container_name"$/;"	c
+NewAdmin	admin/admin.go	/^func NewAdmin(dsmap *etcd.DSMap, chartmap *etcd.ChartMap, beReg registry.Backend) All {$/;"	f
+NewBackend	prometheus/backend.go	/^func NewBackend(ds *graphx.DataSource) (graphx.Backend, error) {$/;"	f
+NewChartMap	etcd/chartmap.go	/^func NewChartMap(ctx context.Context, client *v3.Client) (*ChartMap, error) {$/;"	f
+NewDSMap	etcd/dsmap.go	/^func NewDSMap(ctx context.Context, client *v3.Client) (*DSMap, error) {$/;"	f
+NewQuerier	prometheus/querier.go	/^func NewQuerier(opts QuerierOpts) graphx.Querier {$/;"	f
+NewQueryAggregator	machinery/queryaggregator.go	/^func NewQueryAggregator(queriers []graphx.Querier, interval time.Duration) *QueryAggregator {$/;"	f
+ParseInt64	internal/unixtime/time.go	/^func ParseInt64(epoch int64) (time.Time, error) {$/;"	f
+ParseString	internal/unixtime/time.go	/^func ParseString(epoch string) (time.Time, error) {$/;"	f
+Prometheus	prometheus/backend.go	/^	Prometheus = "prometheus"$/;"	c
+Querier	backend.go	/^type Querier interface {$/;"	t
+Querier	prometheus/backend.go	/^func (b *Backend) Querier(metrics []*graphx.ChartMetric) graphx.Querier {$/;"	f
+QuerierOpts	prometheus/querier.go	/^type QuerierOpts struct {$/;"	t
+Query	prometheus/querier.go	/^func (q *querier) Query(ctx context.Context) ([]*graphx.Metric, error) {$/;"	f
+QueryAggregator	machinery/queryaggregator.go	/^type QueryAggregator struct {$/;"	t
+ReadChart	admin/chart.go	/^func (a *admin) ReadChart() ([]*graphx.Chart, error) {$/;"	f
+ReadChart	http/readchart.go	/^func ReadChart(admin admin.Chart) h.HandlerFunc {$/;"	f
+ReadChartsByName	admin/chart.go	/^func (a *admin) ReadChartsByName(names []string) ([]*graphx.Chart, error) {$/;"	f
+ReadDataSource	admin/datasource.go	/^func (a *admin) ReadDataSource() ([]*graphx.DataSource, error) {$/;"	f
+ReadDataSource	http/readdatasource.go	/^func ReadDataSource(admin admin.DataSource) h.HandlerFunc {$/;"	f
+ReadDataSourcesByName	admin/datasource.go	/^func (a *admin) ReadDataSourcesByName(names []string) ([]*graphx.DataSource, error) {$/;"	f
+Recv	machinery/queryaggregator.go	/^func (qa *QueryAggregator) Recv(ctx context.Context) (*graphx.Metric, error) {$/;"	f
+Register	registry/backend.go	/^func (r *bregistry) Register(name string, f BackendFactory) error {$/;"	f
+Remove	etcd/chartmap.go	/^func (m *ChartMap) Remove(names []string) {$/;"	f
+Remove	etcd/dsmap.go	/^func (m *DSMap) Remove(names []string) {$/;"	f
+Reset	etcd/chartmap.go	/^func (m *ChartMap) Reset() {$/;"	f
+Reset	etcd/dsmap.go	/^func (m *DSMap) Reset() {$/;"	f
+Start	machinery/queryaggregator.go	/^func (qa *QueryAggregator) Start(ctx context.Context) {$/;"	f
+Store	etcd/chartmap.go	/^func (m *ChartMap) Store(charts []*graphx.Chart) {$/;"	f
+Store	etcd/dsmap.go	/^func (m *DSMap) Store(charts []*graphx.DataSource) {$/;"	f
+StreamHandler	http/streamhandler.go	/^func StreamHandler(admin admin.All, beReg registry.Backend, ws websocket.Upgrader) h.HandlerFunc {$/;"	f
+Streamer	streamer.go	/^type Streamer interface {$/;"	t
+StreamerFactory	streamfactory.go	/^type StreamerFactory interface {$/;"	t
+TestParseString	internal/unixtime/time_test.go	/^func TestParseString(t *testing.T) {$/;"	f
+TestQuery	prometheus/prometheus_integration_test.go	/^func TestQuery(t *testing.T) {$/;"	f
+TestQueryRange	prometheus/prometheus_integration_test.go	/^func TestQueryRange(t *testing.T) {$/;"	f
+TestQueryRangeTT	prometheus/prometheus_integration_test.go	/^var TestQueryRangeTT = []struct {$/;"	v
+TestQueryStreamer	prometheus/querier_integration_test.go	/^func TestQueryStreamer(t *testing.T) {$/;"	f
+TestQueryStreamerTT	prometheus/querier_integration_test.go	/^var TestQueryStreamerTT = []struct {$/;"	v
+TestQueryTT	prometheus/prometheus_integration_test.go	/^var TestQueryTT = []struct {$/;"	v
+Test_ChartStore_Integration_Store	etcd/chartmap_integration_test.go	/^func Test_ChartStore_Integration_Store(t *testing.T) {$/;"	f
+Test_DataSourceStore_Integration_Store	etcd/dsmap_integration_test.go	/^func Test_DataSourceStore_Integration_Store(t *testing.T) {$/;"	f
+TimeStamp	chartsdescriptor.go	/^type TimeStamp time.Time$/;"	t
+ToJSON	chart.go	/^func (c *Chart) ToJSON() ([]byte, error) {$/;"	f
+ToJSON	datasource.go	/^func (d *DataSource) ToJSON() ([]byte, error) {$/;"	f
+UnitTimeTT	internal/unixtime/time_test.go	/^var UnitTimeTT = []struct {$/;"	v
+UnmarshalJSON	chartsdescriptor.go	/^func (cn *ChartName) UnmarshalJSON(value []byte) error {$/;"	f
+UnmarshalJSON	chartsdescriptor.go	/^func (d *Duration) UnmarshalJSON(b []byte) error {$/;"	f
+UnmarshalJSON	chartsdescriptor.go	/^func (t *TimeStamp) UnmarshalJSON(b []byte) error {$/;"	f
+UpdateChart	admin/chart.go	/^func (a *admin) UpdateChart(chart *graphx.Chart) error {$/;"	f
+UpdateChart	http/updatechart.go	/^func UpdateChart(a admin.Chart) h.HandlerFunc {$/;"	f
+UpdateDataSource	admin/datasource.go	/^func (a *admin) UpdateDataSource(ds *graphx.DataSource) error {$/;"	f
+UpdateDataSource	http/updatedatasource.go	/^func UpdateDataSource(a admin.DataSource) h.HandlerFunc {$/;"	f
+ValidationError	http/streamhandler.go	/^	ValidationError      = "could not validate your charts descriptor. chart_names and names keys are required and must contain more the one item"$/;"	c
 admin	admin/admin.go	/^package admin$/;"	p
-admin	admin/admin.go	/^type admin struct {$/;"	s	package:admin
+admin	admin/admin.go	/^type admin struct {$/;"	t
 admin	admin/chart.go	/^package admin$/;"	p
 admin	admin/datasource.go	/^package admin$/;"	p
 admin	admin/error.go	/^package admin$/;"	p
-adminInit	cmd/graphx/main.go	/^func adminInit(ctx context.Context, hosts string) (admin.All, error) {$/;"	f	package:main
-adminServer	cmd/graphx/main.go	/^func adminServer(addr string, admin admin.All) *h.Server {$/;"	f	package:main
-admin_addr	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.11.data
-authentication	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.0
-authentication	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.3
-authentication	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.4
-authentication	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.6
-authentication	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.7
-authentication	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.8
-automated-integration-etcd	Makefile	/^automated-integration-etcd:$/;"	t
-backend	registry/errors.go	/^	backend string$/;"	m	struct:registry.ErrBackendNotExist
-backend	registry/errors.go	/^	backend string$/;"	m	struct:registry.ErrDuplicateBackend
-beReg	admin/admin.go	/^	beReg    registry.Backend$/;"	m	struct:admin.admin
-body	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.0
-body	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.3
-body	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.4
-body	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.6
-body	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.7
-body	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.8
-bregistry	registry/backend.go	/^type bregistry struct {$/;"	s	package:registry
-cPrefix	etcd/client.go	/^	cPrefix          = "\/graphx\/charts"$/;"	c	package:etcd
-cPrefixTemplate	etcd/client.go	/^	cPrefixTemplate  = "\/graphx\/charts\/%s"$/;"	c	package:etcd
-cReduce	etcd/chartmap.go	/^var cReduce = func(m *ChartMap) events.ReduceFunc {$/;"	v	package:etcd
-chartmap	admin/admin.go	/^	chartmap *etcd.ChartMap$/;"	m	struct:admin.admin
-charts_path	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.11.data
-color	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.11
-color	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	z	object:resources.9
-confirmChartsSeen	prometheus/querier_integration_test.go	/^func confirmChartsSeen(t *testing.T, seenMap map[graphx.ChartName]bool, charts []graphx.ChartNam/;"	f	package:prometheus
-confirmNamesSeen	prometheus/querier_integration_test.go	/^func confirmNamesSeen(t *testing.T, seenMap map[string]bool, Names []string) {$/;"	f	package:prometheus
-cookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.10
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.0
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.1
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.10
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.11
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.2
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.3
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.4
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.5
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.6
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.7
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.8
-created	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.9
-data	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.11
-data	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.9
-dataPropertyOrder	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.11
-dataPropertyOrder	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	z	object:resources.9
-datasources	admin/chart.go	/^var datasources = func(charts []*graphx.Chart) []string {$/;"	v	package:admin
-datasources_path	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.11.data
-delCharts	etcd/client.go	/^func delCharts(ctx context.Context, etcd *v3.Client, names []string) error {$/;"	f	package:etcd
-delDS	etcd/client.go	/^func delDS(ctx context.Context, etcd *v3.Client, names []string) error {$/;"	f	package:etcd
-description	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0
-description	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.1
-description	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.2
-description	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3
-description	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.4
-description	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.5
-description	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6
-description	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7
-description	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8
-dsPrefix	etcd/client.go	/^	dsPrefix         = "\/graphx\/datasources"$/;"	c	package:etcd
-dsPrefixTemplate	etcd/client.go	/^	dsPrefixTemplate = "\/graphx\/datasources\/%s"$/;"	c	package:etcd
-dsReduce	etcd/dsmap.go	/^var dsReduce = func(m *DSMap) events.ReduceFunc {$/;"	v	package:etcd
-dsmap	admin/admin.go	/^	dsmap    *etcd.DSMap$/;"	m	struct:admin.admin
-eChan	machinery/queryaggregator.go	/^	eChan         chan error$/;"	m	struct:machinery.QueryAggregator
-environment	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.1
-environment	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	o	object:resources.5
-environmentPropertyOrder	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	z	object:resources.1
-environmentPropertyOrder	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	z	object:resources.5
-error	admin/error.go	/^	error$/;"	M	struct:admin.ErrStore	typeref:typename:error
-etcd	etcd/chartmap.go	/^	etcd     *v3.Client$/;"	m	struct:etcd.ChartMap
+adminInit	cmd/graphx/main.go	/^func adminInit(ctx context.Context, hosts string) (admin.All, error) {$/;"	f
+adminServer	cmd/graphx/main.go	/^func adminServer(addr string, admin admin.All) *h.Server {$/;"	f
+bregistry	registry/backend.go	/^type bregistry struct {$/;"	t
+cPrefix	etcd/client.go	/^	cPrefix          = "\/graphx\/charts"$/;"	c
+cPrefixTemplate	etcd/client.go	/^	cPrefixTemplate  = "\/graphx\/charts\/%s"$/;"	c
+cReduce	etcd/chartmap.go	/^var cReduce = func(m *ChartMap) events.ReduceFunc {$/;"	v
+confirmChartsSeen	prometheus/querier_integration_test.go	/^func confirmChartsSeen(t *testing.T, seenMap map[graphx.ChartName]bool, charts []graphx.ChartName) {$/;"	f
+confirmNamesSeen	prometheus/querier_integration_test.go	/^func confirmNamesSeen(t *testing.T, seenMap map[string]bool, Names []string) {$/;"	f
+count	Makefile	/^	go test -count=1 -race -tags etcdintegration .\/...$/;"	m
+datasources	admin/chart.go	/^var datasources = func(charts []*graphx.Chart) []string {$/;"	v
+delCharts	etcd/client.go	/^func delCharts(ctx context.Context, etcd *v3.Client, names []string) error {$/;"	f
+delDS	etcd/client.go	/^func delDS(ctx context.Context, etcd *v3.Client, names []string) error {$/;"	f
+dsPrefix	etcd/client.go	/^	dsPrefix         = "\/graphx\/datasources"$/;"	c
+dsPrefixTemplate	etcd/client.go	/^	dsPrefixTemplate = "\/graphx\/datasources\/%s"$/;"	c
+dsReduce	etcd/dsmap.go	/^var dsReduce = func(m *DSMap) events.ReduceFunc {$/;"	v
 etcd	etcd/chartmap.go	/^package etcd$/;"	p
 etcd	etcd/chartmap_integration_test.go	/^package etcd$/;"	p
 etcd	etcd/client.go	/^package etcd$/;"	p
-etcd	etcd/dsmap.go	/^	etcd     *v3.Client$/;"	m	struct:etcd.DSMap
 etcd	etcd/dsmap.go	/^package etcd$/;"	p
 etcd	etcd/dsmap_integration_test.go	/^package etcd$/;"	p
 etcd	etcd/error.go	/^package etcd$/;"	p
-etcd-down	Makefile	/^etcd-down:$/;"	t
-etcd-up	Makefile	/^etcd-up:$/;"	t
-graphx	README.md	/^# graphx$/;"	c
 graphx	backend.go	/^package graphx$/;"	p
 graphx	chart.go	/^package graphx$/;"	p
 graphx	chartmetric.go	/^package graphx$/;"	p
@@ -284,12 +148,6 @@ graphx	datasource.go	/^package graphx$/;"	p
 graphx	metric.go	/^package graphx$/;"	p
 graphx	streamer.go	/^package graphx$/;"	p
 graphx	streamfactory.go	/^package graphx$/;"	p
-headers	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.0
-headers	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.3
-headers	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.4
-headers	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.6
-headers	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.7
-headers	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.8
 http	http/chartcrud.go	/^package http$/;"	p
 http	http/createchart.go	/^package http$/;"	p
 http	http/createdatasource.go	/^package http$/;"	p
@@ -301,175 +159,30 @@ http	http/readdatasource.go	/^package http$/;"	p
 http	http/streamhandler.go	/^package http$/;"	p
 http	http/updatechart.go	/^package http$/;"	p
 http	http/updatedatasource.go	/^package http$/;"	p
-id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0.headers.0
-id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3.headers.0
-id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6.headers.0
-id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7.headers.0
-id	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8.headers.0
-isPrivate	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.0
-isPrivate	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.11
-isPrivate	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.3
-isPrivate	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.4
-isPrivate	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.6
-isPrivate	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.7
-isPrivate	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.8
-isPrivate	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.9
-listener	etcd/chartmap.go	/^	listener *events.Listener$/;"	m	struct:etcd.ChartMap
-listener	etcd/dsmap.go	/^	listener *events.Listener$/;"	m	struct:etcd.DSMap
-logLevel	cmd/graphx/main.go	/^func logLevel(conf Config) zerolog.Level {$/;"	f	package:main
-logger	admin/admin.go	/^	logger   zerolog.Logger$/;"	m	struct:admin.admin
-logger	etcd/chartmap.go	/^	logger   zerolog.Logger$/;"	m	struct:etcd.ChartMap
-logger	etcd/dsmap.go	/^	logger   zerolog.Logger$/;"	m	struct:etcd.DSMap
-m	etcd/chartmap.go	/^	m        map[string]*graphx.Chart$/;"	m	struct:etcd.ChartMap
-m	etcd/dsmap.go	/^	m        map[string]*graphx.DataSource$/;"	m	struct:etcd.DSMap
-mChan	machinery/queryaggregator.go	/^	mChan         chan *graphx.Metric$/;"	m	struct:machinery.QueryAggregator
+logLevel	cmd/graphx/main.go	/^func logLevel(conf Config) zerolog.Level {$/;"	f
 machinery	machinery/queryaggregator.go	/^package machinery$/;"	p
-main	cmd/graphx/main.go	/^func main() {$/;"	f	package:main
+main	cmd/graphx/main.go	/^func main() {$/;"	f
 main	cmd/graphx/main.go	/^package main$/;"	p
-metaSortKey	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.0
-metaSortKey	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.1
-metaSortKey	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.11
-metaSortKey	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.3
-metaSortKey	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.4
-metaSortKey	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.5
-metaSortKey	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.6
-metaSortKey	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.7
-metaSortKey	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.8
-metaSortKey	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.9
-method	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0
-method	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3
-method	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.4
-method	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6
-method	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7
-method	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8
-mimeType	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0.body
-mimeType	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3.body
-mimeType	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6.body
-mimeType	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7.body
-mimeType	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8.body
-missing	etcd/error.go	/^	missing []string$/;"	m	struct:etcd.ErrNotFound
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.0
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.1
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.10
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.11
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.2
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.3
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.4
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.5
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.6
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.7
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.8
-modified	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	n	object:resources.9
-mu	etcd/chartmap.go	/^	mu       *sync.RWMutex$/;"	m	struct:etcd.ChartMap
-mu	etcd/dsmap.go	/^	mu       *sync.RWMutex$/;"	m	struct:etcd.DSMap
-mu	registry/backend.go	/^	mu  sync.RWMutex$/;"	m	struct:registry.bregistry
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0.headers.0
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.1
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.10
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.11
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.2
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3.headers.0
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.4
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.5
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6.headers.0
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7.headers.0
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8.headers.0
-name	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.9
-names	admin/chart.go	/^var names = func(charts []*graphx.Chart) []string {$/;"	v	package:admin
-parameters	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.0
-parameters	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.3
-parameters	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.4
-parameters	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.6
-parameters	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.7
-parameters	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a	object:resources.8
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.1
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.10
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.11
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.4
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.5
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.9
-parentId	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	z	object:resources.2
+names	admin/chart.go	/^var names = func(charts []*graphx.Chart) []string {$/;"	v
 prometheus	prometheus/backend.go	/^package prometheus$/;"	p
 prometheus	prometheus/prometheus_integration_test.go	/^package prometheus$/;"	p
 prometheus	prometheus/querier.go	/^package prometheus$/;"	p
 prometheus	prometheus/querier_integration_test.go	/^package prometheus$/;"	p
 prometheus	prometheus/sampleconv.go	/^package prometheus$/;"	p
-putCharts	etcd/client.go	/^func putCharts(ctx context.Context, etcd *v3.Client, charts []*graphx.Chart) error {$/;"	f	package:etcd
-putDS	etcd/client.go	/^func putDS(ctx context.Context, etcd *v3.Client, sources []*graphx.DataSource) error {$/;"	f	package:etcd
-querier	prometheus/querier.go	/^type querier struct {$/;"	s	package:prometheus
-queriers	machinery/queryaggregator.go	/^	queriers      []graphx.Querier$/;"	m	struct:machinery.QueryAggregator
-query	machinery/queryaggregator.go	/^func (qa *QueryAggregator) query(ctx context.Context) {$/;"	f	unknown:machinery.QueryAggregator
-query	prometheus/querier.go	/^func (q *querier) query(ctx context.Context, chartMetric *graphx.ChartMetric, eChan chan error, /;"	f	unknown:prometheus.querier
-queryInterval	machinery/queryaggregator.go	/^	queryInterval time.Duration$/;"	m	struct:machinery.QueryAggregator
-readyTO	etcd/client.go	/^	readyTO          = 5 * time.Second$/;"	c	package:etcd
-reg	registry/backend.go	/^	reg map[string]BackendFactory$/;"	m	struct:registry.bregistry
+putCharts	etcd/client.go	/^func putCharts(ctx context.Context, etcd *v3.Client, charts []*graphx.Chart) error {$/;"	f
+putDS	etcd/client.go	/^func putDS(ctx context.Context, etcd *v3.Client, sources []*graphx.DataSource) error {$/;"	f
+querier	prometheus/querier.go	/^type querier struct {$/;"	t
+query	machinery/queryaggregator.go	/^func (qa *QueryAggregator) query(ctx context.Context) {$/;"	f
+query	prometheus/querier.go	/^func (q *querier) query(ctx context.Context, chartMetric *graphx.ChartMetric, eChan chan error, mChan chan *graphx.Metric, wg *sync.WaitGroup) {$/;"	f
+readyTO	etcd/client.go	/^	readyTO          = 5 * time.Second$/;"	c
 registry	registry/backend.go	/^package registry$/;"	p
 registry	registry/errors.go	/^package registry$/;"	p
-resources	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	a
-samplePairToMetric	prometheus/sampleconv.go	/^func samplePairToMetric(chart string, metric promModels.Metric, sp promModels.SamplePair) *graph/;"	f	package:prometheus
-sampleToMetric	prometheus/sampleconv.go	/^func sampleToMetric(chart string, sample *promModels.Sample) *graphx.Metric {$/;"	f	package:prometheus
-settingDisableRenderRequestBody	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.0
-settingDisableRenderRequestBody	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.3
-settingDisableRenderRequestBody	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.4
-settingDisableRenderRequestBody	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.6
-settingDisableRenderRequestBody	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.7
-settingDisableRenderRequestBody	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.8
-settingEncodeUrl	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.0
-settingEncodeUrl	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.3
-settingEncodeUrl	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.4
-settingEncodeUrl	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.6
-settingEncodeUrl	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.7
-settingEncodeUrl	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.8
-settingRebuildPath	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.0
-settingRebuildPath	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.3
-settingRebuildPath	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.4
-settingRebuildPath	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.6
-settingRebuildPath	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.7
-settingRebuildPath	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.8
-settingSendCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.0
-settingSendCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.3
-settingSendCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.4
-settingSendCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.6
-settingSendCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.7
-settingSendCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.8
-settingStoreCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.0
-settingStoreCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.3
-settingStoreCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.4
-settingStoreCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.6
-settingStoreCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.7
-settingStoreCookies	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	b	object:resources.8
-setupAPI	prometheus/prometheus_integration_test.go	/^func setupAPI(t *testing.T, url string) promAPI.API {$/;"	f	package:prometheus
-signalHandler	cmd/graphx/main.go	/^func signalHandler() <-chan os.Signal {$/;"	f	package:main
-start	machinery/queryaggregator.go	/^func (qa *QueryAggregator) start(ctx context.Context) {$/;"	f	unknown:machinery.QueryAggregator
+samplePairToMetric	prometheus/sampleconv.go	/^func samplePairToMetric(chart string, metric promModels.Metric, sp promModels.SamplePair) *graphx.Metric {$/;"	f
+sampleToMetric	prometheus/sampleconv.go	/^func sampleToMetric(chart string, sample *promModels.Sample) *graphx.Metric {$/;"	f
+setupAPI	prometheus/prometheus_integration_test.go	/^func setupAPI(t *testing.T, url string) promAPI.API {$/;"	f
+signalHandler	cmd/graphx/main.go	/^func signalHandler() <-chan os.Signal {$/;"	f
+start	machinery/queryaggregator.go	/^func (qa *QueryAggregator) start(ctx context.Context) {$/;"	f
 test	test/chart.go	/^package test$/;"	p
 test	test/datasource.go	/^package test$/;"	p
-text	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0.body
-text	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3.body
-text	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6.body
-text	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7.body
-text	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8.body
-unit-verbose	Makefile	/^unit-verbose:$/;"	t
 unixtime	internal/unixtime/time.go	/^package unixtime$/;"	p
 unixtime	internal/unixtime/time_test.go	/^package unixtime$/;"	p
-url	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0
-url	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3
-url	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.4
-url	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6
-url	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7
-url	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8
-value	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.0.headers.0
-value	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.3.headers.0
-value	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.6.headers.0
-value	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.7.headers.0
-value	contrib/Insomnia_2019-09-29.json	/^{"_type":"export","__export_format":4,"__export_date":"2019-09-30T00:31:47.919Z","__export_sourc/;"	s	object:resources.8.headers.0
-verbose-integration-etcd	Makefile	/^verbose-integration-etcd:$/;"	t

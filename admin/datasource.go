@@ -13,7 +13,7 @@ func (a *admin) CreateDataSource(sources []*graphx.DataSource) error {
 	}
 
 	if len(missing) > 0 {
-		return ErrMissingQueriers{missing}
+		return ErrMissingBackends{missing}
 	}
 
 	a.dsmap.Store(sources)
@@ -37,7 +37,7 @@ func (a *admin) UpdateDataSource(ds *graphx.DataSource) error {
 	}
 
 	if ok := a.beReg.Exists(ds.Backend); !ok {
-		return ErrMissingQueriers{[]string{ds.Backend}}
+		return ErrMissingBackends{[]string{ds.Backend}}
 	}
 
 	// overwrite

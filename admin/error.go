@@ -17,7 +17,7 @@ type ErrStore struct {
 	error
 }
 
-// ErrMissingDataSources indicates a chart is attempted to be created with a missing datasource resource
+// ErrMissingDataSources indicates a chart is attempted to be created with a missing datasource resource.
 type ErrMissingDataSources struct {
 	Missing []string
 }
@@ -26,11 +26,11 @@ func (e ErrMissingDataSources) Error() string {
 	return fmt.Sprintf("missing datasources: %v", e.Missing)
 }
 
-// ErrMissingQueriers indicates a querier has not been implemented
-type ErrMissingQueriers struct {
+// ErrMissingBackend indicates a backend has not been implemented.
+type ErrMissingBackends struct {
 	Missing []string
 }
 
-func (e ErrMissingQueriers) Error() string {
-	return fmt.Sprintf("missing queriers: %v", e.Missing)
+func (e ErrMissingBackends) Error() string {
+	return fmt.Sprintf("missing backends: %v", e.Missing)
 }
