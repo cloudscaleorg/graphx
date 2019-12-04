@@ -25,10 +25,18 @@ type Backend interface {
 
 // bregistry implements the Backend interface
 type bregistry struct {
-	mu  sync.RWMutex
+	mu  *sync.RWMutex
 	reg map[string]BackendFactory
 }
 
+func NewBackendReg() Backend {
+	return &bregistry{
+		mu:  &sync.RWMutex{},
+		reg: map[string]BackendFactory{},
+	}
+}
+
+// Register take a unique name and a Backend factory function.
 func (r *bregistry) Register(name string, f BackendFactory) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()

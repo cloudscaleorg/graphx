@@ -63,6 +63,7 @@ Name	prometheus/backend.go	/^func (b *Backend) Name() string {$/;"	f
 NameTag	prometheus/sampleconv.go	/^	NameTag = "container_name"$/;"	c
 NewAdmin	admin/admin.go	/^func NewAdmin(dsmap *etcd.DSMap, chartmap *etcd.ChartMap, beReg registry.Backend) All {$/;"	f
 NewBackend	prometheus/backend.go	/^func NewBackend(ds *graphx.DataSource) (graphx.Backend, error) {$/;"	f
+NewBackendReg	registry/backend.go	/^func NewBackendReg() Backend {$/;"	f
 NewChartMap	etcd/chartmap.go	/^func NewChartMap(ctx context.Context, client *v3.Client) (*ChartMap, error) {$/;"	f
 NewDSMap	etcd/dsmap.go	/^func NewDSMap(ctx context.Context, client *v3.Client) (*DSMap, error) {$/;"	f
 NewQuerier	prometheus/querier.go	/^func NewQuerier(opts QuerierOpts) graphx.Querier {$/;"	f
@@ -119,8 +120,9 @@ admin	admin/admin.go	/^type admin struct {$/;"	t
 admin	admin/chart.go	/^package admin$/;"	p
 admin	admin/datasource.go	/^package admin$/;"	p
 admin	admin/error.go	/^package admin$/;"	p
-adminInit	cmd/graphx/main.go	/^func adminInit(ctx context.Context, hosts string) (admin.All, error) {$/;"	f
+adminInit	cmd/graphx/main.go	/^func adminInit(ctx context.Context, hosts string, beReg registry.Backend) (admin.All, error) {$/;"	f
 adminServer	cmd/graphx/main.go	/^func adminServer(addr string, admin admin.All) *h.Server {$/;"	f
+beRegInit	cmd/graphx/main.go	/^func beRegInit(ctx context.Context) registry.Backend {$/;"	f
 bregistry	registry/backend.go	/^type bregistry struct {$/;"	t
 cPrefix	etcd/client.go	/^	cPrefix          = "\/graphx\/charts"$/;"	c
 cPrefixTemplate	etcd/client.go	/^	cPrefixTemplate  = "\/graphx\/charts\/%s"$/;"	c

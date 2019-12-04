@@ -11,6 +11,8 @@ import (
 	"github.com/cloudscaleorg/graphx/admin"
 	"github.com/cloudscaleorg/graphx/etcd"
 	"github.com/cloudscaleorg/graphx/http"
+	"github.com/cloudscaleorg/graphx/prometheus"
+	"github.com/cloudscaleorg/graphx/registry"
 	"github.com/crgimenes/goconfig"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -20,8 +22,8 @@ import (
 // Config this struct is using the goconfig library for simple flag and env var
 // parsing. See: https://github.com/crgimenes/goconfig
 type Config struct {
-	AdminListenAddr     string `cfg:"admin" cfgHelper:"the address in host:port format where the admin Api will listen. optional"`
-	WebsocketListenAddr string `cfg:"websocket" cfgHelper:"the address in host:port format where the websocket API will listen.`
+	AdminListenAddr     string `cfg:"admin" cfgHelper:"the address in host:port format where the admin Api will listen. optional" cfgDefault:"0.0.0.0:8080"`
+	WebsocketListenAddr string `cfg:"websocket" cfgHelper:"the address in host:port format where the websocket API will listen." cfgDefault:"0.0.0.0:8081"`
 	Etcd                string `cfg:"etcd" cfgHelper:"a comma separated list of etcd hosts in host:port format. required" cfgRequired:"true" cfgDefault:"localhost:2379"`
 	LogLevel            string `cfg:"debug" cfgHelper:"the debug level to use" cfgDefault:"debug"`
 }
@@ -38,7 +40,9 @@ func main() {
 	zerolog.SetGlobalLevel(logLevel(conf))
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 
-	a, err := adminInit(context.TODO(), conf.Etcd)
+	beReg := beRegInit(context.TODO())
+
+	a, err := adminInit(context.TODO(), conf.Etcd, beReg)
 	if err != nil {
 		log.Fatal().Msgf("failed to create admin interface: %v", err)
 	}
@@ -82,8 +86,15 @@ func adminServer(addr string, admin admin.All) *h.Server {
 	return s
 }
 
+// creates a backend registry and registers implemented backends
+func beRegInit(ctx context.Context) registry.Backend {
+	beReg := registry.NewBackendReg()
+	beReg.Register(prometheus.Prometheus, prometheus.NewBackend)
+	return beReg
+}
+
 // creates the etcd backed admin interface
-func adminInit(ctx context.Context, hosts string) (admin.All, error) {
+func adminInit(ctx context.Context, hosts string, beReg registry.Backend) (admin.All, error) {
 	endpoints := strings.Split(hosts, ",")
 
 	client, err := v3.New(
@@ -95,16 +106,16 @@ func adminInit(ctx context.Context, hosts string) (admin.All, error) {
 		return nil, err
 	}
 
-	dStore, err := etcd.NewDataSourceStore(ctx, client)
+	dMap, err := etcd.NewDSMap(ctx, client)
 	if err != nil {
 		return nil, err
 	}
-	cStore, err := etcd.NewChartStore(ctx, client)
+	cMap, err := etcd.NewChartMap(ctx, client)
 	if err != nil {
 		return nil, err
 	}
 
-	a := admin.NewAdmin(dStore, cStore)
+	a := admin.NewAdmin(dMap, cMap, beReg)
 
 	return a, nil
 }
