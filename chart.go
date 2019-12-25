@@ -10,7 +10,7 @@ type Chart struct {
 	// a name for this chart. must be unique to the system
 	Name string `json:"name"`
 	// a map of datasource names by chart metrics
-	DataSources map[string][]*ChartMetric `json:data_sources`
+	DataSources map[string][]*ChartMetric `json:"data_sources"`
 }
 
 func (c *Chart) ToJSON() ([]byte, error) {

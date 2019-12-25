@@ -19,7 +19,6 @@ var dsReduce = func(m *DSMap) events.ReduceFunc {
 		if snapshot {
 			m.Reset()
 		}
-
 		switch e.Type {
 		case mvccpb.PUT:
 			var v graphx.DataSource
@@ -58,7 +57,6 @@ func NewDSMap(ctx context.Context, client *v3.Client) (*DSMap, error) {
 		etcd:   client,
 		logger: log.With().Str("component", "datasourcestore").Logger(),
 	}
-
 	l, err := events.NewListener(&events.Opts{
 		Prefix: dsPrefix,
 		Client: client,
@@ -68,7 +66,6 @@ func NewDSMap(ctx context.Context, client *v3.Client) (*DSMap, error) {
 		return nil, fmt.Errorf("failed to create events listener: %v", err)
 	}
 	m.listener = l
-
 	l.Listen(ctx)
 	l.Ready(ctx)
 
@@ -78,7 +75,6 @@ func NewDSMap(ctx context.Context, client *v3.Client) (*DSMap, error) {
 func (m *DSMap) Get(names []string) ([]*graphx.DataSource, []string) {
 	out := []*graphx.DataSource{}
 	missing := []string{}
-
 	if names == nil {
 		m.mu.RLock()
 		for _, v := range m.m {
@@ -87,7 +83,6 @@ func (m *DSMap) Get(names []string) ([]*graphx.DataSource, []string) {
 		m.mu.RUnlock()
 		return out, missing
 	}
-
 	m.mu.RLock()
 	for _, name := range names {
 		v, ok := m.m[name]
@@ -98,7 +93,6 @@ func (m *DSMap) Get(names []string) ([]*graphx.DataSource, []string) {
 		}
 	}
 	m.mu.RUnlock()
-
 	return out, missing
 }
 

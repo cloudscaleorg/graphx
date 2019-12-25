@@ -17,7 +17,6 @@ var cReduce = func(m *ChartMap) events.ReduceFunc {
 		if snapshot {
 			m.Reset()
 		}
-
 		switch e.Type {
 		case mvccpb.PUT:
 			var v graphx.Chart
@@ -55,7 +54,6 @@ func NewChartMap(ctx context.Context, client *v3.Client) (*ChartMap, error) {
 		m:    map[string]*graphx.Chart{},
 		etcd: client,
 	}
-
 	l, err := events.NewListener(&events.Opts{
 		Prefix: cPrefix,
 		Client: client,
@@ -65,17 +63,14 @@ func NewChartMap(ctx context.Context, client *v3.Client) (*ChartMap, error) {
 		return nil, fmt.Errorf("failed to create events listener: %v", err)
 	}
 	m.listener = l
-
 	l.Listen(ctx)
 	l.Ready(ctx)
-
 	return m, nil
 }
 
 func (m *ChartMap) Get(names []string) ([]*graphx.Chart, []string) {
 	out := []*graphx.Chart{}
 	missing := []string{}
-
 	if names == nil {
 		m.mu.RLock()
 		for _, v := range m.m {
@@ -84,7 +79,6 @@ func (m *ChartMap) Get(names []string) ([]*graphx.Chart, []string) {
 		m.mu.RUnlock()
 		return out, missing
 	}
-
 	m.mu.RLock()
 	for _, name := range names {
 		v, ok := m.m[name]
@@ -95,7 +89,6 @@ func (m *ChartMap) Get(names []string) ([]*graphx.Chart, []string) {
 		}
 	}
 	m.mu.RUnlock()
-
 	return out, missing
 }
 

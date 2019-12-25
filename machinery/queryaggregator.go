@@ -49,7 +49,6 @@ func (qa *QueryAggregator) Start(ctx context.Context) {
 
 func (qa *QueryAggregator) start(ctx context.Context) {
 	qa.query(ctx)
-
 	for {
 		ticker := time.NewTicker(qa.queryInterval)
 		select {
@@ -77,7 +76,6 @@ func (qa *QueryAggregator) query(ctx context.Context) {
 					return
 				}
 			}
-
 			for _, m := range metrics {
 				select {
 				case qa.mChan <- m:

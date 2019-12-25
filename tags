@@ -5,9 +5,11 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 All	admin/admin.go	/^type All interface {$/;"	t
+Backend	admin/admin.go	/^type Backend interface {$/;"	t
 Backend	backend.go	/^type Backend interface {$/;"	t
 Backend	prometheus/backend.go	/^type Backend struct {$/;"	t
 Backend	registry/backend.go	/^type Backend interface {$/;"	t
+BackendCRUD	http/backendcrud.go	/^func BackendCRUD(admin admin.Backend) h.HandlerFunc {$/;"	f
 BackendFactory	registry/backend.go	/^type BackendFactory func(ds *graphx.DataSource) (graphx.Backend, error)$/;"	t
 Chart	admin/admin.go	/^type Chart interface {$/;"	t
 Chart	chart.go	/^type Chart struct {$/;"	t
@@ -53,6 +55,7 @@ Get	etcd/chartmap.go	/^func (m *ChartMap) Get(names []string) ([]*graphx.Chart, 
 Get	etcd/dsmap.go	/^func (m *DSMap) Get(names []string) ([]*graphx.DataSource, []string) {$/;"	f
 Get	registry/backend.go	/^func (r *bregistry) Get(ds *graphx.DataSource) (graphx.Backend, error) {$/;"	f
 GetCharts	test/chart.go	/^func GetCharts(n int) []*graphx.Chart {$/;"	f
+List	registry/backend.go	/^func (r *bregistry) List() []string {$/;"	f
 MarshalJSON	chartsdescriptor.go	/^func (cn ChartName) MarshalJSON() ([]byte, error) {$/;"	f
 MarshalJSON	chartsdescriptor.go	/^func (d Duration) MarshalJSON() ([]byte, error) {$/;"	f
 MarshalJSON	chartsdescriptor.go	/^func (t TimeStamp) MarshalJSON() ([]byte, error) {$/;"	f
@@ -76,6 +79,8 @@ Querier	prometheus/backend.go	/^func (b *Backend) Querier(metrics []*graphx.Char
 QuerierOpts	prometheus/querier.go	/^type QuerierOpts struct {$/;"	t
 Query	prometheus/querier.go	/^func (q *querier) Query(ctx context.Context) ([]*graphx.Metric, error) {$/;"	f
 QueryAggregator	machinery/queryaggregator.go	/^type QueryAggregator struct {$/;"	t
+ReadBackend	admin/backend.go	/^func (a *admin) ReadBackend() ([]string, error) {$/;"	f
+ReadBackend	http/readbackend.go	/^func ReadBackend(admin admin.Backend) h.HandlerFunc {$/;"	f
 ReadChart	admin/chart.go	/^func (a *admin) ReadChart() ([]*graphx.Chart, error) {$/;"	f
 ReadChart	http/readchart.go	/^func ReadChart(admin admin.Chart) h.HandlerFunc {$/;"	f
 ReadChartsByName	admin/chart.go	/^func (a *admin) ReadChartsByName(names []string) ([]*graphx.Chart, error) {$/;"	f
@@ -117,6 +122,7 @@ UpdateDataSource	http/updatedatasource.go	/^func UpdateDataSource(a admin.DataSo
 ValidationError	http/streamhandler.go	/^	ValidationError      = "could not validate your charts descriptor. chart_names and names keys are required and must contain more the one item"$/;"	c
 admin	admin/admin.go	/^package admin$/;"	p
 admin	admin/admin.go	/^type admin struct {$/;"	t
+admin	admin/backend.go	/^package admin$/;"	p
 admin	admin/chart.go	/^package admin$/;"	p
 admin	admin/datasource.go	/^package admin$/;"	p
 admin	admin/error.go	/^package admin$/;"	p
@@ -130,7 +136,7 @@ cReduce	etcd/chartmap.go	/^var cReduce = func(m *ChartMap) events.ReduceFunc {$/
 confirmChartsSeen	prometheus/querier_integration_test.go	/^func confirmChartsSeen(t *testing.T, seenMap map[graphx.ChartName]bool, charts []graphx.ChartName) {$/;"	f
 confirmNamesSeen	prometheus/querier_integration_test.go	/^func confirmNamesSeen(t *testing.T, seenMap map[string]bool, Names []string) {$/;"	f
 count	Makefile	/^	go test -count=1 -race -tags etcdintegration .\/...$/;"	m
-datasources	admin/chart.go	/^var datasources = func(charts []*graphx.Chart) []string {$/;"	v
+datasources	admin/chart.go	/^func datasources(charts []*graphx.Chart) []string {$/;"	f
 delCharts	etcd/client.go	/^func delCharts(ctx context.Context, etcd *v3.Client, names []string) error {$/;"	f
 delDS	etcd/client.go	/^func delDS(ctx context.Context, etcd *v3.Client, names []string) error {$/;"	f
 dsPrefix	etcd/client.go	/^	dsPrefix         = "\/graphx\/datasources"$/;"	c
@@ -150,12 +156,14 @@ graphx	datasource.go	/^package graphx$/;"	p
 graphx	metric.go	/^package graphx$/;"	p
 graphx	streamer.go	/^package graphx$/;"	p
 graphx	streamfactory.go	/^package graphx$/;"	p
+http	http/backendcrud.go	/^package http$/;"	p
 http	http/chartcrud.go	/^package http$/;"	p
 http	http/createchart.go	/^package http$/;"	p
 http	http/createdatasource.go	/^package http$/;"	p
 http	http/datasourcecrud.go	/^package http$/;"	p
 http	http/deletechart.go	/^package http$/;"	p
 http	http/deletedatasource.go	/^package http$/;"	p
+http	http/readbackend.go	/^package http$/;"	p
 http	http/readchart.go	/^package http$/;"	p
 http	http/readdatasource.go	/^package http$/;"	p
 http	http/streamhandler.go	/^package http$/;"	p
@@ -165,7 +173,7 @@ logLevel	cmd/graphx/main.go	/^func logLevel(conf Config) zerolog.Level {$/;"	f
 machinery	machinery/queryaggregator.go	/^package machinery$/;"	p
 main	cmd/graphx/main.go	/^func main() {$/;"	f
 main	cmd/graphx/main.go	/^package main$/;"	p
-names	admin/chart.go	/^var names = func(charts []*graphx.Chart) []string {$/;"	v
+names	admin/chart.go	/^func names(charts []*graphx.Chart) []string {$/;"	f
 prometheus	prometheus/backend.go	/^package prometheus$/;"	p
 prometheus	prometheus/prometheus_integration_test.go	/^package prometheus$/;"	p
 prometheus	prometheus/querier.go	/^package prometheus$/;"	p

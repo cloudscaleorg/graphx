@@ -7,7 +7,7 @@ type DataSource struct {
 	// unique name for this datasource
 	Name string `json:"name"`
 	// the datasource backend such as "prometheus"
-	Backend string `json:"type"`
+	Backend string `json:"backend"`
 	// the connection string for the above type
 	ConnString string `json:"connection_string"`
 }

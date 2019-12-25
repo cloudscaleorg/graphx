@@ -30,31 +30,24 @@ type Config struct {
 
 func main() {
 	goconfig.PrefixEnv = "graphx"
-
 	var conf Config
 	err := goconfig.Parse(&conf)
 	if err != nil {
 		log.Fatal().Msgf("failed to parse any configuration: %v", err)
 	}
-
 	zerolog.SetGlobalLevel(logLevel(conf))
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
-
 	beReg := beRegInit(context.TODO())
-
 	a, err := adminInit(context.TODO(), conf.Etcd, beReg)
 	if err != nil {
 		log.Fatal().Msgf("failed to create admin interface: %v", err)
 	}
-
 	adminServer := adminServer(conf.AdminListenAddr, a)
 	if err != nil {
 		log.Fatal().Msgf("failed to create admin api: %v", err)
 	}
-
 	eC := make(chan error, 2)
 	sigs := signalHandler()
-
 	go func() {
 		log.Info().Msgf("starting admin http server on: %v", conf.AdminListenAddr)
 		err := adminServer.ListenAndServe()
@@ -62,7 +55,6 @@ func main() {
 			eC <- err
 		}
 	}()
-
 	select {
 	case e := <-eC:
 		log.Fatal().Msgf("received error: %v", e)
@@ -77,12 +69,11 @@ func adminServer(addr string, admin admin.All) *h.Server {
 	mux := h.NewServeMux()
 	mux.HandleFunc("/api/v1/charts", http.ChartCRUD(admin))
 	mux.HandleFunc("/api/v1/datasources", http.DataSourceCRUD(admin))
-
+	mux.HandleFunc("/api/v1/backends", http.BackendCRUD(admin))
 	s := &h.Server{
 		Addr:    addr,
 		Handler: mux,
 	}
-
 	return s
 }
 
@@ -96,7 +87,6 @@ func beRegInit(ctx context.Context) registry.Backend {
 // creates the etcd backed admin interface
 func adminInit(ctx context.Context, hosts string, beReg registry.Backend) (admin.All, error) {
 	endpoints := strings.Split(hosts, ",")
-
 	client, err := v3.New(
 		v3.Config{
 			Endpoints: endpoints,
@@ -105,7 +95,6 @@ func adminInit(ctx context.Context, hosts string, beReg registry.Backend) (admin
 	if err != nil {
 		return nil, err
 	}
-
 	dMap, err := etcd.NewDSMap(ctx, client)
 	if err != nil {
 		return nil, err
@@ -114,9 +103,7 @@ func adminInit(ctx context.Context, hosts string, beReg registry.Backend) (admin
 	if err != nil {
 		return nil, err
 	}
-
 	a := admin.NewAdmin(dMap, cMap, beReg)
-
 	return a, nil
 }
 

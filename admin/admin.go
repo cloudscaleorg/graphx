@@ -12,6 +12,7 @@ import (
 type All interface {
 	DataSource
 	Chart
+	Backend
 }
 
 // DataSource exports methods for administoring DataSource resources
@@ -30,6 +31,11 @@ type Chart interface {
 	ReadChartsByName(names []string) ([]*graphx.Chart, error)
 	UpdateChart(ds *graphx.Chart) error
 	DeleteChart(ds *graphx.Chart) error
+}
+
+type Backend interface {
+	// ReadBackend lists of backend names
+	ReadBackend() ([]string, error)
 }
 
 // admin implements the All interface

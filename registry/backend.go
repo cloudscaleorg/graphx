@@ -21,6 +21,8 @@ type Backend interface {
 	Get(ds *graphx.DataSource) (graphx.Backend, error)
 	// Exists must tell the caller if the backend exists in the registry given a name
 	Exists(name string) bool
+	// Get returns a list of currently registered backends
+	List() []string
 }
 
 // bregistry implements the Backend interface
@@ -66,4 +68,14 @@ func (r *bregistry) Exists(name string) bool {
 	defer r.mu.RLock()
 	_, ok := r.reg[name]
 	return ok
+}
+
+func (r *bregistry) List() []string {
+	names := []string{}
+	r.mu.RLock()
+	defer r.mu.RLock()
+	for name, _ := range r.reg {
+		names = append(names, name)
+	}
+	return names
 }
