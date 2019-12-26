@@ -33,3 +33,11 @@ automated-integration-etcd:
 .PHONY: verbose-integration-etcd
 verbose-integration-etcd:
 	go test -v -count=1 -race -tags etcdintegration ./...
+
+.PHONY: swagger-up
+swagger-up:
+	docker-compose up -d swagger-ui
+
+.PHONY: swagger-down
+swagger-down:
+	docker-compose down -d swagger-ui

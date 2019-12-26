@@ -12,6 +12,8 @@ import (
 	"go.etcd.io/etcd/mvcc/mvccpb"
 )
 
+// cReduce is an events.ReduceFunc which updates a local
+// ChartMap on receipt of events occuring on the Chart etcd prefix
 var cReduce = func(m *ChartMap) events.ReduceFunc {
 	return func(e *v3.Event, snapshot bool) {
 		if snapshot {
@@ -40,6 +42,9 @@ var cReduce = func(m *ChartMap) events.ReduceFunc {
 	}
 }
 
+// ChartMap keeps a local map of Charts existing in a GraphX cluster.
+//
+// ChartMap's state is kept in sync with etcd in an eventually consistent fashion.
 type ChartMap struct {
 	mu       *sync.RWMutex
 	m        map[string]*graphx.Chart
@@ -48,6 +53,7 @@ type ChartMap struct {
 	logger   zerolog.Logger
 }
 
+// NewChartMap is a constructor for a ChartMap
 func NewChartMap(ctx context.Context, client *v3.Client) (*ChartMap, error) {
 	m := &ChartMap{
 		mu:   &sync.RWMutex{},
@@ -68,6 +74,12 @@ func NewChartMap(ctx context.Context, client *v3.Client) (*ChartMap, error) {
 	return m, nil
 }
 
+// Get retrieves graphx.Chart objects.
+//
+// If a nil array if provided all Charts are returned.
+// If an array of strings are provided only matching Charts will be returned.
+// If the array contains names that do not exist in the state these names will be returned
+// as the second argument indicating the missing Charts.
 func (m *ChartMap) Get(names []string) ([]*graphx.Chart, []string) {
 	out := []*graphx.Chart{}
 	missing := []string{}
@@ -92,6 +104,10 @@ func (m *ChartMap) Get(names []string) ([]*graphx.Chart, []string) {
 	return out, missing
 }
 
+// Remove removes any Charts matching the provided
+// names
+//
+// Names which do not exist are ignored.
 func (m *ChartMap) Remove(names []string) {
 	m.mu.Lock()
 	for _, name := range names {
@@ -100,6 +116,7 @@ func (m *ChartMap) Remove(names []string) {
 	m.mu.Unlock()
 }
 
+// Store persists a slice of Charts
 func (m *ChartMap) Store(charts []*graphx.Chart) {
 	m.mu.Lock()
 	for _, chart := range charts {
@@ -108,6 +125,7 @@ func (m *ChartMap) Store(charts []*graphx.Chart) {
 	m.mu.Unlock()
 }
 
+// Reset discards the current ChartMap state
 func (m *ChartMap) Reset() {
 	m.mu.Lock()
 	m.m = map[string]*graphx.Chart{}

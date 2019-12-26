@@ -8,7 +8,7 @@ import (
 	fw "github.com/ldelossa/goframework/http"
 )
 
-func ReadBackend(admin admin.Backend) h.HandlerFunc {
+func ReadBackend(admin *admin.Admin) h.HandlerFunc {
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodGet {
 			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports GET")
@@ -26,7 +26,6 @@ func ReadBackend(admin admin.Backend) h.HandlerFunc {
 			w.WriteHeader(h.StatusInternalServerError)
 			return
 		}
-
 		return
 	}
 }

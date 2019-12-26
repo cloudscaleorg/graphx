@@ -10,7 +10,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func UpdateDataSource(a admin.DataSource) h.HandlerFunc {
+func UpdateDataSource(a *admin.Admin) h.HandlerFunc {
 	logger := log.With().Str("component", "UpdateDataSourceHandler").Logger()
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodPut {
@@ -18,7 +18,6 @@ func UpdateDataSource(a admin.DataSource) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusNotImplemented)
 			return
 		}
-
 		var v graphx.DataSource
 		err := json.NewDecoder(r.Body).Decode(&v)
 		if err != nil {
@@ -27,7 +26,6 @@ func UpdateDataSource(a admin.DataSource) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusBadRequest)
 			return
 		}
-
 		err = a.UpdateDataSource(&v)
 		switch e := err.(type) {
 		case admin.ErrNotFound:
@@ -41,13 +39,11 @@ func UpdateDataSource(a admin.DataSource) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusNotFound)
 			return
 		}
-
 		err = json.NewEncoder(w).Encode(&v)
 		if err != nil {
 			w.WriteHeader(h.StatusInternalServerError)
 			return
 		}
-
 		logger.Debug().Msgf("succesfully updated datasource: %v", v.Name)
 		return
 	}

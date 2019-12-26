@@ -13,6 +13,8 @@ import (
 	"go.etcd.io/etcd/mvcc/mvccpb"
 )
 
+// dsReduce is an events.ReduceFunc which updates a local
+// DSMap on receipt of events occuring on the DataSource etcd prefix
 var dsReduce = func(m *DSMap) events.ReduceFunc {
 	return func(e *v3.Event, snapshot bool) {
 		// a new consistent state will follow. dump the current map and get up to date
@@ -42,6 +44,9 @@ var dsReduce = func(m *DSMap) events.ReduceFunc {
 	}
 }
 
+// DSMap keeps a local map of DataSources existing in a GraphX cluster.
+//
+// DSMap's state is kept in sync with etcd in an eventually consistent fashion.
 type DSMap struct {
 	mu       *sync.RWMutex
 	m        map[string]*graphx.DataSource
@@ -50,6 +55,7 @@ type DSMap struct {
 	logger   zerolog.Logger
 }
 
+// NewDSMap is a constructor for a DSMap
 func NewDSMap(ctx context.Context, client *v3.Client) (*DSMap, error) {
 	m := &DSMap{
 		mu:     &sync.RWMutex{},
@@ -68,10 +74,15 @@ func NewDSMap(ctx context.Context, client *v3.Client) (*DSMap, error) {
 	m.listener = l
 	l.Listen(ctx)
 	l.Ready(ctx)
-
 	return m, nil
 }
 
+// Get retrieves graphx.DataSource objects.
+//
+// If a nil array if provided all DataSources are returned.
+// If an array of strings are provided only matching DataSources will be returned.
+// If the array contains names that do not exist in the state these names will be returned
+// as the second argument indicating the missing DataSources.
 func (m *DSMap) Get(names []string) ([]*graphx.DataSource, []string) {
 	out := []*graphx.DataSource{}
 	missing := []string{}
@@ -96,6 +107,10 @@ func (m *DSMap) Get(names []string) ([]*graphx.DataSource, []string) {
 	return out, missing
 }
 
+// Remove removes any DataSources matching the provided
+// names
+//
+// Names which do not exist are ignored.
 func (m *DSMap) Remove(names []string) {
 	m.mu.Lock()
 	for _, name := range names {
@@ -104,6 +119,7 @@ func (m *DSMap) Remove(names []string) {
 	m.mu.Unlock()
 }
 
+// Store persists a slice of DataSources
 func (m *DSMap) Store(charts []*graphx.DataSource) {
 	m.mu.Lock()
 	for _, chart := range charts {
@@ -112,6 +128,7 @@ func (m *DSMap) Store(charts []*graphx.DataSource) {
 	m.mu.Unlock()
 }
 
+// Reset discards the current DSMap state
 func (m *DSMap) Reset() {
 	m.mu.Lock()
 	m.m = map[string]*graphx.DataSource{}

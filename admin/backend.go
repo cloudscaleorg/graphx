@@ -1,6 +1,8 @@
 package admin
 
-func (a *admin) ReadBackend() ([]string, error) {
+// ReadBackend returns a slice of all implemented Backend
+// names.
+func (a *Admin) ReadBackend() ([]string, error) {
 	names := a.beReg.List()
 	return names, nil
 }

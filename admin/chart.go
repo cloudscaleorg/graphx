@@ -4,7 +4,7 @@ import (
 	"github.com/cloudscaleorg/graphx"
 )
 
-// extracts a list of datasource names from a list of charts
+// extracts a list of datasource names from a list of Charts
 func datasources(charts []*graphx.Chart) []string {
 	out := []string{}
 	seen := map[string]struct{}{}
@@ -18,7 +18,7 @@ func datasources(charts []*graphx.Chart) []string {
 	return out
 }
 
-// extracts a list of chart names from a list of charts
+// extracts a list of Chart names from a list of Charts
 func names(charts []*graphx.Chart) []string {
 	seen := map[string]struct{}{}
 	names := []string{}
@@ -30,7 +30,11 @@ func names(charts []*graphx.Chart) []string {
 	return names
 }
 
-func (a *admin) CreateChart(charts []*graphx.Chart) error {
+// CreateChart persists a slice of Charts.
+//
+// If a provided Chart contains any references to a DataSource
+// that has not been created prior an ErrMissingDataSources error is returned
+func (a *Admin) CreateChart(charts []*graphx.Chart) error {
 	_, missing := a.dsmap.Get(datasources(charts))
 	if len(missing) > 0 {
 		return ErrMissingDataSources{missing}
@@ -39,17 +43,27 @@ func (a *admin) CreateChart(charts []*graphx.Chart) error {
 	return nil
 }
 
-func (a *admin) ReadChart() ([]*graphx.Chart, error) {
+// ReadChart lists all created Charts
+func (a *Admin) ReadChart() ([]*graphx.Chart, error) {
 	sources, _ := a.chartmap.Get(nil)
 	return sources, nil
 }
 
-func (a *admin) ReadChartsByName(names []string) ([]*graphx.Chart, error) {
+// ReadChartsByName lists Charts by their unique names
+func (a *Admin) ReadChartsByName(names []string) ([]*graphx.Chart, error) {
 	charts, _ := a.chartmap.Get(names)
 	return charts, nil
 }
 
-func (a *admin) UpdateChart(chart *graphx.Chart) error {
+// UpdateChart first confirms the provided Chart exists
+// and if so overwrites the original with the provided.
+//
+// If the provided Chart does not exist an ErrNotFound
+// error will be returned
+//
+// If a provided Chart contains any references to a DataSource
+// that has not been created prior an ErrMissingDataSources error is returned
+func (a *Admin) UpdateChart(chart *graphx.Chart) error {
 	charts, _ := a.chartmap.Get([]string{chart.Name})
 	if len(charts) <= 0 {
 		return ErrNotFound{chart.Name}
@@ -62,7 +76,11 @@ func (a *admin) UpdateChart(chart *graphx.Chart) error {
 	return nil
 }
 
-func (a *admin) DeleteChart(ds *graphx.Chart) error {
+// DeleteChart removes the existence of the provided Chart
+//
+// If the provided Chart does not exist an ErrNotFound
+// error will be returned
+func (a *Admin) DeleteChart(ds *graphx.Chart) error {
 	source, _ := a.chartmap.Get([]string{ds.Name})
 	if len(source) <= 0 {
 		return ErrNotFound{ds.Name}

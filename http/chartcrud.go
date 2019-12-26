@@ -7,7 +7,7 @@ import (
 	"github.com/cloudscaleorg/graphx/admin"
 )
 
-func ChartCRUD(admin admin.Chart) h.HandlerFunc {
+func ChartCRUD(admin *admin.Admin) h.HandlerFunc {
 	return func(w h.ResponseWriter, r *h.Request) {
 		switch r.Method {
 		case http.MethodGet:

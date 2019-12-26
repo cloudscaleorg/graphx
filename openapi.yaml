@@ -1,0 +1,81 @@
+openapi: "3.0.2"
+info:
+  title: "GraphX"
+  description: "Define graphs and stream time series metics over websocket"
+  version: "0.1"
+  termsOfService: ""
+  contact:
+    name: "cloudscale"
+    url: "http://github.com/cloudscaleorg/clair"
+    email: "ldelossa@gmail.com"
+  license:
+    name: "Apache License 2.0"
+    url:  "http://www.apache.org/licenses/"
+
+paths:
+  /index:
+    post:
+
+components:
+  examples:
+    DataSource:
+      value:
+        name: "MyPromDataSource"
+        backend: "prometheus"
+        connection_string: "http://localhost:9090"
+    ChartMetric:
+      value:
+        name: "MyDataSource"
+        chart: "MyChart"
+        query: 'http_requests_total{job="prometheus",group="canary"}'
+    Chart:
+      value:
+        name: "MyChart"
+        data_sources:
+          prometheus:
+           - $ref: '#/components/schemas/ChartMetric'
+  schemas:
+    Chart:
+      title: Chart
+      type: object
+      description: "A Chart which graphs one or more ChartMetrics"
+      properties:
+        name:
+          description: "The name of this Chart"
+          type: string
+        data_sources:
+          description: "A map, key'd by DataSource names, defining one or more ChartMetric objects"
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/ChartMetric'
+    ChartMetric:
+      title: ChartMetric
+      type: object
+      description: "A specific metric within a Chart"
+      properties:
+        name: 
+          description: "The name of this ChartMetric within a chart. This name must be unique"
+          type: string
+        chart:
+          description: "The Chart this ChartMetric belongs to"
+          type: string
+        query:
+          description: "The query string which expresses the desired metric"
+          type: string
+    DataSource:
+      title: DataSource
+      type: object 
+      description: "A named connection to a Backend"
+      properties:
+        name:
+          description: "A name of this DataSource. This name must be unique"
+          type: string
+        backend:
+          description: "An implemented Backend this DataSource describes"
+          type: string
+        connection_string:
+          description: "The connection information encoded as a string"
+          type: string
+

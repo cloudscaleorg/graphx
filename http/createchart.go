@@ -10,7 +10,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func CreateChart(admin admin.Chart) h.HandlerFunc {
+func CreateChart(admin *admin.Admin) h.HandlerFunc {
 	logger := log.With().Str("component", "CreateChartHandler").Logger()
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodPost {
@@ -18,7 +18,6 @@ func CreateChart(admin admin.Chart) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusNotImplemented)
 			return
 		}
-
 		var v graphx.Chart
 		if err := json.NewDecoder(r.Body).Decode(&v); err != nil {
 			logger.Error().Msgf("failed to deserialize datasource: %v", err)
@@ -26,7 +25,6 @@ func CreateChart(admin admin.Chart) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusBadRequest)
 			return
 		}
-
 		err := admin.CreateChart([]*graphx.Chart{&v})
 		if err != nil {
 			logger.Error().Msgf("failed to create chart: %v", err)
@@ -34,7 +32,6 @@ func CreateChart(admin admin.Chart) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusBadRequest)
 			return
 		}
-
 		resp := fw.NewResponse(fw.CodeSuccess, "DataSource stored")
 		err = json.NewEncoder(w).Encode(&resp)
 		if err != nil {
@@ -42,7 +39,6 @@ func CreateChart(admin admin.Chart) h.HandlerFunc {
 			w.WriteHeader(h.StatusInternalServerError)
 			return
 		}
-
 		logger.Debug().Msgf("successfully created chart: %v", v.Name)
 		return
 	}

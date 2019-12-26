@@ -9,7 +9,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func ReadDataSource(admin admin.DataSource) h.HandlerFunc {
+func ReadDataSource(admin *admin.Admin) h.HandlerFunc {
 	logger := log.With().Str("component", "ReadDataSourceHandler").Logger()
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodGet {
@@ -17,7 +17,6 @@ func ReadDataSource(admin admin.DataSource) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusNotImplemented)
 			return
 		}
-
 		v, err := admin.ReadDataSource()
 		if err != nil {
 			logger.Error().Msgf("failed to read datasources from admin interface: %v", err)
@@ -25,14 +24,12 @@ func ReadDataSource(admin admin.DataSource) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusBadRequest)
 			return
 		}
-
 		err = json.NewEncoder(w).Encode(&v)
 		if err != nil {
 			logger.Error().Msgf("failed to deserialize datasource: %v", err)
 			w.WriteHeader(h.StatusInternalServerError)
 			return
 		}
-
 		return
 	}
 }

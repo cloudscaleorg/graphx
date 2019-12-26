@@ -10,7 +10,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func CreateDataSource(admin admin.DataSource) h.HandlerFunc {
+func CreateDataSource(admin *admin.Admin) h.HandlerFunc {
 	logger := log.With().Str("component", "CreateDataSourceHandler").Logger()
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodPost {
@@ -18,7 +18,6 @@ func CreateDataSource(admin admin.DataSource) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusNotImplemented)
 			return
 		}
-
 		var v graphx.DataSource
 		if err := json.NewDecoder(r.Body).Decode(&v); err != nil {
 			logger.Error().Msgf("failed to deserialize datasource: %v", err)
@@ -26,7 +25,6 @@ func CreateDataSource(admin admin.DataSource) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusBadRequest)
 			return
 		}
-
 		err := admin.CreateDataSource([]*graphx.DataSource{&v})
 		if err != nil {
 			logger.Error().Msgf("failed to create datasource %v: %v", v.Name, err)
@@ -35,7 +33,6 @@ func CreateDataSource(admin admin.DataSource) h.HandlerFunc {
 			return
 		}
 		logger.Debug().Msgf("successfully created datasource: %v", v.Name)
-
 		resp := fw.NewResponse(fw.CodeSuccess, "DataSource stored")
 		err = json.NewEncoder(w).Encode(&resp)
 		if err != nil {
@@ -43,7 +40,6 @@ func CreateDataSource(admin admin.DataSource) h.HandlerFunc {
 			w.WriteHeader(h.StatusInternalServerError)
 			return
 		}
-
 		return
 	}
 }

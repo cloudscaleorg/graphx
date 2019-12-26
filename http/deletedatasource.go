@@ -10,7 +10,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func DeleteDataSource(a admin.DataSource) h.HandlerFunc {
+func DeleteDataSource(a *admin.Admin) h.HandlerFunc {
 	logger := log.With().Str("component", "DeleteDataSourceHandler").Logger()
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodDelete {
@@ -18,7 +18,6 @@ func DeleteDataSource(a admin.DataSource) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusNotImplemented)
 			return
 		}
-
 		var v graphx.DataSource
 		err := json.NewDecoder(r.Body).Decode(&v)
 		if err != nil {
@@ -27,7 +26,6 @@ func DeleteDataSource(a admin.DataSource) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusBadRequest)
 			return
 		}
-
 		err = a.DeleteDataSource(&v)
 		switch e := err.(type) {
 		case admin.ErrNotFound:
@@ -41,7 +39,6 @@ func DeleteDataSource(a admin.DataSource) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusNotFound)
 			return
 		}
-
 		logger.Debug().Msgf("succesfully deleted datasource: %v", v.Name)
 		w.WriteHeader(h.StatusOK)
 		return

@@ -11,7 +11,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func UpdateChart(a admin.Chart) h.HandlerFunc {
+func UpdateChart(a *admin.Admin) h.HandlerFunc {
 	logger := log.With().Str("component", "UpdateChartHandler").Logger()
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodPut {
@@ -19,7 +19,6 @@ func UpdateChart(a admin.Chart) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusNotImplemented)
 			return
 		}
-
 		var v graphx.Chart
 		err := json.NewDecoder(r.Body).Decode(&v)
 		if err != nil {
@@ -28,7 +27,6 @@ func UpdateChart(a admin.Chart) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusBadRequest)
 			return
 		}
-
 		err = a.UpdateChart(&v)
 		switch e := err.(type) {
 		case admin.ErrNotFound:
@@ -54,14 +52,12 @@ func UpdateChart(a admin.Chart) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusNotFound)
 			return
 		}
-
 		err = json.NewEncoder(w).Encode(&v)
 		if err != nil {
 			logger.Error().Msgf("failed to deserialize datasource: %v", err)
 			w.WriteHeader(h.StatusInternalServerError)
 			return
 		}
-
 		logger.Debug().Msgf("successfully updated chart: %v", v.Name)
 		return
 	}

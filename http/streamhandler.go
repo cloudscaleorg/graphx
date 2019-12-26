@@ -22,19 +22,17 @@ const (
 	MetricsStreamErrCode = "graphx.stream_handler"
 )
 
-func StreamHandler(admin admin.All, beReg registry.Backend, ws websocket.Upgrader) h.HandlerFunc {
+func StreamHandler(admin *admin.Admin, beReg registry.Backend, ws websocket.Upgrader) h.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports POST")
 			fw.JError(w, resp, h.StatusNotImplemented)
 			return
 		}
-
 		// create context for this streaming session
 		ctx := context.Background()
 		ctx, cancel := context.WithCancel(ctx)
 		defer cancel()
-
 		// upgrade to web socket
 		wsConn, err := ws.Upgrade(w, r, nil)
 		defer wsConn.Close()
@@ -43,10 +41,8 @@ func StreamHandler(admin admin.All, beReg registry.Backend, ws websocket.Upgrade
 			fw.JError(w, resp, h.StatusNotImplemented)
 		}
 		log.Printf("successfully upgraded to websocket")
-
 		// TODO: handle timeouts
 		// set initial deadline see: https://github.com/golang/go/blob/master/src/net/net.go#L149
-
 		// wait for charts descriptor
 		var cd graphx.ChartsDescriptor
 		for {
@@ -59,22 +55,16 @@ func StreamHandler(admin admin.All, beReg registry.Backend, ws websocket.Upgrade
 		}
 		id := fmt.Sprintf("%s.%v", uuid.New().String(), cd.Names)
 		log.Printf("id: %v received chart descriptor: %v", id, cd)
-
 		charts, _ := admin.ReadChartsByName(cd.ChartNames)
-
 		metricMap, dsNames := graphx.MergeCharts(charts)
-
 		datasources, _ := admin.ReadDataSourcesByName(dsNames)
-
 		queriers := []graphx.Querier{}
 		for _, datasource := range datasources {
 			be, _ := beReg.Get(datasource)
 			queriers = append(queriers, be.Querier(metricMap[datasource.Name]))
 		}
-
 		agg := machinery.NewQueryAggregator(queriers, time.Duration(cd.PollInterval))
 		agg.Start(ctx)
-
 		for {
 			metric, err := agg.Recv(ctx)
 			if err != nil {
@@ -85,7 +75,6 @@ func StreamHandler(admin admin.All, beReg registry.Backend, ws websocket.Upgrade
 				log.Printf("received error writing to websocket: %v", err)
 			}
 		}
-
 	}
 }
 

@@ -10,7 +10,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func DeleteChart(a admin.Chart) h.HandlerFunc {
+func DeleteChart(a *admin.Admin) h.HandlerFunc {
 	logger := log.With().Str("component", "DeleteDataSourceHandler").Logger()
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodDelete {
@@ -18,7 +18,6 @@ func DeleteChart(a admin.Chart) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusNotImplemented)
 			return
 		}
-
 		var v graphx.Chart
 		err := json.NewDecoder(r.Body).Decode(&v)
 		if err != nil {
@@ -26,7 +25,6 @@ func DeleteChart(a admin.Chart) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusBadRequest)
 			return
 		}
-
 		err = a.DeleteChart(&v)
 		switch e := err.(type) {
 		case admin.ErrNotFound:
@@ -40,7 +38,6 @@ func DeleteChart(a admin.Chart) h.HandlerFunc {
 			fw.JError(w, resp, h.StatusNotFound)
 			return
 		}
-
 		w.WriteHeader(h.StatusOK)
 		return
 	}
