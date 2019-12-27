@@ -2,15 +2,14 @@ package main
 
 import (
 	"context"
-	h "net/http"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
 
 	"github.com/cloudscaleorg/graphx/admin"
+	"github.com/cloudscaleorg/graphx/admin/httpserv"
 	"github.com/cloudscaleorg/graphx/etcd"
-	"github.com/cloudscaleorg/graphx/http"
 	"github.com/cloudscaleorg/graphx/prometheus"
 	"github.com/cloudscaleorg/graphx/registry"
 	"github.com/crgimenes/goconfig"
@@ -42,7 +41,7 @@ func main() {
 	if err != nil {
 		log.Fatal().Msgf("failed to create admin interface: %v", err)
 	}
-	adminServer := adminServer(conf.AdminListenAddr, a)
+	adminServer := httpserv.New(conf.AdminListenAddr, a)
 	if err != nil {
 		log.Fatal().Msgf("failed to create admin api: %v", err)
 	}
@@ -64,19 +63,6 @@ func main() {
 	}
 }
 
-// creates an http server with the endpoints for administering a graphx cluster
-func adminServer(addr string, admin admin.All) *h.Server {
-	mux := h.NewServeMux()
-	mux.HandleFunc("/api/v1/charts", http.ChartCRUD(admin))
-	mux.HandleFunc("/api/v1/datasources", http.DataSourceCRUD(admin))
-	mux.HandleFunc("/api/v1/backends", http.BackendCRUD(admin))
-	s := &h.Server{
-		Addr:    addr,
-		Handler: mux,
-	}
-	return s
-}
-
 // creates a backend registry and registers implemented backends
 func beRegInit(ctx context.Context) registry.Backend {
 	beReg := registry.NewBackendReg()
@@ -85,7 +71,7 @@ func beRegInit(ctx context.Context) registry.Backend {
 }
 
 // creates the etcd backed admin interface
-func adminInit(ctx context.Context, hosts string, beReg registry.Backend) (admin.All, error) {
+func adminInit(ctx context.Context, hosts string, beReg registry.Backend) (*admin.Admin, error) {
 	endpoints := strings.Split(hosts, ",")
 	client, err := v3.New(
 		v3.Config{

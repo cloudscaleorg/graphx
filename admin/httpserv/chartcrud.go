@@ -1,4 +1,4 @@
-package http
+package httpserv
 
 import (
 	"net/http"
@@ -7,20 +7,20 @@ import (
 	"github.com/cloudscaleorg/graphx/admin"
 )
 
-func DataSourceCRUD(admin *admin.Admin) h.HandlerFunc {
+func ChartCRUD(admin *admin.Admin) h.HandlerFunc {
 	return func(w h.ResponseWriter, r *h.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			ReadDataSource(admin).ServeHTTP(w, r)
+			ReadChart(admin).ServeHTTP(w, r)
 			return
 		case http.MethodPost:
-			CreateDataSource(admin).ServeHTTP(w, r)
+			CreateChart(admin).ServeHTTP(w, r)
 			return
 		case http.MethodPut:
-			UpdateDataSource(admin).ServeHTTP(w, r)
+			UpdateChart(admin).ServeHTTP(w, r)
 			return
 		case http.MethodDelete:
-			DeleteDataSource(admin).ServeHTTP(w, r)
+			DeleteChart(admin).ServeHTTP(w, r)
 			return
 		default:
 			w.WriteHeader(http.StatusMethodNotAllowed)

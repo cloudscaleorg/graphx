@@ -13,8 +13,6 @@ type Backend interface {
 }
 
 // Querier performs a query for each configured ChartMetric and returns the aggregation
-//
-// Implemented Backends construct a Querier by passing a list of ChartMetrics to query
 type Querier interface {
 	Query(ctx context.Context) ([]*Metric, error)
 }

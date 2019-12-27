@@ -9,10 +9,11 @@ import (
 	"github.com/cloudscaleorg/graphx"
 )
 
-// QueryAggregator acts as a fan-in for multiple queriers
+// QueryAggregator acts as a fan-in for multiple Queriers
+//
 //
 // QueryAggregator implements the graphx.Streamer interface
-// Each provided Querier will have it's Query method call at queryInterval interval
+// Each provided Querier will have it's Query method called at queryInterval interval
 // The queried metrics are returned to the internal mChan and maybe retrieved via the Recv method
 type QueryAggregator struct {
 	queriers      []graphx.Querier

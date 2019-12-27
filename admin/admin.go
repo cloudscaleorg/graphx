@@ -9,7 +9,7 @@ import (
 
 // Admin exports all methods for administering a GraphX cluster.
 //
-// This Admin utilizes the etcd package to persist GraphX application resources.
+// This Admin utilizes our etcd package to persist GraphX application resources.
 type Admin struct {
 	dsmap    *etcd.DSMap
 	chartmap *etcd.ChartMap

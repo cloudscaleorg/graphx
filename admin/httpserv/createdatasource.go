@@ -1,4 +1,4 @@
-package http
+package httpserv
 
 import (
 	"encoding/json"
@@ -10,28 +10,29 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func CreateChart(admin *admin.Admin) h.HandlerFunc {
-	logger := log.With().Str("component", "CreateChartHandler").Logger()
+func CreateDataSource(admin *admin.Admin) h.HandlerFunc {
+	logger := log.With().Str("component", "CreateDataSourceHandler").Logger()
 	return func(w h.ResponseWriter, r *h.Request) {
 		if r.Method != h.MethodPost {
 			resp := fw.NewResponse(fw.CodeMethodNotImplemented, "endpoint only supports POST")
 			fw.JError(w, resp, h.StatusNotImplemented)
 			return
 		}
-		var v graphx.Chart
+		var v graphx.DataSource
 		if err := json.NewDecoder(r.Body).Decode(&v); err != nil {
 			logger.Error().Msgf("failed to deserialize datasource: %v", err)
 			resp := fw.NewResponse(fw.CodeFailedSerialization, "could not validate provided json")
 			fw.JError(w, resp, h.StatusBadRequest)
 			return
 		}
-		err := admin.CreateChart([]*graphx.Chart{&v})
+		err := admin.CreateDataSource([]*graphx.DataSource{&v})
 		if err != nil {
-			logger.Error().Msgf("failed to create chart: %v", err)
-			resp := fw.NewResponse(fw.CodeCreateFail, err.Error())
-			fw.JError(w, resp, h.StatusBadRequest)
+			logger.Error().Msgf("failed to create datasource %v: %v", v.Name, err)
+			resp := fw.NewResponse(fw.CodeCreateFail, "creation failed")
+			fw.JError(w, resp, h.StatusInternalServerError)
 			return
 		}
+		logger.Debug().Msgf("successfully created datasource: %v", v.Name)
 		resp := fw.NewResponse(fw.CodeSuccess, "DataSource stored")
 		err = json.NewEncoder(w).Encode(&resp)
 		if err != nil {
@@ -39,7 +40,6 @@ func CreateChart(admin *admin.Admin) h.HandlerFunc {
 			w.WriteHeader(h.StatusInternalServerError)
 			return
 		}
-		logger.Debug().Msgf("successfully created chart: %v", v.Name)
 		return
 	}
 }
