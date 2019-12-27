@@ -1,24 +1,41 @@
+# Local Development #
+
 .PHONY: etcd-up
 etcd-up:
-	docker run -d -p 2379:2379 -p 2380:2380 --name etcd-gcr-v3.4.0-graphx gcr.io/etcd-development/etcd:v3.4.0 \
-		/usr/local/bin/etcd \
-		--name s1 \
-		--listen-client-urls http://0.0.0.0:2379 \
-		--advertise-client-urls http://0.0.0.0:2379 \
-		--listen-peer-urls http://0.0.0.0:2380 \
-		--initial-advertise-peer-urls http://0.0.0.0:2380 \
-		--initial-cluster s1=http://0.0.0.0:2380 \
-		--initial-cluster-token tkn \
-		--initial-cluster-state new \
-		--log-level debug \
-		--logger zap \
-		--log-outputs stderr
-	docker exec etcd-gcr-v3.4.0-graphx /bin/sh -c "/usr/local/bin/etcdctl version"
+	docker-compose up -d graphx-etcd
+	docker exec graphx-etcd /bin/sh -c "/usr/local/bin/etcdctl version"
 
 .PHONY: etcd-down
 etcd-down:
-	-docker kill etcd-gcr-v3.4.0-graphx
-	-docker rm etcd-gcr-v3.4.0-graphx
+	docker-compose down graphx-etcd
+
+.PHONY: swagger-up
+swagger-up:
+	docker-compose up -d graphx-swagger-ui
+
+.PHONY: swagger-down
+swagger-down:
+	docker-compose down -d graphx-swagger-ui
+
+.PHONY: graphx-up
+graphx-up:
+	docker-compose up -d graphx-node
+
+.PHONY: graphx-down
+graphx-down:
+	docker-compose down -d graphx-node
+
+.PHONY: local-dev-up
+local-dev-up:
+	make etcd-up
+	make swagger-up
+	make graphx-up
+
+.PHONY: local-dev-down
+local-dev-down:
+	docker-compose down
+
+# Testing #
 
 .PHONY: unit-verbose
 unit-verbose:
@@ -34,10 +51,3 @@ automated-integration-etcd:
 verbose-integration-etcd:
 	go test -v -count=1 -race -tags etcdintegration ./...
 
-.PHONY: swagger-up
-swagger-up:
-	docker-compose up -d swagger-ui
-
-.PHONY: swagger-down
-swagger-down:
-	docker-compose down -d swagger-ui

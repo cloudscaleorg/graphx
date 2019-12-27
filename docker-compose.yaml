@@ -1,6 +1,39 @@
 version: "3.7"
 services:
-  swagger-ui:
+  graphx-etcd:
+    container_name: graphx-etcd
+    image: gcr.io/etcd-development/etcd:v3.4.0
+    ports:
+      - 2379:2379
+      - 2380:2380
+    command: "/usr/local/bin/etcd \
+		    --name s1 \
+		    --listen-client-urls http://0.0.0.0:2379 \
+		    --advertise-client-urls http://0.0.0.0:2379 \
+		    --listen-peer-urls http://0.0.0.0:2380 \
+		    --initial-advertise-peer-urls http://0.0.0.0:2380 \
+		    --initial-cluster s1=http://0.0.0.0:2380 \
+		    --initial-cluster-token tkn \
+		    --initial-cluster-state new \
+		    --log-level debug \
+		    --logger zap \
+		    --log-outputs stderr" 
+
+  graphx-node:
+    container_name: graphx-node
+    image: golang:1.13
+    ports: 
+      - 8080:8080
+      - 8081:8081
+    volumes:
+      - .:/graphx
+    environment:
+      GRAPHX_ETCD: "graphx-etcd:2379"
+    command:
+      [ "bash", "-c", "cd /graphx; go mod vendor; go run -mod vendor cmd/graphx/*" ]
+
+  graphx-swagger-ui:
+    container_name: graphx-swagger-ui
     image: swaggerapi/swagger-ui
     ports:
       - "8082:8080"
