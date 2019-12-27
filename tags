@@ -9,11 +9,9 @@ Backend	backend.go	/^type Backend interface {$/;"	t
 Backend	prometheus/backend.go	/^type Backend struct {$/;"	t
 Backend	registry/backend.go	/^type Backend interface {$/;"	t
 BackendCRUD	admin/httpserv/backendcrud.go	/^func BackendCRUD(admin *admin.Admin) h.HandlerFunc {$/;"	f
-BackendCRUD	http/backendcrud.go	/^func BackendCRUD(admin *admin.Admin) h.HandlerFunc {$/;"	f
 BackendFactory	registry/backend.go	/^type BackendFactory func(ds *graphx.DataSource) (graphx.Backend, error)$/;"	t
 Chart	chart.go	/^type Chart struct {$/;"	t
 ChartCRUD	admin/httpserv/chartcrud.go	/^func ChartCRUD(admin *admin.Admin) h.HandlerFunc {$/;"	f
-ChartCRUD	http/chartcrud.go	/^func ChartCRUD(admin *admin.Admin) h.HandlerFunc {$/;"	f
 ChartMap	etcd/chartmap.go	/^type ChartMap struct {$/;"	t
 ChartMetric	chartmetric.go	/^type ChartMetric struct {$/;"	t
 ChartName	chartsdescriptor.go	/^type ChartName string$/;"	t
@@ -21,22 +19,17 @@ ChartsDescriptor	chartsdescriptor.go	/^type ChartsDescriptor struct {$/;"	t
 Config	cmd/graphx/main.go	/^type Config struct {$/;"	t
 CreateChart	admin/chart.go	/^func (a *Admin) CreateChart(charts []*graphx.Chart) error {$/;"	f
 CreateChart	admin/httpserv/createchart.go	/^func CreateChart(admin *admin.Admin) h.HandlerFunc {$/;"	f
-CreateChart	http/createchart.go	/^func CreateChart(admin *admin.Admin) h.HandlerFunc {$/;"	f
 CreateDataSource	admin/datasource.go	/^func (a *Admin) CreateDataSource(sources []*graphx.DataSource) error {$/;"	f
 CreateDataSource	admin/httpserv/createdatasource.go	/^func CreateDataSource(admin *admin.Admin) h.HandlerFunc {$/;"	f
-CreateDataSource	http/createdatasource.go	/^func CreateDataSource(admin *admin.Admin) h.HandlerFunc {$/;"	f
 DSMap	etcd/dsmap.go	/^type DSMap struct {$/;"	t
 DataSource	datasource.go	/^type DataSource struct {$/;"	t
 DataSourceCRUD	admin/httpserv/datasourcecrud.go	/^func DataSourceCRUD(admin *admin.Admin) h.HandlerFunc {$/;"	f
-DataSourceCRUD	http/datasourcecrud.go	/^func DataSourceCRUD(admin *admin.Admin) h.HandlerFunc {$/;"	f
 DefaultPromURL	prometheus/prometheus_integration_test.go	/^	DefaultPromURL = "http:\/\/localhost:9090\/"$/;"	c
 DefaultTSFormat	internal/unixtime/time_test.go	/^	DefaultTSFormat = "2006-01-02 15:04:05.999999999 -0700 MST"$/;"	c
 DeleteChart	admin/chart.go	/^func (a *Admin) DeleteChart(ds *graphx.Chart) error {$/;"	f
 DeleteChart	admin/httpserv/deletechart.go	/^func DeleteChart(a *admin.Admin) h.HandlerFunc {$/;"	f
-DeleteChart	http/deletechart.go	/^func DeleteChart(a *admin.Admin) h.HandlerFunc {$/;"	f
 DeleteDataSource	admin/datasource.go	/^func (a *Admin) DeleteDataSource(ds *graphx.DataSource) error {$/;"	f
 DeleteDataSource	admin/httpserv/deletedatasource.go	/^func DeleteDataSource(a *admin.Admin) h.HandlerFunc {$/;"	f
-DeleteDataSource	http/deletedatasource.go	/^func DeleteDataSource(a *admin.Admin) h.HandlerFunc {$/;"	f
 Duration	chartsdescriptor.go	/^type Duration time.Duration$/;"	t
 ErrBackendNotExist	registry/errors.go	/^type ErrBackendNotExist struct {$/;"	t
 ErrDuplicateBackend	registry/errors.go	/^type ErrDuplicateBackend struct {$/;"	t
@@ -66,7 +59,6 @@ MarshalJSON	chartsdescriptor.go	/^func (t TimeStamp) MarshalJSON() ([]byte, erro
 MergeCharts	chart.go	/^func MergeCharts(charts []*Chart) (map[string][]*ChartMetric, []string) {$/;"	f
 Metric	metric.go	/^type Metric struct {$/;"	t
 MetricsStreamErrCode	admin/httpserv/streamhandler.go	/^	MetricsStreamErrCode = "graphx.stream_handler"$/;"	c
-MetricsStreamErrCode	http/streamhandler.go	/^	MetricsStreamErrCode = "graphx.stream_handler"$/;"	c
 Name	prometheus/backend.go	/^func (b *Backend) Name() string {$/;"	f
 NameTag	prometheus/sampleconv.go	/^	NameTag = "container_name"$/;"	c
 New	admin/httpserv/server.go	/^func New(addr string, a *admin.Admin) *Server {$/;"	f
@@ -87,14 +79,11 @@ Query	prometheus/querier.go	/^func (q *querier) Query(ctx context.Context) ([]*g
 QueryAggregator	machinery/queryaggregator.go	/^type QueryAggregator struct {$/;"	t
 ReadBackend	admin/backend.go	/^func (a *Admin) ReadBackend() ([]string, error) {$/;"	f
 ReadBackend	admin/httpserv/readbackend.go	/^func ReadBackend(admin *admin.Admin) h.HandlerFunc {$/;"	f
-ReadBackend	http/readbackend.go	/^func ReadBackend(admin *admin.Admin) h.HandlerFunc {$/;"	f
 ReadChart	admin/chart.go	/^func (a *Admin) ReadChart() ([]*graphx.Chart, error) {$/;"	f
 ReadChart	admin/httpserv/readchart.go	/^func ReadChart(admin *admin.Admin) h.HandlerFunc {$/;"	f
-ReadChart	http/readchart.go	/^func ReadChart(admin *admin.Admin) h.HandlerFunc {$/;"	f
 ReadChartsByName	admin/chart.go	/^func (a *Admin) ReadChartsByName(names []string) ([]*graphx.Chart, error) {$/;"	f
 ReadDataSource	admin/datasource.go	/^func (a *Admin) ReadDataSource() ([]*graphx.DataSource, error) {$/;"	f
 ReadDataSource	admin/httpserv/readdatasource.go	/^func ReadDataSource(admin *admin.Admin) h.HandlerFunc {$/;"	f
-ReadDataSource	http/readdatasource.go	/^func ReadDataSource(admin *admin.Admin) h.HandlerFunc {$/;"	f
 ReadDataSourcesByName	admin/datasource.go	/^func (a *Admin) ReadDataSourcesByName(names []string) ([]*graphx.DataSource, error) {$/;"	f
 Recv	machinery/queryaggregator.go	/^func (qa *QueryAggregator) Recv(ctx context.Context) (*graphx.Metric, error) {$/;"	f
 Register	admin/httpserv/server.go	/^func (s *Server) Register(mux *http.ServeMux) {$/;"	f
@@ -108,7 +97,6 @@ Start	machinery/queryaggregator.go	/^func (qa *QueryAggregator) Start(ctx contex
 Store	etcd/chartmap.go	/^func (m *ChartMap) Store(charts []*graphx.Chart) {$/;"	f
 Store	etcd/dsmap.go	/^func (m *DSMap) Store(charts []*graphx.DataSource) {$/;"	f
 StreamHandler	admin/httpserv/streamhandler.go	/^func StreamHandler(admin *admin.Admin, beReg registry.Backend, ws websocket.Upgrader) h.HandlerFunc {$/;"	f
-StreamHandler	http/streamhandler.go	/^func StreamHandler(admin *admin.Admin, beReg registry.Backend, ws websocket.Upgrader) h.HandlerFunc {$/;"	f
 Streamer	streamer.go	/^type Streamer interface {$/;"	t
 StreamerFactory	streamfactory.go	/^type StreamerFactory interface {$/;"	t
 TestParseString	internal/unixtime/time_test.go	/^func TestParseString(t *testing.T) {$/;"	f
@@ -129,12 +117,9 @@ UnmarshalJSON	chartsdescriptor.go	/^func (d *Duration) UnmarshalJSON(b []byte) e
 UnmarshalJSON	chartsdescriptor.go	/^func (t *TimeStamp) UnmarshalJSON(b []byte) error {$/;"	f
 UpdateChart	admin/chart.go	/^func (a *Admin) UpdateChart(chart *graphx.Chart) error {$/;"	f
 UpdateChart	admin/httpserv/updatechart.go	/^func UpdateChart(a *admin.Admin) h.HandlerFunc {$/;"	f
-UpdateChart	http/updatechart.go	/^func UpdateChart(a *admin.Admin) h.HandlerFunc {$/;"	f
 UpdateDataSource	admin/datasource.go	/^func (a *Admin) UpdateDataSource(ds *graphx.DataSource) error {$/;"	f
 UpdateDataSource	admin/httpserv/updatedatasource.go	/^func UpdateDataSource(a *admin.Admin) h.HandlerFunc {$/;"	f
-UpdateDataSource	http/updatedatasource.go	/^func UpdateDataSource(a *admin.Admin) h.HandlerFunc {$/;"	f
 ValidationError	admin/httpserv/streamhandler.go	/^	ValidationError      = "could not validate your charts descriptor. chart_names and names keys are required and must contain more the one item"$/;"	c
-ValidationError	http/streamhandler.go	/^	ValidationError      = "could not validate your charts descriptor. chart_names and names keys are required and must contain more the one item"$/;"	c
 admin	admin/admin.go	/^package admin$/;"	p
 admin	admin/backend.go	/^package admin$/;"	p
 admin	admin/chart.go	/^package admin$/;"	p
@@ -183,19 +168,6 @@ httpserv	admin/httpserv/server.go	/^package httpserv$/;"	p
 httpserv	admin/httpserv/streamhandler.go	/^package httpserv$/;"	p
 httpserv	admin/httpserv/updatechart.go	/^package httpserv$/;"	p
 httpserv	admin/httpserv/updatedatasource.go	/^package httpserv$/;"	p
-httpserv	http/backendcrud.go	/^package httpserv$/;"	p
-httpserv	http/chartcrud.go	/^package httpserv$/;"	p
-httpserv	http/createchart.go	/^package httpserv$/;"	p
-httpserv	http/createdatasource.go	/^package httpserv$/;"	p
-httpserv	http/datasourcecrud.go	/^package httpserv$/;"	p
-httpserv	http/deletechart.go	/^package httpserv$/;"	p
-httpserv	http/deletedatasource.go	/^package httpserv$/;"	p
-httpserv	http/readbackend.go	/^package httpserv$/;"	p
-httpserv	http/readchart.go	/^package httpserv$/;"	p
-httpserv	http/readdatasource.go	/^package httpserv$/;"	p
-httpserv	http/streamhandler.go	/^package httpserv$/;"	p
-httpserv	http/updatechart.go	/^package httpserv$/;"	p
-httpserv	http/updatedatasource.go	/^package httpserv$/;"	p
 logLevel	cmd/graphx/main.go	/^func logLevel(conf Config) zerolog.Level {$/;"	f
 machinery	machinery/queryaggregator.go	/^package machinery$/;"	p
 main	cmd/graphx/main.go	/^func main() {$/;"	f

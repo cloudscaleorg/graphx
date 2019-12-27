@@ -8,6 +8,8 @@ import (
 
 // Server implements administration of a GraphX cluster via HTTP REST
 // semantics.
+//
+// Server keeps a reference to an admin.Admin structure
 type Server struct {
 	*http.Server
 	Admin *admin.Admin
