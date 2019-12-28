@@ -29,6 +29,7 @@ func New(addr string, a *admin.Admin) *Server {
 	return s
 }
 
+// Register adds all necessary routes to the provided mux.
 func (s *Server) Register(mux *http.ServeMux) {
 	mux.HandleFunc("/api/v1/charts", ChartCRUD(s.Admin))
 	mux.HandleFunc("/api/v1/datasources", DataSourceCRUD(s.Admin))
